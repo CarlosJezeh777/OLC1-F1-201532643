@@ -1,5 +1,20 @@
-Evaluar[1+1];
-Evaluar[1+1*2];
-Evaluar[-(1+1*6/3-5+7)];
-Evaluar[-(1+1*6/3-5+1*-2)];
-Evaluar[-(1.6+1.45)];
+string hola = 23;
+int hola = 23;
+const char hola = 23;
+double jaja = 34;
+boolean bandera = 34;
+
+if(23 +4){
+    string hola = 23;    
+}else{
+    string hola = 23;
+}
+
+switch(){
+    case: 
+        double jaja = 34;
+        break;
+    case: 
+        double jaja = 34;
+        break;
+}

@@ -6,16 +6,65 @@
 %%
 
 "Evaluar"           return 'REVALUAR';
-";"                 return 'PTCOMA';
-"("                 return 'PARIZQ';
-")"                 return 'PARDER';
-"["                 return 'CORIZQ';
-"]"                 return 'CORDER';
 
+"\""                 return 'COMILLASDOBLES';
+"\\"                 return 'BARRAINVERTIDA';
+"\n"                 return 'NUEVALINEA';
+"\r"                 return 'RETORNO';
+"\t"                 return 'TABULACION';
+
+"int"           	return 'INT';
+"double"       		return 'DOUBLE';
+"char"           	return 'CHAR';
+"boolean"           return 'BOOL';
+"String"           	return 'STRING';
+"const"           	return 'CONST';
+"if"           		return 'IF';
+"else"           	return 'ELSE';
+"switch"           	return 'SWITCH';
+"case"           	return 'CASE';
+"default"           return 'DEFAULT';
+"for"           	return 'FOR';
+"while"           	return 'WHILE';
+"do"           		return 'DO';
+"break"           	return 'BREAK';
+"continue"          return 'CONTINUE';
+"void"           	return 'VOID';
+"return"           	return 'RETURN';
+"call"           	return 'CALL';
+"Println"           return 'PRINTLN';
+"Print"           	return 'PRINT';
+"Typeof"           	return 'TYPEOF';
+
+">="                 return 'MAYORIGUAL';
+"<="                 return 'MENORIGUAL';
+"=="                 return 'IGUALQUE';
+"!="                 return 'DIFERENTEQUE';
+">"                 return 'MAYORQUE';
+"<"                 return 'MENORQUE';
+
+"||"                 return 'OR';
+"&&"                 return 'AND';
+"^"                 return 'XOR';
+"!"                 return 'NOT';
+
+"="                 return 'IGUAL';
+";"                 return 'PTCOMA';
+":"                 return 'DOSPUNTOS';
+"("                 return 'ABRIRPARENTESIS';
+")"                 return 'CERRARPARENTESIS';
+"{"                 return 'ABRIRLLAVES';
+"}"                 return 'CERRARLLAVES';
+
+"++"                return 'INCREMENTO';
+"--"                return 'DECREMENTO';
+"**"                return 'POTENCIA';
 "+"                 return 'MAS';
 "-"                 return 'MENOS';
 "*"                 return 'POR';
 "/"                 return 'DIVIDIDO';
+"%"                 return 'MODULO';
+
 
 /* Espacios en blanco */
 [ \r\t]+            {}
@@ -23,6 +72,7 @@
 
 [0-9]+("."[0-9]+)?\b    return 'DECIMAL';
 [0-9]+\b                return 'ENTERO';
+([a-zA-Z])[a-zA-Z0-9_]*	 return 'IDENTIFICADOR';
 
 <<EOF>>                 return 'EOF';
 
@@ -40,19 +90,59 @@
 %% /* Definición de la gramática */
 
 ini
-	: instrucciones EOF
+	: cuerpo EOF
 ;
 
-instrucciones
-	: instruccion instrucciones
-	| instruccion
-	| error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
+cuerpo
+	:declaracion_variables cuerpo 
+	|declaracion_variables
+	|condicion_if cuerpo
+	|condicion_if
+	|error {console.error('Este es un error sintactico: ' + yytext + ', en la linea: '+ this._$.first_line+', en la columna: '+this._$.first_column);}
 ;
 
-instruccion
-	: REVALUAR CORIZQ expresion CORDER PTCOMA {
-		console.log('El valor de la expresión es: ' + $3);
-	}
+declaracion_variables
+	: tipo_dato IDENTIFICADOR IGUAL expresion PTCOMA
+	| CONST declaracion_variables
+;
+
+asignacion
+	: IDENTIFICADOR IGUAL IDENTIFICADOR
+	|IDENTIFICADOR IGUAL expresion
+;
+
+condicion_if
+	: IF ABRIRPARENTESIS expresion CERRARPARENTESIS ABRIRLLAVES cuerpo CERRARLLAVES
+	|condicion_if condicion_else
+	|else_if condicion_else
+; 
+
+condicion_else
+	: ELSE ABRIRLLAVES cuerpo CERRARLLAVES
+;
+
+else_if
+	:ELSE IF ABRIRPARENTESIS  CERRARPARENTESIS ABRIRLLAVES  cuerpo CERRARLLAVES
+;
+
+condicion_switch
+	: SWITCH ABRIRPARENTESIS CERRARPARENTESIS ABRIRLLAVES condicion_case CERRARLLAVES 
+;
+
+condicion_case 
+	: condicion_case CASE DOSPUNTOS cuerpo BREAK PTCOMA
+;
+
+instruccion_case
+	:
+;
+
+tipo_dato 
+	:INT
+	|DOUBLE
+	|STRING
+	|CHAR
+	|BOOL
 ;
 
 expresion
