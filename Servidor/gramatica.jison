@@ -35,6 +35,8 @@
 "Println"           return 'PRINTLN';
 "Print"           	return 'PRINT';
 "Typeof"           	return 'TYPEOF';
+"true"				return 'RTRUE'
+"false"				return 'RFALSE'
 
 ">="                 return 'MAYORIGUAL';
 "<="                 return 'MENORIGUAL';
@@ -112,17 +114,23 @@ asignacion
 ;
 
 condicion_if
-	: IF ABRIRPARENTESIS expresion CERRARPARENTESIS ABRIRLLAVES cuerpo CERRARLLAVES
-	|condicion_if condicion_else
-	|else_if condicion_else
+	: cuerpo_if else_if
+	|cuerpo_if condicion_else
+	|cuerpo_if else_if condicion_else
+	|cuerpo_if
 ; 
+
+cuerpo_if
+	:IF ABRIRPARENTESIS expresion CERRARPARENTESIS ABRIRLLAVES cuerpo CERRARLLAVES
+;
 
 condicion_else
 	: ELSE ABRIRLLAVES cuerpo CERRARLLAVES
 ;
 
 else_if
-	:ELSE IF ABRIRPARENTESIS  CERRARPARENTESIS ABRIRLLAVES  cuerpo CERRARLLAVES
+	:else_if ELSE IF ABRIRPARENTESIS  CERRARPARENTESIS ABRIRLLAVES  cuerpo CERRARLLAVES 
+	|ELSE IF ABRIRPARENTESIS  CERRARPARENTESIS ABRIRLLAVES  cuerpo CERRARLLAVES
 ;
 
 condicion_switch
@@ -133,16 +141,84 @@ condicion_case
 	: condicion_case CASE DOSPUNTOS cuerpo BREAK PTCOMA
 ;
 
-instruccion_case
-	:
+bucle_for
+	:FOR ABRIRPARENTESIS asig_for CERRARPARENTESIS ABRIRLLAVES cuerpo CERRARLLAVES
+;
+
+asig_for
+	:tipo_dato IDENTIFICADOR IGUAL tipo_expresion PTCOMA IDENTIFICADOR expresion_relacional tipo_expresion PTCOMA IDENTIFICADOR incrementales
+	|IDENTIFICADOR IGUAL tipo_expresion PTCOMA IDENTIFICADOR expresion_relacional tipo_expresion PTCOMA IDENTIFICADOR incrementales
+;
+
+bucle_while
+	:WHILE ABRIRPARENTESIS CERRARPARENTESIS ABRIRLLAVES cuerpo CERRARLLAVES
+;
+
+do_while
+	:DO ABRIRLLAVES cuerpo  CERRARLLAVES WHILE ABRIRPARENTESIS CERRARPARENTESIS PTCOMA
+;
+
+metodo_funcion
+	:VOID IDENTIFICADOR ABRIRPARENTESIS CERRARPARENTESIS ABRIRLLAVES cuerpo  CERRARLLAVES
+	|tipo_dato IDENTIFICADOR ABRIRPARENTESIS CERRARPARENTESIS ABRIRLLAVES cuerpo  CERRARLLAVES
+;
+
+llamada_m_f
+	: CALL IDENTIFICADOR ABRIRPARENTESIS CERRARPARENTESIS PTCOMA
+;
+
+bloque_instrucciones
+	:ABRIRLLAVES cuerpo CERRARLLAVES
+;
+
+funciones_nativas
+	:PRINTLN ABRIRPARENTESIS CERRARPARENTESIS
+	|PRINT ABRIRPARENTESIS CERRARPARENTESIS
+	|TYPEOF ABRIRPARENTESIS CERRARPARENTESIS
 ;
 
 tipo_dato 
 	:INT
 	|DOUBLE
-	|STRING
+	|STRING 
 	|CHAR
 	|BOOL
+;
+
+expresiones_logicas
+	:AND
+	|OR
+	|XOR
+	|NOT
+;
+
+tipo_expresion
+	:ENTERO
+	|IDENTIFICADOR
+	|DECIMAL
+;
+
+expresiones_aritmeticas
+	:MAS
+	|MENOS
+	|DIVIDIDO
+	|POR
+	|POTENCIA
+	|MODULO
+;
+
+expresion_relacional
+	:MAYORIGUAL
+	|MENORIGUAL
+	|MAYORQUE
+	|MENORQUE
+	|IGUALQUE
+	|DIFERENTEQUE
+;
+
+incrementales
+	:INCREMENTO
+	|DECREMENTO
 ;
 
 expresion
