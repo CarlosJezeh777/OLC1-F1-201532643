@@ -1,11 +1,9 @@
 /* Definición Léxica */
 %lex
 
-%options case-insensitive
 
 %%
 
-"Evaluar"           return 'REVALUAR';
 
 "\""                 return 'COMILLASDOBLES';
 "\\"                 return 'BARRAINVERTIDA';
@@ -13,68 +11,221 @@
 "\r"                 return 'RETORNO';
 "\t"                 return 'TABULACION';
 
-"int"           	return 'INT';
-"double"       		return 'DOUBLE';
-"char"           	return 'CHAR';
-"boolean"           return 'BOOL';
-"String"           	return 'STRING';
-"const"           	return 'CONST';
-"if"           		return 'IF';
-"else"           	return 'ELSE';
-"switch"           	return 'SWITCH';
-"case"           	return 'CASE';
-"default"           return 'DEFAULT';
-"for"           	return 'FOR';
-"while"           	return 'WHILE';
-"do"           		return 'DO';
-"break"           	return 'BREAK';
-"continue"          return 'CONTINUE';
-"void"           	return 'VOID';
-"return"           	return 'RETURN';
-"call"           	return 'CALL';
-"Println"           return 'PRINTLN';
-"Print"           	return 'PRINT';
-"Typeof"           	return 'TYPEOF';
-"true"				return 'RTRUE'
-"false"				return 'RFALSE'
+"int"           	{
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'r_int';
+					}
+"double"       		{
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'r_double';
+					}
+"char"           	{
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'r_char';
+					}
+"boolean"           {
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'r_bool';
+					}
+"string"           	{
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'r_string';
+					}
 
-">="                 return 'MAYORIGUAL';
-"<="                 return 'MENORIGUAL';
-"=="                 return 'IGUALQUE';
-"!="                 return 'DIFERENTEQUE';
-">"                 return 'MAYORQUE';
-"<"                 return 'MENORQUE';
+"const"           	{
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'r_const';
+					}
+"if"           		{
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'r_if';
+					}
+"else"           	{
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'r_else';
+					}
+"switch"           	{
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'r_switch';
+					}
+"case"           	{
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'r_case';
+					}
+"default"           {
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'r_default';
+					}
+"for"           	{
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'r_for';
+					}
+"while"           	{
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'r_while';
+					}
+"do"           		{
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'r_do';
+					}
+"break"           	{
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'r_break';
+					}
+"continue"          {
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'r_continue';
+					}
+"void"           	{
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'r_void';
+					}
+"return"           	{
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'r_return';
+					}
+"call"           	{
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'r_call';
+					}
+"Println"           {
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'r_println';
+					}
+"Print"           	{
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'r_print';
+					}
+"Typeof"           	{
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'r_typeof';
+					}
+"true"				{
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'r_true';
+					}
+"false"				{
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'r_false';
+					}
 
-"||"                 return 'OR';
-"&&"                 return 'AND';
-"^"                 return 'XOR';
-"!"                 return 'NOT';
+">="                {
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'mayor_igual';
+					}
+"<="                {
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'menor_igual';
+					}
+"=="                {
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'igual_que';
+					}
+"!="                {
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'no_igual';
+					}
+">"                 {
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'mayor';
+					}
+"<"                 {
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'menor';
+					}
 
-"="                 return 'IGUAL';
-";"                 return 'PTCOMA';
-":"                 return 'DOSPUNTOS';
-"("                 return 'ABRIRPARENTESIS';
-")"                 return 'CERRARPARENTESIS';
-"{"                 return 'ABRIRLLAVES';
-"}"                 return 'CERRARLLAVES';
+"||"                {
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'or';
+					}
+"&&"                {
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'and';
+					}
+"^"                 {
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'xor';
+					}
+"!"                 {
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'not';
+					}
 
-"++"                return 'INCREMENTO';
-"--"                return 'DECREMENTO';
-"**"                return 'POTENCIA';
-"+"                 return 'MAS';
-"-"                 return 'MENOS';
-"*"                 return 'POR';
-"/"                 return 'DIVIDIDO';
-"%"                 return 'MODULO';
+"="                 {
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'igual';
+					}
+";"                 {
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'punto_coma';
+					}
+","                 {
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'coma';
+					}
+":"                 {
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'dos_puntos';
+					}
+"("                 {
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'parentesis_a';
+					}
+")"                 {
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'parentesis_c';
+					}
+"{"                 {
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'llave_a';
+					}
+"}"                 {
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'llave_c';
+					}
+
+"++"                {
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'incremento';
+					}
+"--"                {
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'decremento';
+					}
+
+"**"                {
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'potencia';
+					}
+"+"                 {
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'suma';
+					}
+"-"                 {
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'resta';
+					}
+"*"                 {
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'por';
+					}
+"/"                 {
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'div';
+					}
+"%"                 {
+						console.log("Se reconocio el lexema: " + yytext);
+						return 'mod';
+					}
+
+[0-9]+("."[0-9]+)?\b		return 'decimal';
+[0-9]+\b                	return 'entero';
+([a-zA-Z])[a-zA-Z0-9_]*		return 'identificador';
 
 
 /* Espacios en blanco */
 [ \r\t]+            {}
 \n                  {}
-
-[0-9]+("."[0-9]+)?\b    return 'DECIMAL';
-[0-9]+\b                return 'ENTERO';
-([a-zA-Z])[a-zA-Z0-9_]*	 return 'IDENTIFICADOR';
 
 <<EOF>>                 return 'EOF';
 
@@ -82,152 +233,178 @@
 /lex
 
 /* Asociación de operadores y precedencia */
+%left 'or' 'xor' 'and'
+%left 'mayor' 'mayor_igual' 'menor' 'menor_igual' 'igual_que' 'no_igual'
+%left 'potencia' 'mod'
+%left 'suma' 'resta'
+%left 'por' 'div'
 
-%left 'MAS' 'MENOS'
-%left 'POR' 'DIVIDIDO'
-%left UMENOS
-
-%start ini
+%start INIT
 
 %% /* Definición de la gramática */
 
-ini
-	: cuerpo EOF
+INIT
+	: INTRUCCIONES EOF
 ;
 
-cuerpo
-	:declaracion_variables cuerpo 
-	|declaracion_variables
-	|condicion_if cuerpo
-	|condicion_if
+INTRUCCIONES
+	:INTRUCCION INTRUCCIONES
+	|INTRUCCION
 	|error {console.error('Este es un error sintactico: ' + yytext + ', en la linea: '+ this._$.first_line+', en la columna: '+this._$.first_column);}
 ;
 
-declaracion_variables
-	: tipo_dato IDENTIFICADOR IGUAL expresion PTCOMA
-	| CONST declaracion_variables
+INTRUCCION
+	:DVARIABLES
+	|IF
+	|SWITCH
+	|FOR
+	|WHILE
+	|DO_WHILE
+	|MET_FUN
+	|LLAMADA
+	|BLOQUE
 ;
 
-asignacion
-	: IDENTIFICADOR IGUAL IDENTIFICADOR
-	|IDENTIFICADOR IGUAL expresion
+DVARIABLES
+	: TIPO_DATO identificador igual TIPO_EXPRESION punto_coma
+	| r_const TIPO_DATO identificador igual TIPO_EXPRESION punto_coma
 ;
 
-condicion_if
-	: cuerpo_if else_if
-	|cuerpo_if condicion_else
-	|cuerpo_if else_if condicion_else
-	|cuerpo_if
+ASIGNACION
+	: identificador igual identificador punto_coma
+	|identificador igual EXPRESION punto_coma
+;
+
+IF
+	:CUERPO_IF ELSE_IF
+	|CUERPO_IF ELSE_IF ELSE
+	|CUERPO_IF ELSE
+	|CUERPO_IF
 ; 
 
-cuerpo_if
-	:IF ABRIRPARENTESIS expresion CERRARPARENTESIS ABRIRLLAVES cuerpo CERRARLLAVES
+CUERPO_IF
+	:r_if parentesis_a EXPRESION parentesis_c llave_a INTRUCCIONES llave_c
 ;
 
-condicion_else
-	: ELSE ABRIRLLAVES cuerpo CERRARLLAVES
+ELSE
+	:r_else llave_a INTRUCCIONES llave_c
 ;
 
-else_if
-	:else_if ELSE IF ABRIRPARENTESIS  CERRARPARENTESIS ABRIRLLAVES  cuerpo CERRARLLAVES 
-	|ELSE IF ABRIRPARENTESIS  CERRARPARENTESIS ABRIRLLAVES  cuerpo CERRARLLAVES
+ELSE_IF
+	:ELSE_IF I_ELSE_IF 
+	|I_ELSE_IF
 ;
 
-condicion_switch
-	: SWITCH ABRIRPARENTESIS CERRARPARENTESIS ABRIRLLAVES condicion_case CERRARLLAVES 
+I_ELSE_IF
+	: r_else r_if parentesis_a EXPRESION parentesis_c llave_a INTRUCCIONES llave_c 
 ;
 
-condicion_case 
-	: condicion_case CASE DOSPUNTOS cuerpo BREAK PTCOMA
+SWITCH
+	: r_switch parentesis_a parentesis_c llave_a CASE llave_c 
 ;
 
-bucle_for
-	:FOR ABRIRPARENTESIS asig_for CERRARPARENTESIS ABRIRLLAVES cuerpo CERRARLLAVES
+CASE
+	:CASE I_CASE
+	|I_CASE
 ;
 
-asig_for
-	:tipo_dato IDENTIFICADOR IGUAL tipo_expresion PTCOMA IDENTIFICADOR expresion_relacional tipo_expresion PTCOMA IDENTIFICADOR incrementales
-	|IDENTIFICADOR IGUAL tipo_expresion PTCOMA IDENTIFICADOR expresion_relacional tipo_expresion PTCOMA IDENTIFICADOR incrementales
+I_CASE
+	: r_case dos_puntos INTRUCCIONES r_break punto_coma
 ;
 
-bucle_while
-	:WHILE ABRIRPARENTESIS CERRARPARENTESIS ABRIRLLAVES cuerpo CERRARLLAVES
+FOR
+	:r_for parentesis_a ASIG_FOR parentesis_c llave_a INTRUCCIONES  llave_c
 ;
 
-do_while
-	:DO ABRIRLLAVES cuerpo  CERRARLLAVES WHILE ABRIRPARENTESIS CERRARPARENTESIS PTCOMA
+ASIG_FOR
+	:TIPO_DATO identificador igual EXPRESION punto_coma identificador EXPRESION_RELACIONAL EXPRESION punto_coma identificador INCREMENTALES
+	|identificador igual EXPRESION punto_coma identificador EXPRESION_RELACIONAL EXPRESION punto_coma identificador INCREMENTALES
 ;
 
-metodo_funcion
-	:VOID IDENTIFICADOR ABRIRPARENTESIS CERRARPARENTESIS ABRIRLLAVES cuerpo  CERRARLLAVES
-	|tipo_dato IDENTIFICADOR ABRIRPARENTESIS CERRARPARENTESIS ABRIRLLAVES cuerpo  CERRARLLAVES
+WHILE
+	:r_while parentesis_a EXPRESION parentesis_c llave_a INTRUCCIONES llave_c
 ;
 
-llamada_m_f
-	: CALL IDENTIFICADOR ABRIRPARENTESIS CERRARPARENTESIS PTCOMA
+DO_WHILE
+	:r_do llave_a INTRUCCIONES llave_c  r_while parentesis_a EXPRESION parentesis_c punto_coma
 ;
 
-bloque_instrucciones
-	:ABRIRLLAVES cuerpo CERRARLLAVES
+MET_FUN
+	:r_void identificador parentesis_a parentesis_c llave_a INTRUCCIONES  llave_c
+	|TIPO_DATO identificador parentesis_a parentesis_c llave_a INTRUCCIONES llave_c
 ;
 
-funciones_nativas
-	:PRINTLN ABRIRPARENTESIS CERRARPARENTESIS
-	|PRINT ABRIRPARENTESIS CERRARPARENTESIS
-	|TYPEOF ABRIRPARENTESIS CERRARPARENTESIS
+LLAMADA
+	:r_call identificador parentesis_a parentesis_c punto_coma
 ;
 
-tipo_dato 
-	:INT
-	|DOUBLE
-	|STRING 
-	|CHAR
-	|BOOL
+BLOQUE
+	:llave_a INTRUCCIONES llave_c
 ;
 
-expresiones_logicas
-	:AND
-	|OR
-	|XOR
-	|NOT
+
+TIPO_EXPRESION
+	: decimal
+	|entero
+	|r_true
+	|r_false
 ;
 
-tipo_expresion
-	:ENTERO
-	|IDENTIFICADOR
-	|DECIMAL
+TIPO_DATO
+	:r_int
+	|r_double
+	|r_string
+	|r_char
+	|r_bool
 ;
 
-expresiones_aritmeticas
-	:MAS
-	|MENOS
-	|DIVIDIDO
-	|POR
-	|POTENCIA
-	|MODULO
+EXPRESIONES_LOGICAS
+	:or
+	|xor
+	|and
+	|not
 ;
 
-expresion_relacional
-	:MAYORIGUAL
-	|MENORIGUAL
-	|MAYORQUE
-	|MENORQUE
-	|IGUALQUE
-	|DIFERENTEQUE
+
+EXPRESIONES_ARITMETICAS
+	:suma
+	|resta
+	|div
+	|por
 ;
 
-incrementales
-	:INCREMENTO
-	|DECREMENTO
+EXPRESION_RELACIONAL
+	:mayor
+	|mayor_igual
+	|menor
+	|menor_igual
+	|igual_que
+	|no_igual
 ;
 
-expresion
-	: MENOS expresion %prec UMENOS  { $$ = $2 *-1; }
-	| expresion MAS expresion       { $$ = $1 + $3; }
-	| expresion MENOS expresion     { $$ = $1 - $3; }
-	| expresion POR expresion       { $$ = $1 * $3; }
-	| expresion DIVIDIDO expresion  { $$ = $1 / $3; }
-	| ENTERO                        { $$ = Number($1); }
-	| DECIMAL                       { $$ = Number($1); }
-	| PARIZQ expresion PARDER       { $$ = $2; }
+INCREMENTALES
+	:incremento
+	|decremento
+;
+
+EXPRESION
+	:EXPRESION or EXPRESION
+	|EXPRESION xor EXPRESION
+	|EXPRESION and EXPRESION
+	|EXPRESION mayor EXPRESION
+	|EXPRESION mayor_igual EXPRESION
+	|EXPRESION menor EXPRESION
+	|EXPRESION menor_igual EXPRESION
+	|EXPRESION igual_que EXPRESION
+	|EXPRESION no_igual EXPRESION
+	|EXPRESION mod EXPRESION
+	|EXPRESION potencia EXPRESION 
+	|EXPRESION suma EXPRESION
+	|EXPRESION resta EXPRESION
+	|EXPRESION por EXPRESION
+	|EXPRESION div EXPRESION
+	|decimal                        					
+	|entero		
+	|identificador					                      
+	| parentesis_a EXPRESION parentesis_c       						
 ;
