@@ -1,6 +1,6 @@
 /* Definición Léxica */
 %lex
-
+%option case-insensitive;
 
 %%
 
@@ -167,10 +167,12 @@
 						console.log("Se reconocio el lexema: " + yytext);
 						return 'dos_puntos';
 					}
+
 "("                 {
 						console.log("Se reconocio el lexema: " + yytext);
 						return 'parentesis_a';
 					}
+
 ")"                 {
 						console.log("Se reconocio el lexema: " + yytext);
 						return 'parentesis_c';
@@ -218,14 +220,31 @@
 						return 'mod';
 					}
 
-[0-9]+("."[0-9]+)?\b		return 'decimal';
-[0-9]+\b                	return 'entero';
-([a-zA-Z])[a-zA-Z0-9_]*		return 'identificador';
-
+[0-9]+("."[0-9]+)?		{
+							console.log("Se reconocio el lexema: " + yytext);
+							return 'decimal';
+						}
+[0-9]+                	{
+							console.log("Se reconocio el lexema: " + yytext);
+							return 'entero';
+						}
+([a-zA-Z])[a-zA-Z0-9_]*	{
+							console.log("Se reconocio el lexema: " + yytext);
+							return 'identificador';
+						}
+["\""][ ^ \"]*["\""] 	{
+							console.log("Se reconocio el lexema: " + yytext);
+							return 'cadena';
+						}
+["\'"][^\"]?["\'"]		{
+							console.log("Se reconocio el lexema: " + yytext);
+							return 'caracter';
+						}	
 
 /* Espacios en blanco */
 [ \r\t]+            {}
 \n                  {}
+[/*][^.*]+[*/]		{}
 
 <<EOF>>                 return 'EOF';
 
@@ -233,7 +252,8 @@
 /lex
 
 /* Asociación de operadores y precedencia */
-%left 'or' 'xor' 'and'
+%left 'igual' 'coma'
+%left 'or' 'xor' 'and' 'not'
 %left 'mayor' 'mayor_igual' 'menor' 'menor_igual' 'igual_que' 'no_igual'
 %left 'potencia' 'mod'
 %left 'suma' 'resta'
@@ -248,13 +268,14 @@ INIT
 ;
 
 INTRUCCIONES
-	:INTRUCCION INTRUCCIONES
+	:INTRUCCIONES INTRUCCION
 	|INTRUCCION
 	|error {console.error('Este es un error sintactico: ' + yytext + ', en la linea: '+ this._$.first_line+', en la columna: '+this._$.first_column);}
 ;
 
 INTRUCCION
 	:DVARIABLES
+	|ASIGNACION
 	|IF
 	|SWITCH
 	|FOR
@@ -263,16 +284,16 @@ INTRUCCION
 	|MET_FUN
 	|LLAMADA
 	|BLOQUE
+	|FUNCIONES_NATIVAS
 ;
 
 DVARIABLES
-	: TIPO_DATO identificador igual TIPO_EXPRESION punto_coma
-	| r_const TIPO_DATO identificador igual TIPO_EXPRESION punto_coma
+	: TIPO_DATO EXPRESION punto_coma
+	|r_const TIPO_DATO EXPRESION punto_coma
 ;
 
 ASIGNACION
-	: identificador igual identificador punto_coma
-	|identificador igual EXPRESION punto_coma
+	: EXPRESION punto_coma
 ;
 
 IF
@@ -300,7 +321,7 @@ I_ELSE_IF
 ;
 
 SWITCH
-	: r_switch parentesis_a parentesis_c llave_a CASE llave_c 
+	: r_switch parentesis_a  EXPRESION parentesis_c llave_a CASE llave_c 
 ;
 
 CASE
@@ -310,6 +331,7 @@ CASE
 
 I_CASE
 	: r_case dos_puntos INTRUCCIONES r_break punto_coma
+	|default dos_puntos INTRUCCIONES 
 ;
 
 FOR
@@ -317,7 +339,7 @@ FOR
 ;
 
 ASIG_FOR
-	:TIPO_DATO identificador igual EXPRESION punto_coma identificador EXPRESION_RELACIONAL EXPRESION punto_coma identificador INCREMENTALES
+	:TIPO_DATO identificador igual EXPRESION punto_coma EXPRESION punto_coma identificador INCREMENTALES
 	|identificador igual EXPRESION punto_coma identificador EXPRESION_RELACIONAL EXPRESION punto_coma identificador INCREMENTALES
 ;
 
@@ -331,24 +353,34 @@ DO_WHILE
 
 MET_FUN
 	:r_void identificador parentesis_a parentesis_c llave_a INTRUCCIONES  llave_c
+	|r_void identificador parentesis_a ASIG_PARAMETROS parentesis_c llave_a INTRUCCIONES  llave_c
 	|TIPO_DATO identificador parentesis_a parentesis_c llave_a INTRUCCIONES llave_c
+	|TIPO_DATO identificador parentesis_a ASIG_PARAMETROS parentesis_c llave_a INTRUCCIONES llave_c
 ;
 
 LLAMADA
 	:r_call identificador parentesis_a parentesis_c punto_coma
+	|r_call identificador parentesis_a PARAMETROS parentesis_c  punto_coma
+;
+
+ASIG_PARAMETROS
+	: ASIG_PARAMETROS coma A_P
+	|A_P
+;
+
+A_P
+	: TIPO_DATO identificador
+;	
+
+PARAMETROS	
+	: PARAMETROS coma identificador
+	| identificador
 ;
 
 BLOQUE
 	:llave_a INTRUCCIONES llave_c
 ;
 
-
-TIPO_EXPRESION
-	: decimal
-	|entero
-	|r_true
-	|r_false
-;
 
 TIPO_DATO
 	:r_int
@@ -365,6 +397,15 @@ EXPRESIONES_LOGICAS
 	|not
 ;
 
+FUNCIONES_NATIVAS
+	:r_println parentesis_a EXPRESION parentesis_c punto_coma
+	|r_println parentesis_a MET_FUN parentesis_c punto_coma
+	|r_println parentesis_a parentesis_c punto_coma
+	|r_print parentesis_a  EXPRESION parentesis_c punto_coma
+	|r_print parentesis_a  MET_FUN parentesis_c punto_coma
+	|r_print parentesis_a  parentesis_c punto_coma
+	|r_typeof parentesis_a EXPRESION parentesis_c punto_coma
+;
 
 EXPRESIONES_ARITMETICAS
 	:suma
@@ -388,7 +429,10 @@ INCREMENTALES
 ;
 
 EXPRESION
-	:EXPRESION or EXPRESION
+	:EXPRESION coma identificador
+	|EXPRESION igual EXPRESION
+	|EXPRESION or EXPRESION
+	|not EXPRESION
 	|EXPRESION xor EXPRESION
 	|EXPRESION and EXPRESION
 	|EXPRESION mayor EXPRESION
@@ -405,6 +449,10 @@ EXPRESION
 	|EXPRESION div EXPRESION
 	|decimal                        					
 	|entero		
-	|identificador					                      
+	|identificador
+	|cadena		
+	|caracter
+	|r_true
+	|r_false			                      
 	| parentesis_a EXPRESION parentesis_c       						
 ;

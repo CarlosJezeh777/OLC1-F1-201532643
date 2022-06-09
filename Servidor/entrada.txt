@@ -1,8 +1,16 @@
-string hola = 23;
-int hola = 23;
-const char hola = 23;
-double jaja = 34;
-boolean bandera = 34;
+string hola = 3;
+const string hola = 3;
+int numero = 23;
+const int numero = 23;
+char letra = 'a';
+const char letra = 'a';
+double numero2 = 34.3;
+const double numero2 = 34.3;
+boolean bandera = true;
+const boolean bandera = false;
+string uno, dos , tres = 23;
+
+hola = 34;
 
 if(4>5){
     double jaja = 34;
@@ -15,7 +23,7 @@ if(4>5){
     boolean bandera = 34;
 }
 
-switch(){
+switch(nombre1){
     case:
         boolean bandera = 34;
     break;
@@ -34,7 +42,7 @@ switch(){
 }
 
 for(int i = 0; i>10; i++){
-    switch(){
+    switch(n){
         case:
             boolean bandera = 34;
         break;
@@ -54,7 +62,7 @@ for(int i = 0; i>10; i++){
 }
 
 for(i = 0; i>10; i++){
-    switch(){
+    switch(nombre1){
         case:
             boolean bandera = 34;
         break;
@@ -76,7 +84,7 @@ for(i = 0; i>10; i++){
 while(5 >= 4){
     int i = 0;
     for(i = 0; i>10; i++){
-        switch(){
+        switch(b){
             case:
                 boolean bandera = 34;
             break;
@@ -100,7 +108,7 @@ do{
     while(5 >= 4){
         int i = 0;
         for(i = 0; i>10; i++){
-            switch(){
+            switch(nombre1){
                 case:
                     boolean bandera = 34;
                 break;
@@ -121,12 +129,12 @@ do{
     }
 }while(34==3);
 
-void funcion1(){
+void funcion1(string uno,int dos){
     do{
         while(5 >= 4){
             int i = 0;
             for(i = 0; i>10; i++){
-                switch(){
+                switch(nombre1){
                     case:
                         boolean bandera = 34;
                     break;
@@ -149,5 +157,8 @@ void funcion1(){
 }
 
 {
-    call funcion1();
+    call funcion1(uno, dos);
+    Println();
+    Typeof(4+4);
+    Print();
 }
