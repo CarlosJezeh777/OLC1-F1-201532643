@@ -5,7 +5,7 @@
 %%
 
 
-"\""                 return 'COMILLASDOBLES';
+//"\""                 return 'COMILLASDOBLES';
 "\\"                 return 'BARRAINVERTIDA';
 "\n"                 return 'NUEVALINEA';
 "\r"                 return 'RETORNO';
@@ -232,11 +232,11 @@
 							console.log("Se reconocio el lexema: " + yytext);
 							return 'identificador';
 						}
-["\""][ ^ \"]*["\""] 	{
+"\""[^\"]*"\"" 	{
 							console.log("Se reconocio el lexema: " + yytext);
 							return 'cadena';
 						}
-["\'"][^\"]?["\'"]		{
+"'"[^\"]?"'"		{
 							console.log("Se reconocio el lexema: " + yytext);
 							return 'caracter';
 						}	
@@ -244,7 +244,6 @@
 /* Espacios en blanco */
 [ \r\t]+            {}
 \n                  {}
-[/*][^.*]+[*/]		{}
 
 <<EOF>>                 return 'EOF';
 
@@ -252,7 +251,7 @@
 /lex
 
 /* Asociación de operadores y precedencia */
-%left 'igual' 'coma'
+%left 'igual' 'coma' 'incremento' 'decremento'
 %left 'or' 'xor' 'and' 'not'
 %left 'mayor' 'mayor_igual' 'menor' 'menor_igual' 'igual_que' 'no_igual'
 %left 'potencia' 'mod'
@@ -429,7 +428,11 @@ INCREMENTALES
 ;
 
 EXPRESION
-	:EXPRESION coma identificador
+	:incremento EXPRESION
+	|decremento EXPRESION
+	|EXPRESION incremento
+	|EXPRESION decremento
+	|EXPRESION coma identificador
 	|EXPRESION igual EXPRESION
 	|EXPRESION or EXPRESION
 	|not EXPRESION

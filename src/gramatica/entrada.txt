@@ -161,4 +161,10 @@ void funcion1(string uno,int dos){
     Println();
     Typeof(4+4);
     Print();
+    texto = "hola_3423sdf";
+    Print(texto);
+    numero = a++;
+    numero = --numero;
+
+    Println(char1);    
 }
