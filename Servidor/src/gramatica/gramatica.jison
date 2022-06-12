@@ -1,4 +1,10 @@
 /* Definición Léxica */
+%{
+	const {Declaracion} = require('../instrucciones/declaraciones');
+	const {Literal} = require('../Expresiones/Literales');
+	const {Type} = require('../Symbols/type')
+%}
+
 %lex
 %option case-insensitive;
 
@@ -12,233 +18,228 @@
 "\t"                 return 'TABULACION';
 
 "int"           	{
-						console.log("Se reconocio el lexema: " + yytext);
+					//	console.log("Se reconocio el lexema: " + yytext);
 						return 'r_int';
 					}
 "double"       		{
-						console.log("Se reconocio el lexema: " + yytext);
+					//	console.log("Se reconocio el lexema: " + yytext);
 						return 'r_double';
 					}
 "char"           	{
-						console.log("Se reconocio el lexema: " + yytext);
+					//	console.log("Se reconocio el lexema: " + yytext);
 						return 'r_char';
 					}
 "boolean"           {
-						console.log("Se reconocio el lexema: " + yytext);
+					//	console.log("Se reconocio el lexema: " + yytext);
 						return 'r_bool';
 					}
 "string"           	{
-						console.log("Se reconocio el lexema: " + yytext);
+					//	console.log("Se reconocio el lexema: " + yytext);
 						return 'r_string';
 					}
 
 "const"           	{
-						console.log("Se reconocio el lexema: " + yytext);
+					//	console.log("Se reconocio el lexema: " + yytext);
 						return 'r_const';
 					}
 "if"           		{
-						console.log("Se reconocio el lexema: " + yytext);
+					//	console.log("Se reconocio el lexema: " + yytext);
 						return 'r_if';
 					}
 "else"           	{
-						console.log("Se reconocio el lexema: " + yytext);
+					//	console.log("Se reconocio el lexema: " + yytext);
 						return 'r_else';
 					}
 "switch"           	{
-						console.log("Se reconocio el lexema: " + yytext);
+					//	console.log("Se reconocio el lexema: " + yytext);
 						return 'r_switch';
 					}
 "case"           	{
-						console.log("Se reconocio el lexema: " + yytext);
+					//	console.log("Se reconocio el lexema: " + yytext);
 						return 'r_case';
 					}
 "default"           {
-						console.log("Se reconocio el lexema: " + yytext);
+					//	console.log("Se reconocio el lexema: " + yytext);
 						return 'r_default';
 					}
 "for"           	{
-						console.log("Se reconocio el lexema: " + yytext);
+					//	console.log("Se reconocio el lexema: " + yytext);
 						return 'r_for';
 					}
 "while"           	{
-						console.log("Se reconocio el lexema: " + yytext);
+					//	console.log("Se reconocio el lexema: " + yytext);
 						return 'r_while';
 					}
 "do"           		{
-						console.log("Se reconocio el lexema: " + yytext);
+					//	console.log("Se reconocio el lexema: " + yytext);
 						return 'r_do';
 					}
 "break"           	{
-						console.log("Se reconocio el lexema: " + yytext);
+					//	console.log("Se reconocio el lexema: " + yytext);
 						return 'r_break';
 					}
 "continue"          {
-						console.log("Se reconocio el lexema: " + yytext);
+					//	console.log("Se reconocio el lexema: " + yytext);
 						return 'r_continue';
 					}
 "void"           	{
-						console.log("Se reconocio el lexema: " + yytext);
+						//console.log("Se reconocio el lexema: " + yytext);
 						return 'r_void';
 					}
 "return"           	{
-						console.log("Se reconocio el lexema: " + yytext);
+						//console.log("Se reconocio el lexema: " + yytext);
 						return 'r_return';
 					}
 "call"           	{
-						console.log("Se reconocio el lexema: " + yytext);
+						//console.log("Se reconocio el lexema: " + yytext);
 						return 'r_call';
 					}
 "Println"           {
-						console.log("Se reconocio el lexema: " + yytext);
+						//console.log("Se reconocio el lexema: " + yytext);
 						return 'r_println';
 					}
 "Print"           	{
-						console.log("Se reconocio el lexema: " + yytext);
+						//console.log("Se reconocio el lexema: " + yytext);
 						return 'r_print';
 					}
 "Typeof"           	{
-						console.log("Se reconocio el lexema: " + yytext);
+						//console.log("Se reconocio el lexema: " + yytext);
 						return 'r_typeof';
 					}
-"true"				{
-						console.log("Se reconocio el lexema: " + yytext);
-						return 'r_true';
-					}
-"false"				{
-						console.log("Se reconocio el lexema: " + yytext);
-						return 'r_false';
-					}
-
 ">="                {
-						console.log("Se reconocio el lexema: " + yytext);
+						//console.log("Se reconocio el lexema: " + yytext);
 						return 'mayor_igual';
 					}
 "<="                {
-						console.log("Se reconocio el lexema: " + yytext);
+						//console.log("Se reconocio el lexema: " + yytext);
 						return 'menor_igual';
 					}
 "=="                {
-						console.log("Se reconocio el lexema: " + yytext);
+						//console.log("Se reconocio el lexema: " + yytext);
 						return 'igual_que';
 					}
 "!="                {
-						console.log("Se reconocio el lexema: " + yytext);
+						//console.log("Se reconocio el lexema: " + yytext);
 						return 'no_igual';
 					}
 ">"                 {
-						console.log("Se reconocio el lexema: " + yytext);
+						//console.log("Se reconocio el lexema: " + yytext);
 						return 'mayor';
 					}
 "<"                 {
-						console.log("Se reconocio el lexema: " + yytext);
+						//console.log("Se reconocio el lexema: " + yytext);
 						return 'menor';
 					}
 
 "||"                {
-						console.log("Se reconocio el lexema: " + yytext);
+						//console.log("Se reconocio el lexema: " + yytext);
 						return 'or';
 					}
 "&&"                {
-						console.log("Se reconocio el lexema: " + yytext);
+						//console.log("Se reconocio el lexema: " + yytext);
 						return 'and';
 					}
 "^"                 {
-						console.log("Se reconocio el lexema: " + yytext);
+						//console.log("Se reconocio el lexema: " + yytext);
 						return 'xor';
 					}
 "!"                 {
-						console.log("Se reconocio el lexema: " + yytext);
+						//console.log("Se reconocio el lexema: " + yytext);
 						return 'not';
 					}
 
 "="                 {
-						console.log("Se reconocio el lexema: " + yytext);
+						//console.log("Se reconocio el lexema: " + yytext);
 						return 'igual';
 					}
 ";"                 {
-						console.log("Se reconocio el lexema: " + yytext);
+						//console.log("Se reconocio el lexema: " + yytext);
 						return 'punto_coma';
 					}
 ","                 {
-						console.log("Se reconocio el lexema: " + yytext);
+						//console.log("Se reconocio el lexema: " + yytext);
 						return 'coma';
 					}
 ":"                 {
-						console.log("Se reconocio el lexema: " + yytext);
+						//console.log("Se reconocio el lexema: " + yytext);
 						return 'dos_puntos';
 					}
 
 "("                 {
-						console.log("Se reconocio el lexema: " + yytext);
+						//console.log("Se reconocio el lexema: " + yytext);
 						return 'parentesis_a';
 					}
 
 ")"                 {
-						console.log("Se reconocio el lexema: " + yytext);
+						//console.log("Se reconocio el lexema: " + yytext);
 						return 'parentesis_c';
 					}
 "{"                 {
-						console.log("Se reconocio el lexema: " + yytext);
+						//console.log("Se reconocio el lexema: " + yytext);
 						return 'llave_a';
 					}
 "}"                 {
-						console.log("Se reconocio el lexema: " + yytext);
+						//console.log("Se reconocio el lexema: " + yytext);
 						return 'llave_c';
 					}
 
 "++"                {
-						console.log("Se reconocio el lexema: " + yytext);
+						//console.log("Se reconocio el lexema: " + yytext);
 						return 'incremento';
 					}
 "--"                {
-						console.log("Se reconocio el lexema: " + yytext);
+						//console.log("Se reconocio el lexema: " + yytext);
 						return 'decremento';
 					}
 
 "**"                {
-						console.log("Se reconocio el lexema: " + yytext);
+						//console.log("Se reconocio el lexema: " + yytext);
 						return 'potencia';
 					}
 "+"                 {
-						console.log("Se reconocio el lexema: " + yytext);
+						//console.log("Se reconocio el lexema: " + yytext);
 						return 'suma';
 					}
 "-"                 {
-						console.log("Se reconocio el lexema: " + yytext);
+						//console.log("Se reconocio el lexema: " + yytext);
 						return 'resta';
 					}
 "*"                 {
-						console.log("Se reconocio el lexema: " + yytext);
+						//console.log("Se reconocio el lexema: " + yytext);
 						return 'por';
 					}
 "/"                 {
-						console.log("Se reconocio el lexema: " + yytext);
+						//console.log("Se reconocio el lexema: " + yytext);
 						return 'div';
 					}
 "%"                 {
-						console.log("Se reconocio el lexema: " + yytext);
+						//console.log("Se reconocio el lexema: " + yytext);
 						return 'mod';
 					}
 
 [0-9]+("."[0-9]+)?		{
-							console.log("Se reconocio el lexema: " + yytext);
+							//console.log("Se reconocio el lexema: " + yytext);
 							return 'decimal';
 						}
 [0-9]+                	{
-							console.log("Se reconocio el lexema: " + yytext);
+							//console.log("Se reconocio el lexema: " + yytext);
 							return 'entero';
 						}
 ([a-zA-Z])[a-zA-Z0-9_]*	{
-							console.log("Se reconocio el lexema: " + yytext);
+							//console.log("Se reconocio el lexema: " + yytext);
 							return 'identificador';
 						}
 "\""[^\"]*"\"" 	{
-							console.log("Se reconocio el lexema: " + yytext);
+							//console.log("Se reconocio el lexema: " + yytext);
 							return 'cadena';
 						}
-"'"[^\"]?"'"		{
-							console.log("Se reconocio el lexema: " + yytext);
+"'"[^\"]?"'"			{
+							//console.log("Se reconocio el lexema: " + yytext);
 							return 'caracter';
+						}
+"true"|"false"			{
+							//console.log("Se reconocio el lexema: " + yytext);
+							return 'boolean';
 						}	
 
 /* Espacios en blanco */
@@ -262,18 +263,15 @@
 
 %% /* Definición de la gramática */
 
-INIT
-	: INTRUCCIONES EOF
+INIT : INTRUCCIONES EOF {return $1}
 ;
 
-INTRUCCIONES
-	:INTRUCCIONES INTRUCCION
-	|INTRUCCION
+INTRUCCIONES : INTRUCCIONES INTRUCCION 	{ $1.push($2); $$ = $1;}
+	|INTRUCCION 						{$$ = [$1]}
 	|error {console.error('Este es un error sintactico: ' + yytext + ', en la linea: '+ this._$.first_line+', en la columna: '+this._$.first_column);}
 ;
 
-INTRUCCION
-	:DVARIABLES
+INTRUCCION:DVARIABLES {$$=$1}
 	|ASIGNACION
 	|IF
 	|SWITCH
@@ -286,89 +284,71 @@ INTRUCCION
 	|FUNCIONES_NATIVAS
 ;
 
-DVARIABLES
-	: TIPO_DATO EXPRESION punto_coma
+DVARIABLES: TIPO_DATO EXPRESION punto_coma {$$ =  new Declaracion($1,$2[0],null,@1.first_line,@1.first_column);console.log($2);}
 	|r_const TIPO_DATO EXPRESION punto_coma
 ;
 
-ASIGNACION
-	: EXPRESION punto_coma
+ASIGNACION: EXPRESION punto_coma	{console.log($1)}		
 ;
 
-IF
-	:CUERPO_IF ELSE_IF
+IF:CUERPO_IF ELSE_IF
 	|CUERPO_IF ELSE_IF ELSE
 	|CUERPO_IF ELSE
 	|CUERPO_IF
 ; 
 
-CUERPO_IF
-	:r_if parentesis_a EXPRESION parentesis_c llave_a INTRUCCIONES llave_c
+CUERPO_IF:r_if parentesis_a EXPRESION parentesis_c llave_a INTRUCCIONES llave_c
 ;
 
-ELSE
-	:r_else llave_a INTRUCCIONES llave_c
+ELSE:r_else llave_a INTRUCCIONES llave_c
 ;
 
-ELSE_IF
-	:ELSE_IF I_ELSE_IF 
+ELSE_IF:ELSE_IF I_ELSE_IF 
 	|I_ELSE_IF
 ;
 
-I_ELSE_IF
-	: r_else r_if parentesis_a EXPRESION parentesis_c llave_a INTRUCCIONES llave_c 
+I_ELSE_IF:r_else r_if parentesis_a EXPRESION parentesis_c llave_a INTRUCCIONES llave_c 
 ;
 
-SWITCH
-	: r_switch parentesis_a  EXPRESION parentesis_c llave_a CASE llave_c 
+SWITCH:r_switch parentesis_a  EXPRESION parentesis_c llave_a CASE llave_c 
 ;
 
-CASE
-	:CASE I_CASE
+CASE:CASE I_CASE
 	|I_CASE
 ;
 
-I_CASE
-	: r_case dos_puntos INTRUCCIONES r_break punto_coma
+I_CASE: r_case dos_puntos INTRUCCIONES r_break punto_coma
 	|default dos_puntos INTRUCCIONES 
 ;
 
-FOR
-	:r_for parentesis_a ASIG_FOR parentesis_c llave_a INTRUCCIONES  llave_c
+FOR:r_for parentesis_a ASIG_FOR parentesis_c llave_a INTRUCCIONES  llave_c
 ;
 
-ASIG_FOR
-	:TIPO_DATO identificador igual EXPRESION punto_coma EXPRESION punto_coma identificador INCREMENTALES
-	|identificador igual EXPRESION punto_coma identificador EXPRESION_RELACIONAL EXPRESION punto_coma identificador INCREMENTALES
+ASIG_FOR:TIPO_DATO EXPRESION punto_coma EXPRESION punto_coma EXPRESION
+	|EXPRESION punto_coma EXPRESION punto_coma EXPRESION
 ;
 
-WHILE
-	:r_while parentesis_a EXPRESION parentesis_c llave_a INTRUCCIONES llave_c
+WHILE:r_while parentesis_a EXPRESION parentesis_c llave_a INTRUCCIONES llave_c
 ;
 
-DO_WHILE
-	:r_do llave_a INTRUCCIONES llave_c  r_while parentesis_a EXPRESION parentesis_c punto_coma
+DO_WHILE:r_do llave_a INTRUCCIONES llave_c  r_while parentesis_a EXPRESION parentesis_c punto_coma
 ;
 
-MET_FUN
-	:r_void identificador parentesis_a parentesis_c llave_a INTRUCCIONES  llave_c
+MET_FUN:r_void identificador parentesis_a parentesis_c llave_a INTRUCCIONES  llave_c
 	|r_void identificador parentesis_a ASIG_PARAMETROS parentesis_c llave_a INTRUCCIONES  llave_c
 	|TIPO_DATO identificador parentesis_a parentesis_c llave_a INTRUCCIONES llave_c
 	|TIPO_DATO identificador parentesis_a ASIG_PARAMETROS parentesis_c llave_a INTRUCCIONES llave_c
 ;
 
-LLAMADA
-	:r_call identificador parentesis_a parentesis_c punto_coma
+LLAMADA:r_call identificador parentesis_a parentesis_c punto_coma
 	|r_call identificador parentesis_a PARAMETROS parentesis_c  punto_coma
 ;
 
-ASIG_PARAMETROS
-	: ASIG_PARAMETROS coma A_P
+ASIG_PARAMETROS: ASIG_PARAMETROS coma A_P
 	|A_P
 ;
 
-A_P
-	: TIPO_DATO identificador
+A_P	: TIPO_DATO identificador
 ;	
 
 PARAMETROS	
@@ -382,19 +362,14 @@ BLOQUE
 
 
 TIPO_DATO
-	:r_int
-	|r_double
-	|r_string
-	|r_char
-	|r_bool
+	:r_int  	{$$=$1}
+	|r_double	{$$=$1}
+	|r_string	{$$=$1}
+	|r_char		{$$=$1}
+	|r_bool		{$$=$1}
 ;
 
-EXPRESIONES_LOGICAS
-	:or
-	|xor
-	|and
-	|not
-;
+
 
 FUNCIONES_NATIVAS
 	:r_println parentesis_a EXPRESION parentesis_c punto_coma
@@ -406,34 +381,12 @@ FUNCIONES_NATIVAS
 	|r_typeof parentesis_a EXPRESION parentesis_c punto_coma
 ;
 
-EXPRESIONES_ARITMETICAS
-	:suma
-	|resta
-	|div
-	|por
-;
-
-EXPRESION_RELACIONAL
-	:mayor
-	|mayor_igual
-	|menor
-	|menor_igual
-	|igual_que
-	|no_igual
-;
-
-INCREMENTALES
-	:incremento
-	|decremento
-;
-
-EXPRESION
-	:incremento EXPRESION
+EXPRESION:incremento EXPRESION
 	|decremento EXPRESION
 	|EXPRESION incremento
 	|EXPRESION decremento
 	|EXPRESION coma identificador
-	|EXPRESION igual EXPRESION
+	|EXPRESION igual EXPRESION 			{$$ = [$1,$3]}
 	|EXPRESION or EXPRESION
 	|not EXPRESION
 	|EXPRESION xor EXPRESION
@@ -450,12 +403,12 @@ EXPRESION
 	|EXPRESION resta EXPRESION
 	|EXPRESION por EXPRESION
 	|EXPRESION div EXPRESION
-	|decimal                        					
-	|entero		
-	|identificador
-	|cadena		
-	|caracter
-	|r_true
-	|r_false			                      
+	|decimal       						{$$ = new Literal($1,Type.DOUBLE,	@1.first_line,@1.first_column)}                 					
+	|entero								{$$ = new Literal($1,Type.INT,		@1.first_line,@1.first_column)}
+	|identificador			
+	|cadena								{$$ = new Literal($1,Type.STRING,	@1.first_line,@1.first_column)}
+	|caracter							{$$ = new Literal($1,Type.CHAR,		@1.first_line,@1.first_column)}
+	|boolean			            	{$$ = new Literal($1,Type.BOOLEAN,	@1.first_line,@1.first_column)}          	
 	| parentesis_a EXPRESION parentesis_c       						
 ;
+
