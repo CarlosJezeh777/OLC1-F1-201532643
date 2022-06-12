@@ -3,6 +3,8 @@
 	const {Declaracion} = require('../instrucciones/declaraciones');
 	const {Literal} = require('../Expresiones/Literales');
 	const {Type} = require('../Symbols/type')
+	const {Aritmeticas} = require('../Expresiones/Aritmeticas')
+	const {AritmeticasOptions} = require('../Expresiones/aritmeticasOpc')
 %}
 
 %lex
@@ -284,7 +286,7 @@ INTRUCCION:DVARIABLES {$$=$1}
 	|FUNCIONES_NATIVAS
 ;
 
-DVARIABLES: TIPO_DATO EXPRESION punto_coma {$$ =  new Declaracion($1,$2[0],null,@1.first_line,@1.first_column);console.log($2);}
+DVARIABLES: TIPO_DATO EXPRESION punto_coma {$$ =  new Declaracion($1,$2[0],$[1],@1.first_line,@1.first_column);console.log($2);}
 	|r_const TIPO_DATO EXPRESION punto_coma
 ;
 

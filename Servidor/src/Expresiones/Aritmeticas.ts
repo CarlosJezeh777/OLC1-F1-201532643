@@ -159,6 +159,7 @@ export class Aritmeticas extends Expression{
             }
 
         }
+        console.log("no se porque no hace nada")
         return resultado
     }
 }
