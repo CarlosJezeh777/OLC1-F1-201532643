@@ -13,7 +13,7 @@ class Declaracion extends Instruccion{
     }
     public ejecutar() {
 
-        console.log("Declarando variable: " + this.nombre + "nose");
+        console.log("Declarando variable: " + this.nombre );
             
         
     }

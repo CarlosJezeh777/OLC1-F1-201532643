@@ -193,6 +193,7 @@ var Aritmeticas = /** @class */ (function (_super) {
                 };
             }
         }
+        console.log("no se porque no hace nada");
         return resultado;
     };
     return Aritmeticas;
