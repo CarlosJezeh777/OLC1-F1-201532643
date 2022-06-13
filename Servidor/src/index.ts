@@ -4,15 +4,15 @@ const fs = require("fs");
 try {
     const entrada =  fs.readFileSync("src/entrada.txt");
     const ast = parser.parse(entrada.toString());
-    console.log(ast)
-    /*for (const elemento of ast) {
+    
+    for (const elemento of ast) {
         try {
-            console.log("no")
+            console.log(elemento);
             elemento.ejecutar();
         } catch (error) {
             console.log(error)
         }
-    }*/
+    }
     
 } catch (error) {
     console.log(error)   

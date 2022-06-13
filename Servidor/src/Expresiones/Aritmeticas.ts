@@ -1,5 +1,7 @@
+import { log } from "console";
 import { Expression } from "../abstract/expression";
 import { Retorno } from "../abstract/Retorno";
+import { Enviroment } from "../Symbols/enviroment";
 import { Type } from "../Symbols/type";
 import { AritmeticasOptions } from "./aritmeticasOpc";
 
@@ -13,22 +15,28 @@ export class Aritmeticas extends Expression{
     ){
         super(line,column)
     }
-    public ejecutar(): Retorno {
+    public ejecutar(env:Enviroment): Retorno {
         let resultado : Retorno = {
             value: null,
             type: Type.error
         }
 
-        const nodIzq = this.izquierda.ejecutar()
-        const nodDer =  this.derecha.ejecutar()
-
+        const nodIzq = this.izquierda.ejecutar(env)
+        const nodDer =  this.derecha.ejecutar(env)
+        console.log(this.tipo)
+        console.log(AritmeticasOptions.MAS);
+        
         if(this.tipo == AritmeticasOptions.MAS){
-            if(nodIzq.type == Type.INT && nodDer.type == Type.INT){
+            console.log(nodIzq.type);
+            console.log(nodDer.type);
+            
+            if(nodIzq.type == Type.DOUBLE && nodDer.type == Type.DOUBLE){
                 resultado = {
-                    value : (nodIzq.value + nodDer.value),
+                    value : (Number(nodIzq.value) + Number(nodDer.value)),
                     type: Type.INT
                 }
-            }else if(nodIzq.type == Type.INT && nodDer.type == Type.DOUBLE){
+                return resultado
+            }/*else if(nodIzq.type == Type.INT && nodDer.type == Type.DOUBLE){
                 resultado = {
                     value : (nodIzq.value + nodDer.value),
                     type: Type.DOUBLE
@@ -108,9 +116,9 @@ export class Aritmeticas extends Expression{
                     value : (String(nodIzq.value) +String(nodDer.value)),
                     type: Type.STRING
                 }
-            }
+            }*/
         //AQUI EMPIEZA LA RESTA
-        }else if(this.tipo == AritmeticasOptions.MENOS){
+        }/*else if(this.tipo == AritmeticasOptions.MENOS){
             if(nodIzq.type == Type.INT && nodDer.type == Type.INT){
                 resultado = {
                     value : (nodIzq.value - nodDer.value),
@@ -158,8 +166,7 @@ export class Aritmeticas extends Expression{
                 }
             }
 
-        }
-        console.log("no se porque no hace nada")
+        }*/
         return resultado
     }
 }

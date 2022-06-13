@@ -1,15 +1,10 @@
-string hola = 3;
-const string hola = 3;
-int numero = 23;
-const int numero = 23;
+string hola = "hola";
+int numero = 23 +3;
 char letra = 'a';
-const char letra = 'a';
 double numero2 = 34.3;
-const double numero2 = 34.3;
 boolean bandera = true;
-const boolean bandera = false;
 string uno, dos , tres = 23;
 
-a = 5;
+a = 5 + 5 ;
 jola = 34;
 

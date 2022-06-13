@@ -5,8 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-</head>
+
+    <link rel="stylesheet" href="lib/css/editor.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">   
+  </head>
 <body>
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
@@ -19,7 +21,7 @@
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Archivos</a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="#">Abrir</a></li>
+                  <li><button id="abrir" class="btn">Archivo</button><input type="file" id="file-selector" multiple></li>
                   <li><a class="dropdown-item" href="#">Guardar</a></li>
                   <li><a class="dropdown-item" href="#">Guardar como</a></li>
                   <li><a class="dropdown-item" href="#">Crear</a></li>                 
@@ -31,10 +33,36 @@
           </div>
         </div>
       </nav>
-      <p> aqui esta la pagina principal</p>
+
+
+      <div class="container-fluid p-3">
+      <div class="row align-items-center">
+          <div class="col-md-auto"> 
+            <button type="button" id="ejecutar" class="btn btn-lg btn-primary">EJECUTAR</button>
+          </div>
+      </div>
+      <div class="row align-items-center">
+        <div class="col">
+          <h2>Editor</h2>
+        </div>
+        <div class="col">
+          <h2>Consola</h2>
+        </div>
+      </div>
+      <div class="row align-items-center">
+        <div class="col">
+          <textarea name="editor" id="editor" cols="50" rows="20">este es el text area que tendria que reemplazar</textarea>
+        </div>
+        <div class="col">
+          <textarea name="" id="" cols="40" rows="20"> </textarea>
+        </div>
+      </div>
+    </div>
+    
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
-</body>
+     
+    <script src="lib/js/main.js"></script>
+  </body>
 </html>

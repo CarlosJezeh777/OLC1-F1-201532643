@@ -3,8 +3,9 @@
 	const {Declaracion} = require('../instrucciones/declaraciones');
 	const {Literal} = require('../Expresiones/Literales');
 	const {Type} = require('../Symbols/type')
-	//const {Aritmeticas} = require('../Expresiones/Aritmeticas')
-	//const {AritmeticasOptions} = require('../Expresiones/aritmeticasOpc')
+	const {Asignar} = require('../instrucciones/asignar');
+	const {Aritmeticas} = require('../Expresiones/Aritmeticas');
+	const {AritmeticasOptions} = require('../Expresiones/aritmeticasOpc');
 %}
 
 %lex
@@ -274,7 +275,7 @@ INTRUCCIONES : INTRUCCIONES INTRUCCION 	{ $1.push($2); $$ = $1;}
 ;
 
 INTRUCCION:DVARIABLES {$$=$1}
-	|ASIGNACION
+	|ASIGNACION {$$ = $1}
 	|IF
 	|SWITCH
 	|FOR
@@ -286,11 +287,11 @@ INTRUCCION:DVARIABLES {$$=$1}
 	|FUNCIONES_NATIVAS
 ;
 
-DVARIABLES: TIPO_DATO EXPRESION punto_coma { console.log($1)}
+DVARIABLES: TIPO_DATO EXPRESION punto_coma {$$ = new Declaracion($1,$2[0],$2[1],@1.first_line,@1.first_column);}
 	|r_const TIPO_DATO EXPRESION punto_coma
 ;
 
-ASIGNACION: EXPRESION punto_coma	{console.log($1)}		
+ASIGNACION: EXPRESION punto_coma	{$$ = new Asignar($1[0],$1[1],@1.first_line,@1.first_column);}		
 ;
 
 IF:CUERPO_IF ELSE_IF
@@ -364,11 +365,11 @@ BLOQUE
 
 
 TIPO_DATO
-	:r_int  	{$$=$1}
-	|r_double	{$$=$1}
-	|r_string	{$$=$1}
-	|r_char		{$$=$1}
-	|r_bool		{$$=$1}
+	:r_int  	{$$=Type.INT}
+	|r_double	{$$=Type.DOUBLE}
+	|r_string	{$$=Type.STRING}
+	|r_char		{$$=Type.CHAR}
+	|r_bool		{$$=Type.BOOLEAN}
 ;
 
 
@@ -399,12 +400,12 @@ EXPRESION:incremento EXPRESION
 	|EXPRESION menor_igual EXPRESION
 	|EXPRESION igual_que EXPRESION
 	|EXPRESION no_igual EXPRESION
-	|EXPRESION mod EXPRESION
-	|EXPRESION potencia EXPRESION 
-	|EXPRESION suma EXPRESION
-	|EXPRESION resta EXPRESION
-	|EXPRESION por EXPRESION
-	|EXPRESION div EXPRESION
+	|EXPRESION mod EXPRESION			{$$ = new Aritmeticas($1,$3,AritmeticasOptions.MODULO,@1.first_line,@1.first_column)}
+	|EXPRESION potencia EXPRESION 		{$$ = new Aritmeticas($1,$3,AritmeticasOptions.POTENCIA,@1.first_line,@1.first_column)}
+	|EXPRESION suma EXPRESION			{$$ = new Aritmeticas($1,$3,AritmeticasOptions.MAS,@1.first_line,@1.first_column)}
+	|EXPRESION resta EXPRESION			{$$ = new Aritmeticas($1,$3,AritmeticasOptions.MENOS,@1.first_line,@1.first_column)}
+	|EXPRESION por EXPRESION			{$$ = new Aritmeticas($1,$3,AritmeticasOptions.MULTIPLICAR,@1.first_line,@1.first_column)}
+	|EXPRESION div EXPRESION			{$$ = new Aritmeticas($1,$3,AritmeticasOptions.DIVIDIR,@1.first_line,@1.first_column)}
 	|decimal       						{$$ = new Literal($1,Type.DOUBLE,	@1.first_line,@1.first_column)}                 					
 	|entero								{$$ = new Literal($1,Type.INT,		@1.first_line,@1.first_column)}
 	|identificador			

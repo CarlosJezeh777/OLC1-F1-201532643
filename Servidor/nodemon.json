@@ -4,5 +4,5 @@
         "src"
     ],
     "ext" : "ts,txt, jison",
-    "exec" : "jison ./src/gramatica/gramatica.jison && mv gramatica.js ./src/gramatica && tsc && ts-node ./src/ "
+    "exec" : "clear && jison ./src/gramatica/gramatica.jison && mv gramatica.js ./src/gramatica && tsc && ts-node ./src/ "
 }

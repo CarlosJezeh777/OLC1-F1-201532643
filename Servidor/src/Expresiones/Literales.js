@@ -28,11 +28,11 @@ var Literal = /** @class */ (function (_super) {
             return { value: Number(this.valor), type: type_1.Type.INT };
         }
         else if (this.tipo == type_1.Type.STRING) {
-            this.valor = (this.valor).replaceAll("\"", "");
+            this.valor = (this.valor).replaceAll('"', "");
             return { value: this.valor, type: type_1.Type.STRING };
         }
         else if (this.tipo == type_1.Type.CHAR) {
-            this.valor = (this.valor).replaceAll("\'", "");
+            this.valor = (this.valor).replaceAll("'", "");
             return { value: this.valor, type: type_1.Type.CHAR };
         }
         else if (this.tipo == type_1.Type.DOUBLE) {

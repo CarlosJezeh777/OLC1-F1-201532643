@@ -14,21 +14,20 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var instruccion_1 = require("../abstract/instruccion");
-var Declaracion = /** @class */ (function (_super) {
-    __extends(Declaracion, _super);
-    function Declaracion(tipo, nombre, expresion, line, colum) {
-        var _this = _super.call(this, line, colum) || this;
-        _this.tipo = tipo;
+var Asignar = /** @class */ (function (_super) {
+    __extends(Asignar, _super);
+    function Asignar(nombre, expresion, line, column) {
+        var _this = _super.call(this, line, column) || this;
         _this.nombre = nombre;
         _this.expresion = expresion;
         return _this;
     }
-    Declaracion.prototype.ejecutar = function (env) {
-        console.log("Declarando variable: " + this.nombre);
-        console.log("tipo: " + this.tipo);
+    Asignar.prototype.ejecutar = function (env) {
         var expresion = this.expresion.ejecutar(env);
-        env.guardarVarible(this.nombre, expresion.value, expresion.type);
+        console.log("haciendo una asinacion: " + this.nombre);
+        console.log(expresion.value);
+        env.actualizar_variable(this.nombre, expresion.value);
     };
-    return Declaracion;
+    return Asignar;
 }(instruccion_1.Instruccion));
-exports.Declaracion = Declaracion;
+exports.Asignar = Asignar;

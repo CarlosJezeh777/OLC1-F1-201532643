@@ -15,10 +15,10 @@ export class Literal extends Expression{
         if(this.tipo == Type.INT){
             return{value: Number(this.valor), type: Type.INT}
         }else if(this.tipo == Type.STRING){
-            this.valor = (this.valor).replaceAll("\"","")
+            this.valor = (this.valor).replaceAll('"',"")
             return{value: this.valor, type: Type.STRING}
         }else if(this.tipo == Type.CHAR){
-            this.valor = (this.valor).replaceAll("\'","")
+            this.valor = (this.valor).replaceAll("'","")
             return{value: this.valor, type: Type.CHAR}
         }else if(this.tipo == Type.DOUBLE){
             return{value: Number(this.valor), type: Type.DOUBLE}

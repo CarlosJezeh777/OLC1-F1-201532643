@@ -1,4 +1,5 @@
 
+import { Enviroment } from "../Symbols/enviroment"
 import { Retorno } from "./Retorno"
 
 export abstract class Expression {
@@ -6,5 +7,5 @@ export abstract class Expression {
         this.line =  line
         this.column =  column
     }
-    public abstract ejecutar(): Retorno
+    public abstract ejecutar(env:Enviroment): Retorno
 }
