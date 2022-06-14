@@ -14,21 +14,26 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var instruccion_1 = require("../abstract/instruccion");
-var Declaracion = /** @class */ (function (_super) {
-    __extends(Declaracion, _super);
-    function Declaracion(tipo, nombre, expresion, line, colum) {
+var Iif = /** @class */ (function (_super) {
+    __extends(Iif, _super);
+    function Iif(expresion, instruc, line, colum) {
         var _this = _super.call(this, line, colum) || this;
-        _this.tipo = tipo;
-        _this.nombre = nombre;
         _this.expresion = expresion;
+        _this.instruc = instruc;
         return _this;
     }
-    Declaracion.prototype.ejecutar = function (env) {
-        console.log("Declarando variable: " + this.nombre);
+    Iif.prototype.ejecutar = function (env) {
         var expresion = this.expresion.ejecutar(env);
-        console.log(expresion.value);
-        env.guardar_varible(this.nombre, expresion.value, expresion.type);
+        if (expresion.value == true) {
+            console.log("aqui van las instrucicones");
+            for (var _i = 0, _a = this.instruc; _i < _a.length; _i++) {
+                var elemento = _a[_i];
+                elemento.ejecutar();
+            }
+            console.log(this.instruc);
+        }
+        console.log(expresion);
     };
-    return Declaracion;
+    return Iif;
 }(instruccion_1.Instruccion));
-exports.Declaracion = Declaracion;
+exports.Iif = Iif;

@@ -6,13 +6,20 @@
 	const {Asignar} = require('../instrucciones/asignar');
 	const {Aritmeticas} = require('../Expresiones/Aritmeticas');
 	const {AritmeticasOptions} = require('../Expresiones/aritmeticasOpc');
+	const {Relacional} = require('../Expresiones/Relacional');
+	const {OpcionRelacional} = require('../Expresiones/RelacionalOpc');
+	const {Logica} = require('../Expresiones/Logicas');
+	const {OpcionesLogicas} = require('../Expresiones/LogicasOpc');
+	const {OpcionesInDe} = require('../Expresiones/IncrementosOpc');
+	const {InDe} = require('../Expresiones/Incrementos');
+	const {Iif} = require('../instrucciones/InstruccionIF')
 %}
 
 %lex
 %option case-insensitive;
 
 %%
-
+						
 
 //"\""                 return 'COMILLASDOBLES';
 "\\"                 return 'BARRAINVERTIDA';
@@ -121,6 +128,9 @@
 						//console.log("Se reconocio el lexema: " + yytext);
 						return 'igual_que';
 					}
+"."					{
+						return '.'
+					}
 "!="                {
 						//console.log("Se reconocio el lexema: " + yytext);
 						return 'no_igual';
@@ -220,18 +230,15 @@
 						return 'mod';
 					}
 
-[0-9]+("."[0-9]+)?		{
+[0-9]+"."[0-9]+		{
 							//console.log("Se reconocio el lexema: " + yytext);
 							return 'decimal';
 						}
-[0-9]+                	{
+[0-9]+               {
 							//console.log("Se reconocio el lexema: " + yytext);
 							return 'entero';
 						}
-([a-zA-Z])[a-zA-Z0-9_]*	{
-							//console.log("Se reconocio el lexema: " + yytext);
-							return 'identificador';
-						}
+
 "\""[^\"]*"\"" 	{
 							//console.log("Se reconocio el lexema: " + yytext);
 							return 'cadena';
@@ -244,6 +251,11 @@
 							//console.log("Se reconocio el lexema: " + yytext);
 							return 'boolean';
 						}	
+([a-zA-Z])[a-zA-Z0-9_]*	{
+							//console.log("Se reconocio el lexema: " + yytext);
+							return 'identificador';
+						}
+
 
 /* Espacios en blanco */
 [ \r\t]+            {}
@@ -276,7 +288,7 @@ INTRUCCIONES : INTRUCCIONES INTRUCCION 	{ $1.push($2); $$ = $1;}
 
 INTRUCCION:DVARIABLES {$$=$1}
 	|ASIGNACION {$$ = $1}
-	|IF
+	|IF {$$ = $1}
 	|SWITCH
 	|FOR
 	|WHILE
@@ -297,10 +309,10 @@ ASIGNACION: EXPRESION punto_coma	{$$ = new Asignar($1[0],$1[1],@1.first_line,@1.
 IF:CUERPO_IF ELSE_IF
 	|CUERPO_IF ELSE_IF ELSE
 	|CUERPO_IF ELSE
-	|CUERPO_IF
+	|CUERPO_IF	{$$ = $1}
 ; 
 
-CUERPO_IF:r_if parentesis_a EXPRESION parentesis_c llave_a INTRUCCIONES llave_c
+CUERPO_IF:r_if parentesis_a EXPRESION parentesis_c llave_a INTRUCCIONES llave_c {$$ = new Iif($3,$6,@1.first_line,@1.first_column);}
 ;
 
 ELSE:r_else llave_a INTRUCCIONES llave_c
@@ -384,34 +396,36 @@ FUNCIONES_NATIVAS
 	|r_typeof parentesis_a EXPRESION parentesis_c punto_coma
 ;
 
-EXPRESION:incremento EXPRESION
-	|decremento EXPRESION
-	|EXPRESION incremento
-	|EXPRESION decremento
-	|EXPRESION coma identificador
+EXPRESION:incremento EXPRESION			{$$ = new InDe(Number(0),$2,OpcionesInDe.MAMA,@1.first_line,@1.first_column)}
+	|decremento EXPRESION				{$$ = new InDe(Number(0),$2,OpcionesInDe.MEME,@1.first_line,@1.first_column)}
+	|EXPRESION incremento				{$$ = new InDe(Number(1),$1,OpcionesInDe.MAMA,@1.first_line,@1.first_column)}
+	|EXPRESION decremento				{$$ = new InDe(Number(1),$1,OpcionesInDe.MEME,@1.first_line,@1.first_column)}
+	|EXPRESION coma identificador		{$$ = [$1,$3]}
 	|EXPRESION igual EXPRESION 			{$$ = [$1,$3]}
-	|EXPRESION or EXPRESION
-	|not EXPRESION
-	|EXPRESION xor EXPRESION
-	|EXPRESION and EXPRESION
-	|EXPRESION mayor EXPRESION
-	|EXPRESION mayor_igual EXPRESION
-	|EXPRESION menor EXPRESION
-	|EXPRESION menor_igual EXPRESION
-	|EXPRESION igual_que EXPRESION
-	|EXPRESION no_igual EXPRESION
+	|EXPRESION or EXPRESION				{$$ = new Logica($1,$3,OpcionesLogicas.OR,@1.first_line,@1.first_column)}
+	|not EXPRESION						{$$ = new Logica($2,$2,OpcionesLogicas.NOT,@1.first_line,@1.first_column)}
+	|EXPRESION xor EXPRESION			{$$ = new Logica($1,$3,OpcionesLogicas.XOR,@1.first_line,@1.first_column)}
+	|EXPRESION and EXPRESION			{$$ = new Logica($1,$3,OpcionesLogicas.AND,@1.first_line,@1.first_column)}
+	|EXPRESION mayor EXPRESION			{$$ = new Relacional($1,$3,OpcionRelacional.MAYORQUE,@1.first_line,@1.first_column)}
+	|EXPRESION mayor_igual EXPRESION	{$$ = new Relacional($1,$3,OpcionRelacional.MAYORIGUAL,@1.first_line,@1.first_column)}
+	|EXPRESION menor EXPRESION			{$$ = new Relacional($1,$3,OpcionRelacional.MENORQUE,@1.first_line,@1.first_column)}
+	|EXPRESION menor_igual EXPRESION	{$$ = new Relacional($1,$3,OpcionRelacional.MENORIGUAL,@1.first_line,@1.first_column)}
+	|EXPRESION igual_que EXPRESION		{$$ = new Relacional($1,$3,OpcionRelacional.IGUALQUE,@1.first_line,@1.first_column)}
+	|EXPRESION no_igual EXPRESION		{$$ = new Relacional($1,$3,OpcionRelacional.NOIGUAL,@1.first_line,@1.first_column)}
 	|EXPRESION mod EXPRESION			{$$ = new Aritmeticas($1,$3,AritmeticasOptions.MODULO,@1.first_line,@1.first_column)}
 	|EXPRESION potencia EXPRESION 		{$$ = new Aritmeticas($1,$3,AritmeticasOptions.POTENCIA,@1.first_line,@1.first_column)}
 	|EXPRESION suma EXPRESION			{$$ = new Aritmeticas($1,$3,AritmeticasOptions.MAS,@1.first_line,@1.first_column)}
 	|EXPRESION resta EXPRESION			{$$ = new Aritmeticas($1,$3,AritmeticasOptions.MENOS,@1.first_line,@1.first_column)}
 	|EXPRESION por EXPRESION			{$$ = new Aritmeticas($1,$3,AritmeticasOptions.MULTIPLICAR,@1.first_line,@1.first_column)}
 	|EXPRESION div EXPRESION			{$$ = new Aritmeticas($1,$3,AritmeticasOptions.DIVIDIR,@1.first_line,@1.first_column)}
-	|decimal       						{$$ = new Literal($1,Type.DOUBLE,	@1.first_line,@1.first_column)}                 					
-	|entero								{$$ = new Literal($1,Type.INT,		@1.first_line,@1.first_column)}
-	|identificador			
+	|parentesis_a EXPRESION parentesis_c{$$ = $2}       						
+	|TIPO_LITERAL						{$$ = $1}	
+	|identificador						{$$ = $1}       	          	
+	;
+
+TIPO_LITERAL:entero						{$$ = new Literal($1,Type.INT,		@1.first_line,@1.first_column)}  
+ 	|decimal       						{$$ = new Literal($1,Type.DOUBLE,	@1.first_line,@1.first_column)}                 								 
 	|cadena								{$$ = new Literal($1,Type.STRING,	@1.first_line,@1.first_column)}
 	|caracter							{$$ = new Literal($1,Type.CHAR,		@1.first_line,@1.first_column)}
-	|boolean			            	{$$ = new Literal($1,Type.BOOLEAN,	@1.first_line,@1.first_column)}          	
-	| parentesis_a EXPRESION parentesis_c       						
+	|boolean							{$$ = new Literal($1,Type.BOOLEAN,	@1.first_line,@1.first_column)}
 ;
-

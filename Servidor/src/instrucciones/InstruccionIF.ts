@@ -3,11 +3,10 @@ import { Instruccion } from "../abstract/instruccion";
 import { Enviroment } from "../Symbols/enviroment";
 import { Type } from "../Symbols/type";
 
-export class Declaracion extends Instruccion{
+export class Iif extends Instruccion{
     constructor(
-        public tipo: Type, 
-        public nombre: string,
         public expresion:Expression,
+        private instruc: any,
         line: number,
         colum: number
     ){
@@ -15,15 +14,19 @@ export class Declaracion extends Instruccion{
     }
     public ejecutar(env:Enviroment) {
 
-        console.log("Declarando variable: " + this.nombre );
-        
-        
         const expresion = this.expresion.ejecutar(env)
+        if(expresion.value == true){
+            console.log("aqui van las instrucicones");
+            for (const elemento of this.instruc) {
+                elemento.ejecutar();
+            }
+            console.log(this.instruc);
+                       
+        }
         
-        console.log(expresion.value);
+        console.log(expresion);
         
         
-        env.guardar_varible(this.nombre,expresion.value,expresion.type)
         
     }
 }

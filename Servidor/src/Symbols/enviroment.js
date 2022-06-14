@@ -10,15 +10,15 @@ var Enviroment = /** @class */ (function () {
     Enviroment.prototype.getEnv = function () {
         return this.tablaSimbolos;
     };
-    Enviroment.prototype.guardarVarible = function (nombre, valor, type) {
-        if (!this.buscarVariable(nombre)) {
+    Enviroment.prototype.guardar_varible = function (nombre, valor, type) {
+        if (!this.buscar_variable(nombre)) {
             this.tablaSimbolos.set(nombre, new symbols_1.Symbolos(valor, nombre, type));
             return true;
         }
         console.log("esta variable [" + nombre + "] ya existe...");
         return false;
     };
-    Enviroment.prototype.buscarVariable = function (nombre) {
+    Enviroment.prototype.buscar_variable = function (nombre) {
         for (var _i = 0, _a = Array.from(this.tablaSimbolos.entries()); _i < _a.length; _i++) {
             var entry = _a[_i];
             if (entry[0] == nombre)

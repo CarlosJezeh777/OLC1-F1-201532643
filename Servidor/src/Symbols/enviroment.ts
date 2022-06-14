@@ -15,8 +15,8 @@ export class Enviroment{
         return this.tablaSimbolos
     }
 
-    public guardarVarible(nombre: string, valor: any, type: Type){
-        if(!this.buscarVariable(nombre)){
+    public guardar_varible(nombre: string, valor: any, type: Type){
+        if(!this.buscar_variable(nombre)){
             this.tablaSimbolos.set(nombre, new Symbolos(valor,nombre,type));
             return true
         }
@@ -24,7 +24,7 @@ export class Enviroment{
         return false
     }
 
-    public buscarVariable(nombre: string): boolean {
+    public buscar_variable(nombre: string): boolean {
         for (let entry of Array.from(this.tablaSimbolos.entries())) {
             if (entry[0] == nombre) return true;
         }

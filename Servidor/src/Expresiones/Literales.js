@@ -24,30 +24,52 @@ var Literal = /** @class */ (function (_super) {
         return _this;
     }
     Literal.prototype.ejecutar = function () {
+        var resultado = {
+            value: this.valor,
+            type: type_1.Type.error
+        };
+        console.log("tipo dato: " + this.tipo);
         if (this.tipo == type_1.Type.INT) {
-            return { value: Number(this.valor), type: type_1.Type.INT };
+            resultado = {
+                value: Number(this.valor),
+                type: type_1.Type.INT
+            };
         }
         else if (this.tipo == type_1.Type.STRING) {
-            this.valor = (this.valor).replaceAll('"', "");
-            return { value: this.valor, type: type_1.Type.STRING };
+            var valor_1 = String(this.valor);
+            valor_1 = valor_1.substring(1, valor_1.length - 1);
+            //this.valor = (this.valor).replaceAll("\"","")
+            resultado = {
+                value: valor_1,
+                type: type_1.Type.STRING
+            };
         }
         else if (this.tipo == type_1.Type.CHAR) {
-            this.valor = (this.valor).replaceAll("'", "");
-            return { value: this.valor, type: type_1.Type.CHAR };
+            var valor1 = this.valor[1];
+            resultado = {
+                value: valor1,
+                type: type_1.Type.CHAR
+            };
         }
         else if (this.tipo == type_1.Type.DOUBLE) {
-            return { value: Number(this.valor), type: type_1.Type.DOUBLE };
+            resultado = {
+                value: Number(this.valor),
+                type: type_1.Type.DOUBLE
+            };
         }
         else if (this.tipo == type_1.Type.BOOLEAN) {
             if (this.valor == "true")
-                return { value: Boolean(true), type: type_1.Type.BOOLEAN };
+                resultado = {
+                    value: Boolean(true),
+                    type: type_1.Type.BOOLEAN
+                };
             else
-                return { value: Boolean(false), type: type_1.Type.BOOLEAN };
+                resultado = {
+                    value: Boolean(false),
+                    type: type_1.Type.BOOLEAN
+                };
         }
-        else
-            return {
-                value: this.valor, type: type_1.Type.error
-            };
+        return resultado;
     };
     return Literal;
 }(expression_1.Expression));

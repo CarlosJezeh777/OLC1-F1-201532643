@@ -26,6 +26,7 @@ var Asignar = /** @class */ (function (_super) {
         var expresion = this.expresion.ejecutar(env);
         console.log("haciendo una asinacion: " + this.nombre);
         console.log(expresion.value);
+        console.log(expresion.type);
         env.actualizar_variable(this.nombre, expresion.value);
     };
     return Asignar;

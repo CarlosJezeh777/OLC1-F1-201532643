@@ -15,415 +15,385 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var expression_1 = require("../abstract/expression");
 var type_1 = require("../Symbols/type");
-var aritmeticasOpc_1 = require("./aritmeticasOpc");
-var Aritmeticas = /** @class */ (function (_super) {
-    __extends(Aritmeticas, _super);
-    function Aritmeticas(izquierda, derecha, tipo, line, column) {
+var RelacionalOpc_1 = require("./RelacionalOpc");
+var Relacional = /** @class */ (function (_super) {
+    __extends(Relacional, _super);
+    function Relacional(izquierda, derecha, tipo, line, column) {
         var _this = _super.call(this, line, column) || this;
         _this.izquierda = izquierda;
         _this.derecha = derecha;
         _this.tipo = tipo;
         return _this;
     }
-    Aritmeticas.prototype.ejecutar = function (env) {
+    Relacional.prototype.ejecutar = function (env) {
         var resultado = {
             value: null,
             type: type_1.Type.error
         };
         var nodIzq = this.izquierda.ejecutar(env);
         var nodDer = this.derecha.ejecutar(env);
-        if (this.tipo == aritmeticasOpc_1.AritmeticasOptions.MAS) {
+        if (this.tipo == RelacionalOpc_1.OpcionRelacional.MAYORQUE) {
             if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.INT) {
                 resultado = {
-                    value: (Number(nodIzq.value) + Number(nodDer.value)),
-                    type: type_1.Type.INT
+                    value: (nodIzq.value > nodDer.value),
+                    type: type_1.Type.BOOLEAN
                 };
-                return resultado;
             }
             else if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.DOUBLE) {
                 resultado = {
-                    value: (nodIzq.value + nodDer.value),
-                    type: type_1.Type.DOUBLE
+                    value: (nodIzq.value > nodDer.value),
+                    type: type_1.Type.BOOLEAN
                 };
             }
             else if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.CHAR) {
                 resultado = {
-                    value: (nodIzq.value + nodDer.value.charCodeAt()),
-                    type: type_1.Type.INT
-                };
-            }
-            else if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.STRING) {
-                resultado = {
-                    value: (String(nodIzq.value) + String(nodDer.value)),
-                    type: type_1.Type.STRING
+                    value: (nodIzq.value > nodDer.value.charCodeAt()),
+                    type: type_1.Type.BOOLEAN
                 };
             }
             else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.INT) {
                 resultado = {
-                    value: (nodIzq.value + nodDer.value),
-                    type: type_1.Type.DOUBLE
+                    value: (nodIzq.value > nodDer.value),
+                    type: type_1.Type.BOOLEAN
                 };
             }
             else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.DOUBLE) {
                 resultado = {
-                    value: (nodIzq.value + nodDer.value),
-                    type: type_1.Type.DOUBLE
+                    value: (nodIzq.value > nodDer.value),
+                    type: type_1.Type.BOOLEAN
                 };
             }
             else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.CHAR) {
                 resultado = {
-                    value: (nodIzq.value + nodDer.value.charCodeAt()),
-                    type: type_1.Type.DOUBLE
-                };
-            }
-            else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.STRING) {
-                resultado = {
-                    value: (String(nodIzq.value) + String(nodDer.value)),
-                    type: type_1.Type.STRING
+                    value: (nodIzq.value > nodDer.value.charCodeAt()),
+                    type: type_1.Type.BOOLEAN
                 };
             }
             else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.INT) {
                 resultado = {
-                    value: (nodIzq.value.charCodeAt() + nodDer.value),
-                    type: type_1.Type.INT
+                    value: (nodIzq.value.charCodeAt() > nodDer.value),
+                    type: type_1.Type.BOOLEAN
                 };
             }
             else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.DOUBLE) {
                 resultado = {
-                    value: (nodIzq.value.charCodeAt() + nodDer.value),
-                    type: type_1.Type.DOUBLE
+                    value: (nodIzq.value.charCodeAt() > nodDer.value),
+                    type: type_1.Type.BOOLEAN
                 };
             }
             else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.CHAR) {
                 resultado = {
-                    value: (nodIzq.value.charCodeAt() + nodDer.value.charCodeAt()),
-                    type: type_1.Type.INT
+                    value: (nodIzq.value.charCodeAt() > nodDer.value.charCodeAt()),
+                    type: type_1.Type.BOOLEAN
                 };
             }
-            else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.STRING) {
+        }
+        else if (this.tipo == RelacionalOpc_1.OpcionRelacional.MENORQUE) {
+            if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.INT) {
                 resultado = {
-                    value: (String(nodIzq.value) + String(nodDer.value)),
-                    type: type_1.Type.STRING
+                    value: (nodIzq.value < nodDer.value),
+                    type: type_1.Type.BOOLEAN
                 };
             }
-            else if (nodIzq.type == type_1.Type.STRING && nodDer.type == type_1.Type.INT) {
+            else if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.DOUBLE) {
                 resultado = {
-                    value: (String(nodIzq.value) + String(nodDer.value)),
-                    type: type_1.Type.STRING
+                    value: (nodIzq.value < nodDer.value),
+                    type: type_1.Type.BOOLEAN
                 };
             }
-            else if (nodIzq.type == type_1.Type.STRING && nodDer.type == type_1.Type.DOUBLE) {
+            else if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.CHAR) {
                 resultado = {
-                    value: (String(nodIzq.value) + String(nodDer.value)),
-                    type: type_1.Type.STRING
+                    value: (nodIzq.value < nodDer.value.charCodeAt()),
+                    type: type_1.Type.BOOLEAN
                 };
             }
-            else if (nodIzq.type == type_1.Type.STRING && nodDer.type == type_1.Type.CHAR) {
+            else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.INT) {
                 resultado = {
-                    value: (String(nodIzq.value) + String(nodDer.value)),
-                    type: type_1.Type.STRING
+                    value: (nodIzq.value < nodDer.value),
+                    type: type_1.Type.BOOLEAN
+                };
+            }
+            else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.DOUBLE) {
+                resultado = {
+                    value: (nodIzq.value < nodDer.value),
+                    type: type_1.Type.BOOLEAN
+                };
+            }
+            else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.CHAR) {
+                resultado = {
+                    value: (nodIzq.value < nodDer.value.charCodeAt()),
+                    type: type_1.Type.BOOLEAN
+                };
+            }
+            else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.INT) {
+                resultado = {
+                    value: (nodIzq.value.charCodeAt() < nodDer.value),
+                    type: type_1.Type.BOOLEAN
+                };
+            }
+            else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.DOUBLE) {
+                resultado = {
+                    value: (nodIzq.value.charCodeAt() < nodDer.value),
+                    type: type_1.Type.BOOLEAN
+                };
+            }
+            else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.CHAR) {
+                resultado = {
+                    value: (nodIzq.value.charCodeAt() < nodDer.value.charCodeAt()),
+                    type: type_1.Type.BOOLEAN
+                };
+            }
+        }
+        else if (this.tipo == RelacionalOpc_1.OpcionRelacional.MAYORIGUAL) {
+            if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.INT) {
+                resultado = {
+                    value: (nodIzq.value >= nodDer.value),
+                    type: type_1.Type.BOOLEAN
+                };
+            }
+            else if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.DOUBLE) {
+                resultado = {
+                    value: (nodIzq.value >= nodDer.value),
+                    type: type_1.Type.BOOLEAN
+                };
+            }
+            else if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.CHAR) {
+                resultado = {
+                    value: (nodIzq.value >= nodDer.value.charCodeAt()),
+                    type: type_1.Type.BOOLEAN
+                };
+            }
+            else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.INT) {
+                resultado = {
+                    value: (nodIzq.value >= nodDer.value),
+                    type: type_1.Type.BOOLEAN
+                };
+            }
+            else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.DOUBLE) {
+                resultado = {
+                    value: (nodIzq.value >= nodDer.value),
+                    type: type_1.Type.BOOLEAN
+                };
+            }
+            else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.CHAR) {
+                resultado = {
+                    value: (nodIzq.value >= nodDer.value.charCodeAt()),
+                    type: type_1.Type.BOOLEAN
+                };
+            }
+            else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.INT) {
+                resultado = {
+                    value: (nodIzq.value.charCodeAt() >= nodDer.value),
+                    type: type_1.Type.BOOLEAN
+                };
+            }
+            else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.DOUBLE) {
+                resultado = {
+                    value: (nodIzq.value.charCodeAt() >= nodDer.value),
+                    type: type_1.Type.BOOLEAN
+                };
+            }
+            else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.CHAR) {
+                resultado = {
+                    value: (nodIzq.value.charCodeAt() >= nodDer.value.charCodeAt()),
+                    type: type_1.Type.BOOLEAN
+                };
+            }
+        }
+        else if (this.tipo == RelacionalOpc_1.OpcionRelacional.MENORIGUAL) {
+            if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.INT) {
+                resultado = {
+                    value: (nodIzq.value <= nodDer.value),
+                    type: type_1.Type.BOOLEAN
+                };
+            }
+            else if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.DOUBLE) {
+                resultado = {
+                    value: (nodIzq.value <= nodDer.value),
+                    type: type_1.Type.BOOLEAN
+                };
+            }
+            else if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.CHAR) {
+                resultado = {
+                    value: (nodIzq.value <= nodDer.value.charCodeAt()),
+                    type: type_1.Type.BOOLEAN
+                };
+            }
+            else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.INT) {
+                resultado = {
+                    value: (nodIzq.value <= nodDer.value),
+                    type: type_1.Type.BOOLEAN
+                };
+            }
+            else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.DOUBLE) {
+                resultado = {
+                    value: (nodIzq.value <= nodDer.value),
+                    type: type_1.Type.BOOLEAN
+                };
+            }
+            else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.CHAR) {
+                resultado = {
+                    value: (nodIzq.value <= nodDer.value.charCodeAt()),
+                    type: type_1.Type.BOOLEAN
+                };
+            }
+            else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.INT) {
+                resultado = {
+                    value: (nodIzq.value.charCodeAt() <= nodDer.value),
+                    type: type_1.Type.BOOLEAN
+                };
+            }
+            else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.DOUBLE) {
+                resultado = {
+                    value: (nodIzq.value.charCodeAt() <= nodDer.value),
+                    type: type_1.Type.BOOLEAN
+                };
+            }
+            else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.CHAR) {
+                resultado = {
+                    value: (nodIzq.value.charCodeAt() <= nodDer.value.charCodeAt()),
+                    type: type_1.Type.BOOLEAN
+                };
+            }
+        }
+        else if (this.tipo == RelacionalOpc_1.OpcionRelacional.IGUALQUE) {
+            if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.INT) {
+                resultado = {
+                    value: (nodIzq.value == nodDer.value),
+                    type: type_1.Type.BOOLEAN
+                };
+            }
+            else if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.DOUBLE) {
+                resultado = {
+                    value: (nodIzq.value == nodDer.value),
+                    type: type_1.Type.BOOLEAN
+                };
+            }
+            else if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.CHAR) {
+                resultado = {
+                    value: (nodIzq.value == nodDer.value.charCodeAt()),
+                    type: type_1.Type.BOOLEAN
+                };
+            }
+            else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.INT) {
+                resultado = {
+                    value: (nodIzq.value == nodDer.value),
+                    type: type_1.Type.BOOLEAN
+                };
+            }
+            else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.DOUBLE) {
+                resultado = {
+                    value: (nodIzq.value == nodDer.value),
+                    type: type_1.Type.BOOLEAN
+                };
+            }
+            else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.CHAR) {
+                resultado = {
+                    value: (nodIzq.value == nodDer.value.charCodeAt()),
+                    type: type_1.Type.BOOLEAN
+                };
+            }
+            else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.INT) {
+                resultado = {
+                    value: (nodIzq.value.charCodeAt() == nodDer.value),
+                    type: type_1.Type.BOOLEAN
+                };
+            }
+            else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.DOUBLE) {
+                resultado = {
+                    value: (nodIzq.value.charCodeAt() == nodDer.value),
+                    type: type_1.Type.BOOLEAN
+                };
+            }
+            else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.CHAR) {
+                resultado = {
+                    value: (nodIzq.value.charCodeAt() == nodDer.value.charCodeAt()),
+                    type: type_1.Type.BOOLEAN
                 };
             }
             else if (nodIzq.type == type_1.Type.STRING && nodDer.type == type_1.Type.STRING) {
                 resultado = {
-                    value: (String(nodIzq.value) + String(nodDer.value)),
-                    type: type_1.Type.STRING
+                    value: (nodIzq.value == nodDer.value),
+                    type: type_1.Type.BOOLEAN
                 };
             }
-            else if (nodIzq.type == type_1.Type.STRING && nodDer.type == type_1.Type.BOOLEAN) {
+            else if (nodIzq.type == type_1.Type.BOOLEAN && nodDer.type == type_1.Type.BOOLEAN) {
                 resultado = {
-                    value: (String(nodIzq.value) + String(nodDer.value)),
-                    type: type_1.Type.STRING
+                    value: (nodIzq.value == nodDer.value),
+                    type: type_1.Type.BOOLEAN
                 };
             }
-            //AQUI EMPIEZA LA RESTA
         }
-        else if (this.tipo == aritmeticasOpc_1.AritmeticasOptions.MENOS) {
+        else if (this.tipo == RelacionalOpc_1.OpcionRelacional.NOIGUAL) {
             if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.INT) {
                 resultado = {
-                    value: (nodIzq.value - nodDer.value),
-                    type: type_1.Type.INT
+                    value: (nodIzq.value != nodDer.value),
+                    type: type_1.Type.BOOLEAN
                 };
             }
             else if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.DOUBLE) {
                 resultado = {
-                    value: (nodIzq.value - nodDer.value),
-                    type: type_1.Type.DOUBLE
+                    value: (nodIzq.value != nodDer.value),
+                    type: type_1.Type.BOOLEAN
                 };
             }
             else if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.CHAR) {
                 resultado = {
-                    value: (nodIzq.value - nodDer.value.charCodeAt()),
-                    type: type_1.Type.INT
+                    value: (nodIzq.value != nodDer.value.charCodeAt()),
+                    type: type_1.Type.BOOLEAN
                 };
             }
             else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.INT) {
                 resultado = {
-                    value: (nodIzq.value - nodDer.value),
-                    type: type_1.Type.DOUBLE
+                    value: (nodIzq.value != nodDer.value),
+                    type: type_1.Type.BOOLEAN
                 };
             }
             else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.DOUBLE) {
                 resultado = {
-                    value: (nodIzq.value - nodDer.value),
-                    type: type_1.Type.DOUBLE
+                    value: (nodIzq.value != nodDer.value),
+                    type: type_1.Type.BOOLEAN
                 };
             }
             else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.CHAR) {
                 resultado = {
-                    value: (nodIzq.value - nodDer.value.charCodeAt()),
-                    type: type_1.Type.DOUBLE
+                    value: (nodIzq.value != nodDer.value.charCodeAt()),
+                    type: type_1.Type.BOOLEAN
                 };
             }
             else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.INT) {
                 resultado = {
-                    value: (nodIzq.value.charCodeAt() - nodDer.value),
-                    type: type_1.Type.INT
+                    value: (nodIzq.value.charCodeAt() != nodDer.value),
+                    type: type_1.Type.BOOLEAN
                 };
             }
             else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.DOUBLE) {
                 resultado = {
-                    value: (nodIzq.value.charCodeAt() - nodDer.value),
-                    type: type_1.Type.DOUBLE
+                    value: (nodIzq.value.charCodeAt() != nodDer.value),
+                    type: type_1.Type.BOOLEAN
                 };
             }
             else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.CHAR) {
                 resultado = {
-                    value: (nodIzq.value.charCodeAt() - nodDer.value.charCodeAt()),
-                    type: type_1.Type.INT
+                    value: (nodIzq.value.charCodeAt() != nodDer.value.charCodeAt()),
+                    type: type_1.Type.BOOLEAN
                 };
             }
-            //AQUI EMPIEZA LA MULTIPLICACION
-        }
-        else if (this.tipo == aritmeticasOpc_1.AritmeticasOptions.MULTIPLICAR) {
-            if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.INT) {
+            else if (nodIzq.type == type_1.Type.STRING && nodDer.type == type_1.Type.STRING) {
                 resultado = {
-                    value: (nodIzq.value * nodDer.value),
-                    type: type_1.Type.INT
+                    value: (nodIzq.value != nodDer.value),
+                    type: type_1.Type.BOOLEAN
                 };
             }
-            else if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.DOUBLE) {
+            else if (nodIzq.type == type_1.Type.BOOLEAN && nodDer.type == type_1.Type.BOOLEAN) {
                 resultado = {
-                    value: (nodIzq.value * nodDer.value),
-                    type: type_1.Type.DOUBLE
-                };
-            }
-            else if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.CHAR) {
-                resultado = {
-                    value: (nodIzq.value * nodDer.value.charCodeAt()),
-                    type: type_1.Type.INT
-                };
-            }
-            else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.INT) {
-                resultado = {
-                    value: (nodIzq.value * nodDer.value),
-                    type: type_1.Type.DOUBLE
-                };
-            }
-            else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.DOUBLE) {
-                resultado = {
-                    value: (nodIzq.value * nodDer.value),
-                    type: type_1.Type.DOUBLE
-                };
-            }
-            else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.CHAR) {
-                resultado = {
-                    value: (nodIzq.value * nodDer.value.charCodeAt()),
-                    type: type_1.Type.DOUBLE
-                };
-            }
-            else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.INT) {
-                resultado = {
-                    value: (nodIzq.value.charCodeAt() * nodDer.value),
-                    type: type_1.Type.INT
-                };
-            }
-            else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.DOUBLE) {
-                resultado = {
-                    value: (nodIzq.value.charCodeAt() * nodDer.value),
-                    type: type_1.Type.DOUBLE
-                };
-            }
-            else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.CHAR) {
-                resultado = {
-                    value: (nodIzq.value.charCodeAt() * nodDer.value.charCodeAt()),
-                    type: type_1.Type.INT
-                };
-            }
-            //AQUI EMPIEZA LA DIVISION
-        }
-        else if (this.tipo == aritmeticasOpc_1.AritmeticasOptions.DIVIDIR) {
-            if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.INT) {
-                resultado = {
-                    value: Math.trunc(nodIzq.value / nodDer.value),
-                    type: type_1.Type.INT
-                };
-            }
-            else if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.DOUBLE) {
-                resultado = {
-                    value: (nodIzq.value / nodDer.value),
-                    type: type_1.Type.DOUBLE
-                };
-            }
-            else if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.CHAR) {
-                resultado = {
-                    value: Math.trunc(nodIzq.value / nodDer.value.charCodeAt()),
-                    type: type_1.Type.INT
-                };
-            }
-            else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.INT) {
-                resultado = {
-                    value: (nodIzq.value / nodDer.value),
-                    type: type_1.Type.DOUBLE
-                };
-            }
-            else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.DOUBLE) {
-                resultado = {
-                    value: (nodIzq.value / nodDer.value),
-                    type: type_1.Type.DOUBLE
-                };
-            }
-            else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.CHAR) {
-                resultado = {
-                    value: (nodIzq.value / nodDer.value.charCodeAt()),
-                    type: type_1.Type.DOUBLE
-                };
-            }
-            else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.INT) {
-                resultado = {
-                    value: Math.trunc(nodIzq.value.charCodeAt() / nodDer.value),
-                    type: type_1.Type.INT
-                };
-            }
-            else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.DOUBLE) {
-                resultado = {
-                    value: (nodIzq.value.charCodeAt() / nodDer.value),
-                    type: type_1.Type.DOUBLE
-                };
-            }
-            else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.CHAR) {
-                resultado = {
-                    value: Math.trunc(nodIzq.value.charCodeAt() / nodDer.value.charCodeAt()),
-                    type: type_1.Type.INT
-                };
-            }
-            //AQUI EMPIZA LA POTENCIA
-        }
-        else if (this.tipo == aritmeticasOpc_1.AritmeticasOptions.POTENCIA) {
-            if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.INT) {
-                resultado = {
-                    value: Math.pow(nodIzq.value, nodDer.value),
-                    type: type_1.Type.DOUBLE
-                };
-            }
-            else if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.DOUBLE) {
-                resultado = {
-                    value: Math.pow(nodIzq.value, nodDer.value),
-                    type: type_1.Type.DOUBLE
-                };
-            }
-            else if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.CHAR) {
-                resultado = {
-                    value: Math.pow(nodIzq.value, nodDer.value.charCodeAt()),
-                    type: type_1.Type.DOUBLE
-                };
-            }
-            else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.INT) {
-                resultado = {
-                    value: Math.pow(nodIzq.value, nodDer.value),
-                    type: type_1.Type.DOUBLE
-                };
-            }
-            else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.DOUBLE) {
-                resultado = {
-                    value: Math.pow(nodIzq.value, nodDer.value),
-                    type: type_1.Type.DOUBLE
-                };
-            }
-            else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.CHAR) {
-                resultado = {
-                    value: Math.pow(nodIzq.value, nodDer.value.charCodeAt()),
-                    type: type_1.Type.DOUBLE
-                };
-            }
-            else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.INT) {
-                resultado = {
-                    value: Math.pow(nodIzq.value.charCodeAt(), nodDer.value),
-                    type: type_1.Type.DOUBLE
-                };
-            }
-            else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.DOUBLE) {
-                resultado = {
-                    value: Math.pow(nodIzq.value.charCodeAt(), nodDer.value),
-                    type: type_1.Type.DOUBLE
-                };
-            }
-            else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.CHAR) {
-                resultado = {
-                    value: Math.pow(nodIzq.value.charCodeAt(), nodDer.value.charCodeAt()),
-                    type: type_1.Type.DOUBLE
-                };
-            }
-            //AQUI EMPIZA EL MODULO
-        }
-        else if (this.tipo == aritmeticasOpc_1.AritmeticasOptions.MODULO) {
-            if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.INT) {
-                resultado = {
-                    value: (nodIzq.value % nodDer.value),
-                    type: type_1.Type.DOUBLE
-                };
-            }
-            else if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.DOUBLE) {
-                resultado = {
-                    value: (nodIzq.value % nodDer.value),
-                    type: type_1.Type.DOUBLE
-                };
-            }
-            else if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.CHAR) {
-                resultado = {
-                    value: (nodIzq.value % nodDer.value.charCodeAt()),
-                    type: type_1.Type.DOUBLE
-                };
-            }
-            else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.INT) {
-                resultado = {
-                    value: (nodIzq.value % nodDer.value),
-                    type: type_1.Type.DOUBLE
-                };
-            }
-            else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.DOUBLE) {
-                resultado = {
-                    value: (nodIzq.value % nodDer.value),
-                    type: type_1.Type.DOUBLE
-                };
-            }
-            else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.CHAR) {
-                resultado = {
-                    value: (nodIzq.value % nodDer.value.charCodeAt()),
-                    type: type_1.Type.DOUBLE
-                };
-            }
-            else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.INT) {
-                resultado = {
-                    value: (nodIzq.value.charCodeAt() % nodDer.value),
-                    type: type_1.Type.DOUBLE
-                };
-            }
-            else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.DOUBLE) {
-                resultado = {
-                    value: (nodIzq.value.charCodeAt() % nodDer.value),
-                    type: type_1.Type.DOUBLE
-                };
-            }
-            else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.CHAR) {
-                resultado = {
-                    value: Math.trunc(nodIzq.value.charCodeAt() % nodDer.value.charCodeAt()),
-                    type: type_1.Type.DOUBLE
+                    value: (nodIzq.value != nodDer.value),
+                    type: type_1.Type.BOOLEAN
                 };
             }
         }
         return resultado;
     };
-    return Aritmeticas;
+    return Relacional;
 }(expression_1.Expression));
-exports.Aritmeticas = Aritmeticas;
+exports.Relacional = Relacional;
