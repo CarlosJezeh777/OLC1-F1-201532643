@@ -1,3 +1,23 @@
-if(5>3){
-    a = 3+2;
+{
+    int nuevaUno=5+5+1-3;
+    int nuevaDos=5+5;
+    int nuevaTres=50-5;
+
+    {
+        int variable_nuevo_bloque=50-5;
+        int nuevaTres=50+5; 
+        Print(variable_nuevo_bloque);
+        Print("variable de otra ts : "+nuevaUno);
+        Print(nuevaTres);
+   }
+    
+    int nuevaTres_dos =  50-5;
+    Println("la variable nuevaUno tiene el valor de: "+nuevaUno);
+    Println(nuevaUno+nuevaUno+2);
+    Println(15+6);
+    Println("si sale"+ " compi");
+
+
+
+
 }

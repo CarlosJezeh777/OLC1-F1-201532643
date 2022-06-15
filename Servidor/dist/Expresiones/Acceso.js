@@ -13,22 +13,24 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var instruccion_1 = require("../abstract/instruccion");
-var Asignar = /** @class */ (function (_super) {
-    __extends(Asignar, _super);
-    function Asignar(nombre, expresion, line, column) {
+var expression_1 = require("../abstract/expression");
+var Acces = /** @class */ (function (_super) {
+    __extends(Acces, _super);
+    function Acces(id, line, column) {
         var _this = _super.call(this, line, column) || this;
-        _this.nombre = nombre;
-        _this.expresion = expresion;
+        _this.id = id;
         return _this;
     }
-    Asignar.prototype.ejecutar = function (env) {
-        var expresion = this.expresion.ejecutar(env);
-        //console.log("haciendo una asinacion: " + this.nombre)
-        //console.log(expresion.value)
-        //console.log(expresion.type)
-        env.actualizar_variable(this.nombre, expresion.value);
+    Acces.prototype.ejecutar = function (env) {
+        var variable_ts = env.get_variable(this.id);
+        if (variable_ts == null || variable_ts == undefined) {
+            throw "Error Semantico, esta variable no existe";
+        }
+        return {
+            value: variable_ts.value,
+            type: variable_ts.type
+        };
     };
-    return Asignar;
-}(instruccion_1.Instruccion));
-exports.Asignar = Asignar;
+    return Acces;
+}(expression_1.Expression));
+exports.Acces = Acces;

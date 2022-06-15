@@ -13,9 +13,9 @@ export class Asignar extends Instruccion{
     }
     public ejecutar(env:Enviroment) {
         const expresion = this.expresion.ejecutar(env)
-        console.log("haciendo una asinacion: " + this.nombre)
-        console.log(expresion.value)
-        console.log(expresion.type)
+        //console.log("haciendo una asinacion: " + this.nombre)
+        //console.log(expresion.value)
+        //console.log(expresion.type)
         env.actualizar_variable(this.nombre,expresion.value)
     }
 }

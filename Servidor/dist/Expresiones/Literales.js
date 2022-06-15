@@ -28,7 +28,7 @@ var Literal = /** @class */ (function (_super) {
             value: this.valor,
             type: type_1.Type.error
         };
-        console.log("tipo dato: " + this.tipo);
+        //console.log("tipo dato: "+ this.tipo);
         if (this.tipo == type_1.Type.INT) {
             resultado = {
                 value: Number(this.valor),

@@ -5,7 +5,7 @@ var Expression = /** @class */ (function () {
         this.line = line;
         this.column = column;
         this.line = line;
-        this.column = column;
+        this.column = column + 1;
     }
     return Expression;
 }());

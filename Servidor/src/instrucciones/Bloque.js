@@ -15,26 +15,26 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var instruccion_1 = require("../abstract/instruccion");
 var enviroment_1 = require("../Symbols/enviroment");
-var Iif = /** @class */ (function (_super) {
-    __extends(Iif, _super);
-    function Iif(expresion, instruc, line, colum) {
+var Bloque = /** @class */ (function (_super) {
+    __extends(Bloque, _super);
+    function Bloque(instruccion, line, colum) {
         var _this = _super.call(this, line, colum) || this;
-        _this.expresion = expresion;
-        _this.instruc = instruc;
+        _this.instruccion = instruccion;
         return _this;
     }
-    Iif.prototype.ejecutar = function (env) {
+    Bloque.prototype.ejecutar = function (env) {
         var new_env = new enviroment_1.Enviroment(env);
-        var expresion = this.expresion.ejecutar(env);
-        if (expresion.value == true) {
-            //console.log("aqui van las instrucicones");
-            for (var _i = 0, _a = this.instruc; _i < _a.length; _i++) {
-                var elemento = _a[_i];
+        for (var _i = 0, _a = this.instruccion; _i < _a.length; _i++) {
+            var elemento = _a[_i];
+            try {
                 elemento.ejecutar(new_env);
             }
+            catch (error) {
+                console.log(error);
+            }
         }
-        //console.log(expresion);
+        //console.log(env);
     };
-    return Iif;
+    return Bloque;
 }(instruccion_1.Instruccion));
-exports.Iif = Iif;
+exports.Bloque = Bloque;

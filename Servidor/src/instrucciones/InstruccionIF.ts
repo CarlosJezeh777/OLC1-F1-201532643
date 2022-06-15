@@ -14,17 +14,18 @@ export class Iif extends Instruccion{
     }
     public ejecutar(env:Enviroment) {
 
+        const new_env =  new Enviroment(env)
+
         const expresion = this.expresion.ejecutar(env)
         if(expresion.value == true){
-            console.log("aqui van las instrucicones");
+            //console.log("aqui van las instrucicones");
             for (const elemento of this.instruc) {
-                elemento.ejecutar();
+                elemento.ejecutar(new_env);
             }
-            console.log(this.instruc);
                        
         }
         
-        console.log(expresion);
+        //console.log(expresion);
         
         
         

@@ -3,6 +3,6 @@
     "watch":[
         "src"
     ],
-    "ext" : "ts,txt, jison",
-    "exec" : "clear && jison ./src/gramatica/gramatica.jison && mv gramatica.js ./src/gramatica && tsc && ts-node ./src/ "
+    "ext" : "ts,txt",
+    "exec" : "clear  && tsc && ts-node ./src/ "
 }

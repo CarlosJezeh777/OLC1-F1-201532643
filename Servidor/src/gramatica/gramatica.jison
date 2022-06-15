@@ -12,7 +12,10 @@
 	const {OpcionesLogicas} = require('../Expresiones/LogicasOpc');
 	const {OpcionesInDe} = require('../Expresiones/IncrementosOpc');
 	const {InDe} = require('../Expresiones/Incrementos');
+	const {Acces} = require('../Expresiones/Acceso');
 	const {Iif} = require('../instrucciones/InstruccionIF')
+	const {Bloque} = require('../instrucciones/Bloque')
+	const {Imprimir} = require('../instrucciones/imprimir')
 %}
 
 %lex
@@ -286,17 +289,17 @@ INTRUCCIONES : INTRUCCIONES INTRUCCION 	{ $1.push($2); $$ = $1;}
 	|error {console.error('Este es un error sintactico: ' + yytext + ', en la linea: '+ this._$.first_line+', en la columna: '+this._$.first_column);}
 ;
 
-INTRUCCION:DVARIABLES {$$=$1}
-	|ASIGNACION {$$ = $1}
-	|IF {$$ = $1}
+INTRUCCION:DVARIABLES 	{$$=$1}
+	|ASIGNACION 		{$$ = $1}
+	|IF 				{$$ = $1}
 	|SWITCH
 	|FOR
 	|WHILE
 	|DO_WHILE
 	|MET_FUN
 	|LLAMADA
-	|BLOQUE
-	|FUNCIONES_NATIVAS
+	|BLOQUE				{$$ = $1}
+	|FUNCIONES_NATIVAS	{$$ = $1}
 ;
 
 DVARIABLES: TIPO_DATO EXPRESION punto_coma {$$ = new Declaracion($1,$2[0],$2[1],@1.first_line,@1.first_column);}
@@ -372,7 +375,7 @@ PARAMETROS
 ;
 
 BLOQUE
-	:llave_a INTRUCCIONES llave_c
+	:llave_a INTRUCCIONES llave_c		{$$ =  new Bloque($2,@1.first_line,@1.first_column);}
 ;
 
 
@@ -387,12 +390,11 @@ TIPO_DATO
 
 
 FUNCIONES_NATIVAS
-	:r_println parentesis_a EXPRESION parentesis_c punto_coma
-	|r_println parentesis_a MET_FUN parentesis_c punto_coma
-	|r_println parentesis_a parentesis_c punto_coma
-	|r_print parentesis_a  EXPRESION parentesis_c punto_coma
+	:r_println parentesis_a EXPRESION parentesis_c punto_coma 	{$$ = new Imprimir(1,$3,@1.first_line,@1.first_column);}
+	|r_println parentesis_a MET_FUN parentesis_c punto_coma		
+	|r_println parentesis_a parentesis_c punto_coma				//{$$ = new Imprimir(1,null,@1.first_line,@1.first_column);}
+	|r_print parentesis_a  EXPRESION parentesis_c punto_coma	{$$ = new Imprimir(0,$3,@1.first_line,@1.first_column);}	
 	|r_print parentesis_a  MET_FUN parentesis_c punto_coma
-	|r_print parentesis_a  parentesis_c punto_coma
 	|r_typeof parentesis_a EXPRESION parentesis_c punto_coma
 ;
 
@@ -419,8 +421,9 @@ EXPRESION:incremento EXPRESION			{$$ = new InDe(Number(0),$2,OpcionesInDe.MAMA,@
 	|EXPRESION por EXPRESION			{$$ = new Aritmeticas($1,$3,AritmeticasOptions.MULTIPLICAR,@1.first_line,@1.first_column)}
 	|EXPRESION div EXPRESION			{$$ = new Aritmeticas($1,$3,AritmeticasOptions.DIVIDIR,@1.first_line,@1.first_column)}
 	|parentesis_a EXPRESION parentesis_c{$$ = $2}       						
+	|identificador						{$$ = new Acces($1,@1.first_line,@1.first_column);} 
 	|TIPO_LITERAL						{$$ = $1}	
-	|identificador						{$$ = $1}       	          	
+	      	          	
 	;
 
 TIPO_LITERAL:entero						{$$ = new Literal($1,Type.INT,		@1.first_line,@1.first_column)}  

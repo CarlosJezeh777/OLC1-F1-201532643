@@ -1,6 +1,7 @@
 import { type } from "os";
 import { Expression } from "../abstract/expression";
 import { Retorno } from "../abstract/Retorno";
+import { Enviroment } from "../Symbols/enviroment";
 import { Type } from "../Symbols/type";
 
 export class Literal extends Expression{
@@ -19,7 +20,7 @@ export class Literal extends Expression{
             type: Type.error
              
         }
-        console.log("tipo dato: "+ this.tipo);
+        //console.log("tipo dato: "+ this.tipo);
         if(this.tipo == Type.INT){
             resultado = {
                 value: Number(this.valor), 
