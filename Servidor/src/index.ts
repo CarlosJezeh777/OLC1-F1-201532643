@@ -14,11 +14,12 @@ import cors from 'cors'
 class servidorProyecto{
     constructor(
         public app: express.Application = express(),
-        private port: number = 3000
+        private port: number = 3000,
+        private corsOption: cors.CorsOptions = {origin: true, optionsSuccessStatus: 200}
     ){
         this.app.use(express.json());
         this.app.use(express.urlencoded({extended:true}));
-        this.app.use(cors());
+        this.app.use(cors(corsOption));
         this.app.use(morgan('dev'));
         this.listen();
     }

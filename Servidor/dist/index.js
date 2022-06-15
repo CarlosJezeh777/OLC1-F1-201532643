@@ -15,14 +15,16 @@ var express_1 = __importDefault(require("express"));
 var morgan_1 = __importDefault(require("morgan"));
 var cors_1 = __importDefault(require("cors"));
 var servidorProyecto = /** @class */ (function () {
-    function servidorProyecto(app, port) {
+    function servidorProyecto(app, port, corsOption) {
         if (app === void 0) { app = express_1.default(); }
         if (port === void 0) { port = 3000; }
+        if (corsOption === void 0) { corsOption = { origin: true, optionsSuccessStatus: 200 }; }
         this.app = app;
         this.port = port;
+        this.corsOption = corsOption;
         this.app.use(express_1.default.json());
         this.app.use(express_1.default.urlencoded({ extended: true }));
-        this.app.use(cors_1.default());
+        this.app.use(cors_1.default(corsOption));
         this.app.use(morgan_1.default('dev'));
         this.listen();
     }
