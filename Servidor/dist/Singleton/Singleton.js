@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Singleton = void 0;
 var Singleton = /** @class */ (function () {
     function Singleton() {
         this.consola = " ";

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.AritmeticasOptions = void 0;
 var AritmeticasOptions;
 (function (AritmeticasOptions) {
     AritmeticasOptions[AritmeticasOptions["MAS"] = 0] = "MAS";

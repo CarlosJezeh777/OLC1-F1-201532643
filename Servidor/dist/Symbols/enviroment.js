@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Enviroment = void 0;
 var symbols_1 = require("./symbols");
 var type_1 = require("./type");
 var Enviroment = /** @class */ (function () {

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.OpcionRelacional = void 0;
 var OpcionRelacional;
 (function (OpcionRelacional) {
     OpcionRelacional[OpcionRelacional["MAYORQUE"] = 0] = "MAYORQUE";
