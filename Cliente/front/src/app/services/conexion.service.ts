@@ -9,7 +9,11 @@ export class ConexionService {
   constructor(private http:HttpClient) { 
   }
 
-  getData(){
-    return this.http.get(`${this.URL}/`)
+  public getData(){
+    return this.http.get(`${this.URL}/enviar`);
+  }
+
+  public setData(json:any){
+    return this.http.post(`${this.URL}/recibir`,json);
   }
 }

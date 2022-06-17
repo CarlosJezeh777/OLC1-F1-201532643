@@ -10,18 +10,24 @@
 	const {OpcionRelacional} = require('../Expresiones/RelacionalOpc');
 	const {Logica} = require('../Expresiones/Logicas');
 	const {OpcionesLogicas} = require('../Expresiones/LogicasOpc');
-	const {OpcionesInDe} = require('../Expresiones/IncrementosOpc');
-	const {InDe} = require('../Expresiones/Incrementos');
+	const {OpcionesInDe} = require('../instrucciones/IncrementosOpc');
+	const {InDe} = require('../instrucciones/Incrementos');
 	const {Acces} = require('../Expresiones/Acceso');
 	const {Iif} = require('../instrucciones/InstruccionIF')
+	const {If_Else} = require('../instrucciones/If_else')
 	const {Bloque} = require('../instrucciones/Bloque')
 	const {Imprimir} = require('../instrucciones/imprimir')
+	const {IWhile} = require('../instrucciones/InstWhile')
 %}
 
 %lex
-%option case-insensitive;
+%options case-insensitive
 
 %%
+
+\s+                   /* skip whitespace */
+"//".*                // comentario simple línea
+[/][*][^*]*[*]+([^/*][^*]*[*]+)*[/] // comentario multiple líneas
 						
 
 //"\""                 return 'COMILLASDOBLES';
@@ -294,68 +300,65 @@ INTRUCCION:DVARIABLES 	{$$=$1}
 	|IF 				{$$ = $1}
 	|SWITCH
 	|FOR
-	|WHILE
+	|WHILE				{$$ = $1}
 	|DO_WHILE
 	|MET_FUN
 	|LLAMADA
 	|BLOQUE				{$$ = $1}
 	|FUNCIONES_NATIVAS	{$$ = $1}
+	|INCREMENTOS		{$$ = $1}
 ;
 
-DVARIABLES: TIPO_DATO EXPRESION punto_coma {$$ = new Declaracion($1,$2[0],$2[1],@1.first_line,@1.first_column);}
-	|r_const TIPO_DATO EXPRESION punto_coma
+DVARIABLES: TIPO_DATO identificador igual EXPRESION punto_coma {$$ = new Declaracion($1,$2,$4,@1.first_line,@1.first_column);}
+	|r_const identificador igual EXPRESION punto_coma
 ;
 
-ASIGNACION: EXPRESION punto_coma	{$$ = new Asignar($1[0],$1[1],@1.first_line,@1.first_column);}		
+ASIGNACION: identificador igual EXPRESION punto_coma	{$$ = new Asignar($1,$3,@1.first_line,@1.first_column);}		
 ;
 
-IF:CUERPO_IF ELSE_IF
-	|CUERPO_IF ELSE_IF ELSE
-	|CUERPO_IF ELSE
-	|CUERPO_IF	{$$ = $1}
+IF:CUERPO_IF
 ; 
 
-CUERPO_IF:r_if parentesis_a EXPRESION parentesis_c llave_a INTRUCCIONES llave_c {$$ = new Iif($3,$6,@1.first_line,@1.first_column);}
+CUERPO_IF:r_if EXPRESION BLOQUE  {$$ = new Iif($2,$3,@1.first_line,@1.first_column);} 
+		|r_if EXPRESION BLOQUE r_else BLOQUE {$$ = new If_Else($2,$3,$5,@1.first_line,@1.first_column);}
 ;
 
-ELSE:r_else llave_a INTRUCCIONES llave_c
-;
 
 ELSE_IF:ELSE_IF I_ELSE_IF 
 	|I_ELSE_IF
 ;
 
-I_ELSE_IF:r_else r_if parentesis_a EXPRESION parentesis_c llave_a INTRUCCIONES llave_c 
+I_ELSE_IF:r_else r_if EXPRESION BLOQUE
 ;
 
-SWITCH:r_switch parentesis_a  EXPRESION parentesis_c llave_a CASE llave_c 
+SWITCH:r_switch parentesis_a identificador parentesis_c llave_a CASE llave_c 
 ;
 
 CASE:CASE I_CASE
 	|I_CASE
 ;
 
-I_CASE: r_case dos_puntos INTRUCCIONES r_break punto_coma
+I_CASE: r_case TIPO_LITERAL dos_puntos INTRUCCIONES r_break punto_coma
 	|default dos_puntos INTRUCCIONES 
 ;
 
-FOR:r_for parentesis_a ASIG_FOR parentesis_c llave_a INTRUCCIONES  llave_c
+FOR:r_for parentesis_a ASIG_FOR parentesis_c BLOQUE
 ;
 
 ASIG_FOR:TIPO_DATO EXPRESION punto_coma EXPRESION punto_coma EXPRESION
 	|EXPRESION punto_coma EXPRESION punto_coma EXPRESION
 ;
 
-WHILE:r_while parentesis_a EXPRESION parentesis_c llave_a INTRUCCIONES llave_c
+WHILE:r_while EXPRESION  BLOQUE {$$ = new IWhile($2,$3,@1.first_line,@1.first_column);}
 ;
 
-DO_WHILE:r_do llave_a INTRUCCIONES llave_c  r_while parentesis_a EXPRESION parentesis_c punto_coma
+DO_WHILE:r_do BLOQUE r_while EXPRESION punto_coma
 ;
 
-MET_FUN:r_void identificador parentesis_a parentesis_c llave_a INTRUCCIONES  llave_c
-	|r_void identificador parentesis_a ASIG_PARAMETROS parentesis_c llave_a INTRUCCIONES  llave_c
-	|TIPO_DATO identificador parentesis_a parentesis_c llave_a INTRUCCIONES llave_c
-	|TIPO_DATO identificador parentesis_a ASIG_PARAMETROS parentesis_c llave_a INTRUCCIONES llave_c
+MET_FUN:r_void identificador parentesis_a parentesis_c BLOQUE
+	|r_void identificador parentesis_a ASIG_PARAMETROS parentesis_c BLOQUE
+	|TIPO_DATO identificador parentesis_a parentesis_c BLOQUE
+	|TIPO_DATO identificador parentesis_a ASIG_PARAMETROS parentesis_c BLOQUE
 ;
 
 LLAMADA:r_call identificador parentesis_a parentesis_c punto_coma
@@ -387,24 +390,22 @@ TIPO_DATO
 	|r_bool		{$$=Type.BOOLEAN}
 ;
 
-
+INCREMENTOS:identificador incremento punto_coma	{$$ =  new InDe(1,$1,OpcionesInDe.MAMA,@1.first_line,@1.first_column);}
+			|identificador decremento punto_coma	{$$ =  new InDe(1,$1,OpcionesInDe.MEME,@1.first_line,@1.first_column);}
+			|incremento identificador punto_coma 	{$$ =  new InDe(0,$2,OpcionesInDe.MAMA,@1.first_line,@1.first_column);}
+			|decremento identificador punto_coma	{$$ =  new InDe(0,$2,OpcionesInDe.MEME,@1.first_line,@1.first_column);}
+;
 
 FUNCIONES_NATIVAS
 	:r_println parentesis_a EXPRESION parentesis_c punto_coma 	{$$ = new Imprimir(1,$3,@1.first_line,@1.first_column);}
 	|r_println parentesis_a MET_FUN parentesis_c punto_coma		
-	|r_println parentesis_a parentesis_c punto_coma				//{$$ = new Imprimir(1,null,@1.first_line,@1.first_column);}
+	|r_println parentesis_a parentesis_c punto_coma				{$$ = new Imprimir(2,null,@1.first_line,@1.first_column);}
 	|r_print parentesis_a  EXPRESION parentesis_c punto_coma	{$$ = new Imprimir(0,$3,@1.first_line,@1.first_column);}	
 	|r_print parentesis_a  MET_FUN parentesis_c punto_coma
 	|r_typeof parentesis_a EXPRESION parentesis_c punto_coma
 ;
 
-EXPRESION:incremento EXPRESION			{$$ = new InDe(Number(0),$2,OpcionesInDe.MAMA,@1.first_line,@1.first_column)}
-	|decremento EXPRESION				{$$ = new InDe(Number(0),$2,OpcionesInDe.MEME,@1.first_line,@1.first_column)}
-	|EXPRESION incremento				{$$ = new InDe(Number(1),$1,OpcionesInDe.MAMA,@1.first_line,@1.first_column)}
-	|EXPRESION decremento				{$$ = new InDe(Number(1),$1,OpcionesInDe.MEME,@1.first_line,@1.first_column)}
-	|EXPRESION coma identificador		{$$ = [$1,$3]}
-	|EXPRESION igual EXPRESION 			{$$ = [$1,$3]}
-	|EXPRESION or EXPRESION				{$$ = new Logica($1,$3,OpcionesLogicas.OR,@1.first_line,@1.first_column)}
+EXPRESION:EXPRESION or EXPRESION		{$$ = new Logica($1,$3,OpcionesLogicas.OR,@1.first_line,@1.first_column)}
 	|not EXPRESION						{$$ = new Logica($2,$2,OpcionesLogicas.NOT,@1.first_line,@1.first_column)}
 	|EXPRESION xor EXPRESION			{$$ = new Logica($1,$3,OpcionesLogicas.XOR,@1.first_line,@1.first_column)}
 	|EXPRESION and EXPRESION			{$$ = new Logica($1,$3,OpcionesLogicas.AND,@1.first_line,@1.first_column)}

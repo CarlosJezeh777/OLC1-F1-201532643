@@ -7,13 +7,28 @@ var Enviroment = /** @class */ (function () {
     function Enviroment(anterior) {
         this.anterior = anterior;
         this.tablaSimbolos = new Map();
+        this.tablaSimbolos_metodos = new Map();
     }
     Enviroment.prototype.getEnv = function () {
         return this.tablaSimbolos;
     };
+    Enviroment.prototype.guardar_funcion = function (nombre, valor) {
+        if (!this.buscar_metodo(nombre)) {
+            this.tablaSimbolos_metodos.set(nombre, valor);
+        }
+    };
+    Enviroment.prototype.buscar_metodo = function (nombre) {
+        for (var _i = 0, _a = Array.from(this.tablaSimbolos_metodos.entries()); _i < _a.length; _i++) {
+            var entry = _a[_i];
+            if (entry[0] == nombre)
+                return true;
+        }
+        console.log("El nomnbre del metodo ya existe");
+        return false;
+    };
     Enviroment.prototype.guardar_varible = function (nombre, valor, type) {
         if (!this.buscar_variable(nombre)) {
-            this.tablaSimbolos.set(nombre, new symbols_1.Symbolos(valor, nombre, type));
+            this.tablaSimbolos.set(nombre, new symbols_1.Symbolos(valor, nombre, type, true));
             return true;
         }
         console.log("esta variable [" + nombre + "] ya existe...");
@@ -34,6 +49,14 @@ var Enviroment = /** @class */ (function () {
                 return entry[1].type;
         }
         return type_1.Type.error;
+    };
+    Enviroment.prototype.getValor_variable = function (nombre) {
+        for (var _i = 0, _a = Array.from(this.tablaSimbolos.entries()); _i < _a.length; _i++) {
+            var entry = _a[_i];
+            if (entry[0] == nombre)
+                return { value: entry[1], type: entry[1].type };
+        }
+        return { value: null, type: type_1.Type.error };
     };
     Enviroment.prototype.actualizar_variable = function (nombre, new_valor) {
         for (var _i = 0, _a = Array.from(this.tablaSimbolos.entries()); _i < _a.length; _i++) {

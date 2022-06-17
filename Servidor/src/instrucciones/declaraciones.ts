@@ -1,5 +1,6 @@
 import { Expression } from "../abstract/expression";
 import { Instruccion } from "../abstract/instruccion";
+import { Acces } from "../Expresiones/Acceso";
 import { Enviroment } from "../Symbols/enviroment";
 import { Type } from "../Symbols/type";
 
@@ -21,6 +22,7 @@ export class Declaracion extends Instruccion{
         const expresion = this.expresion.ejecutar(env)
         
         //console.log(expresion.value);
+        //console.log(expresion.type);
 
         if(env.buscar_variable(this.nombre)){
             throw "Error semantico, la variable ya exite, y no se puede repetir"

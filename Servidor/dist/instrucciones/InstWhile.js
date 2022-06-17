@@ -15,27 +15,33 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Iif = void 0;
+exports.IWhile = void 0;
 var instruccion_1 = require("../abstract/instruccion");
 var enviroment_1 = require("../Symbols/enviroment");
-var Iif = /** @class */ (function (_super) {
-    __extends(Iif, _super);
-    function Iif(expresion, instruc, line, colum) {
+var type_1 = require("../Symbols/type");
+var IWhile = /** @class */ (function (_super) {
+    __extends(IWhile, _super);
+    function IWhile(condicion, instrucciones, line, colum) {
         var _this = _super.call(this, line, colum) || this;
-        _this.expresion = expresion;
-        _this.instruc = instruc;
+        _this.condicion = condicion;
+        _this.instrucciones = instrucciones;
         return _this;
     }
-    Iif.prototype.ejecutar = function (env) {
+    IWhile.prototype.ejecutar = function (env) {
+        var band = true;
         var new_env = new enviroment_1.Enviroment(env);
-        var expresion = this.expresion.ejecutar(env);
-        console.log(expresion);
-        if (expresion.value == true) {
-            //console.log("aqui van las instrucicones");
-            this.instruc.ejecutar(new_env);
+        while (band == true) {
+            var cond = this.condicion.ejecutar(env);
+            console.log(cond);
+            if (cond.type != type_1.Type.BOOLEAN) {
+                throw new Error("la condicion tiene que ser un boolean");
+            }
+            this.instrucciones.ejecutar(new_env);
+            if (cond.value == false) {
+                band = false;
+            }
         }
-        //console.log(expresion);
     };
-    return Iif;
+    return IWhile;
 }(instruccion_1.Instruccion));
-exports.Iif = Iif;
+exports.IWhile = IWhile;

@@ -15,27 +15,22 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Iif = void 0;
+exports.Metodo = void 0;
 var instruccion_1 = require("../abstract/instruccion");
-var enviroment_1 = require("../Symbols/enviroment");
-var Iif = /** @class */ (function (_super) {
-    __extends(Iif, _super);
-    function Iif(expresion, instruc, line, colum) {
-        var _this = _super.call(this, line, colum) || this;
-        _this.expresion = expresion;
-        _this.instruc = instruc;
+var Metodo = /** @class */ (function (_super) {
+    __extends(Metodo, _super);
+    function Metodo(id, parametros, bloque, line, column) {
+        var _this = _super.call(this, line, column) || this;
+        _this.id = id;
+        _this.parametros = parametros;
+        _this.bloque = bloque;
         return _this;
     }
-    Iif.prototype.ejecutar = function (env) {
-        var new_env = new enviroment_1.Enviroment(env);
-        var expresion = this.expresion.ejecutar(env);
-        console.log(expresion);
-        if (expresion.value == true) {
-            //console.log("aqui van las instrucicones");
-            this.instruc.ejecutar(new_env);
-        }
-        //console.log(expresion);
+    Metodo.prototype.ejecutar = function (env) {
+        //semantica
+        //asignacion parecida a la de varibles, envez de guardar variables, estoy guardando funciones/metodods
+        env.guardar_funcion(this.id, this);
     };
-    return Iif;
+    return Metodo;
 }(instruccion_1.Instruccion));
-exports.Iif = Iif;
+exports.Metodo = Metodo;

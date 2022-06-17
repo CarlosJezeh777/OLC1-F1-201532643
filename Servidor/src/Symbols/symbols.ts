@@ -4,7 +4,8 @@ export class Symbolos{
     constructor(
         public value: any,
         public id: string,
-        public type: Type
+        public type: Type,
+        public editable: boolean
     ){
         
     }

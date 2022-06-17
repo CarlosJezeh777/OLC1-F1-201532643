@@ -30,6 +30,7 @@ var Declaracion = /** @class */ (function (_super) {
         //console.log("Declarando variable: " + this.nombre );
         var expresion = this.expresion.ejecutar(env);
         //console.log(expresion.value);
+        //console.log(expresion.type);
         if (env.buscar_variable(this.nombre)) {
             throw "Error semantico, la variable ya exite, y no se puede repetir";
         }

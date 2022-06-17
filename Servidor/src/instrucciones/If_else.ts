@@ -4,10 +4,11 @@ import { Enviroment } from "../Symbols/enviroment";
 import { Type } from "../Symbols/type";
 import { Bloque } from "./Bloque";
 
-export class Iif extends Instruccion{
+export class If_Else extends Instruccion{
     constructor(
         public expresion:Expression,
-        private instruc: Bloque,
+        private instrucTrue: Bloque,
+        private instrucFalse: Bloque,
         line: number,
         colum: number
     ){
@@ -22,8 +23,10 @@ export class Iif extends Instruccion{
         
         if(expresion.value == true){
             //console.log("aqui van las instrucicones");
-            this.instruc.ejecutar(new_env);
+            this.instrucTrue.ejecutar(new_env);
                        
+        }else if (expresion.value == false){
+            this.instrucFalse.ejecutar(new_env);
         }
         
         //console.log(expresion);

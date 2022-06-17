@@ -27,6 +27,9 @@ var Imprimir = /** @class */ (function (_super) {
         return _this;
     }
     Imprimir.prototype.ejecutar = function (env) {
+        if (this.expresion == null) {
+            throw "Es un salto de linea";
+        }
         var tmp = this.expresion.ejecutar(env);
         var s = Singleton_1.Singleton.getInstance();
         if (this.tipo == 0) {
@@ -34,6 +37,9 @@ var Imprimir = /** @class */ (function (_super) {
         }
         else if (this.tipo == 1) {
             s.addConsola(tmp.value + "\n");
+        }
+        else if (this.tipo == 2) {
+            s.addConsola("\n\r");
         }
     };
     return Imprimir;

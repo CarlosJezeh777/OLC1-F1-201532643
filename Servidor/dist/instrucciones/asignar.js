@@ -26,11 +26,12 @@ var Asignar = /** @class */ (function (_super) {
         return _this;
     }
     Asignar.prototype.ejecutar = function (env) {
+        var acces = this.nombre.ejecutar(env);
         var expresion = this.expresion.ejecutar(env);
         //console.log("haciendo una asinacion: " + this.nombre)
         //console.log(expresion.value)
         //console.log(expresion.type)
-        env.actualizar_variable(this.nombre, expresion.value);
+        env.actualizar_variable(acces.value, expresion.value);
     };
     return Asignar;
 }(instruccion_1.Instruccion));

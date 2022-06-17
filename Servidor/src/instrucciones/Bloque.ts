@@ -3,7 +3,7 @@ import { Enviroment } from "../Symbols/enviroment";
 
 export class Bloque extends Instruccion{
     constructor(
-        private instruccion: any,
+        private instruccion: any[],
         line: number,
         colum: number
     ){
