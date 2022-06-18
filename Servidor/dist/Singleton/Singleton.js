@@ -5,6 +5,7 @@ var Singleton = /** @class */ (function () {
     function Singleton() {
         this.consola = " ";
         this.errores = [];
+        this.elses_if = [];
     }
     Singleton.getInstance = function () {
         if (!Singleton.instance) {
@@ -23,6 +24,15 @@ var Singleton = /** @class */ (function () {
     };
     Singleton.prototype.getErrores = function () {
         return this.errores;
+    };
+    Singleton.prototype.addElseIf = function (data) {
+        this.elses_if.push(data);
+    };
+    Singleton.prototype.getElseIF = function () {
+        return this.elses_if;
+    };
+    Singleton.prototype.deleteElemets = function () {
+        this.elses_if.length = 0;
     };
     return Singleton;
 }());

@@ -15,34 +15,27 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.IWhile = void 0;
+exports.If_Else_If = void 0;
 var instruccion_1 = require("../abstract/instruccion");
 var enviroment_1 = require("../Symbols/enviroment");
-var type_1 = require("../Symbols/type");
-var IWhile = /** @class */ (function (_super) {
-    __extends(IWhile, _super);
-    function IWhile(condicion, instrucciones, line, colum) {
+var If_Else_If = /** @class */ (function (_super) {
+    __extends(If_Else_If, _super);
+    function If_Else_If(variable, condicion, in_de, instrucciones, line, colum) {
         var _this = _super.call(this, line, colum) || this;
+        _this.variable = variable;
         _this.condicion = condicion;
+        _this.in_de = in_de;
         _this.instrucciones = instrucciones;
         return _this;
     }
-    IWhile.prototype.ejecutar = function (env) {
-        var band = true;
-        var new_env = new enviroment_1.Enviroment(env);
-        while (band == true) {
-            //console.log(index);
-            var cond = this.condicion.ejecutar(env);
-            //console.log(cond);
-            if (cond.value == false) {
-                break;
-            }
-            if (cond.type != type_1.Type.BOOLEAN) {
-                throw new Error("la condicion tiene que ser un boolean");
-            }
-            this.instrucciones.ejecutar(env);
-        }
+    If_Else_If.prototype.ejecutar = function (env) {
+        var env_for = new enviroment_1.Enviroment(env);
+        this.variable.ejecutar(env_for);
+        var cond = this.condicion.ejecutar(env_for);
+        var incremento = this.in_de.ejecutar(env_for);
+        console.log(cond);
+        console.log(incremento);
     };
-    return IWhile;
+    return If_Else_If;
 }(instruccion_1.Instruccion));
-exports.IWhile = IWhile;
+exports.If_Else_If = If_Else_If;

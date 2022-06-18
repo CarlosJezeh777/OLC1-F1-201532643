@@ -15,34 +15,33 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.IWhile = void 0;
+exports.Type_Of = void 0;
 var instruccion_1 = require("../abstract/instruccion");
-var enviroment_1 = require("../Symbols/enviroment");
+var Singleton_1 = require("../Singleton/Singleton");
 var type_1 = require("../Symbols/type");
-var IWhile = /** @class */ (function (_super) {
-    __extends(IWhile, _super);
-    function IWhile(condicion, instrucciones, line, colum) {
-        var _this = _super.call(this, line, colum) || this;
-        _this.condicion = condicion;
-        _this.instrucciones = instrucciones;
+var Type_Of = /** @class */ (function (_super) {
+    __extends(Type_Of, _super);
+    function Type_Of(expresion, line, column) {
+        var _this = _super.call(this, line, column) || this;
+        _this.expresion = expresion;
         return _this;
     }
-    IWhile.prototype.ejecutar = function (env) {
-        var band = true;
-        var new_env = new enviroment_1.Enviroment(env);
-        while (band == true) {
-            //console.log(index);
-            var cond = this.condicion.ejecutar(env);
-            //console.log(cond);
-            if (cond.value == false) {
-                break;
-            }
-            if (cond.type != type_1.Type.BOOLEAN) {
-                throw new Error("la condicion tiene que ser un boolean");
-            }
-            this.instrucciones.ejecutar(env);
+    Type_Of.prototype.ejecutar = function (env) {
+        var tmp = this.expresion.ejecutar(env);
+        var s = Singleton_1.Singleton.getInstance();
+        if (tmp.type == type_1.Type.INT) {
+            s.addConsola("Integer\n");
+        }
+        else if (tmp.type == type_1.Type.BOOLEAN) {
+            s.addConsola("Boolean\n");
+        }
+        else if (tmp.type == type_1.Type.CHAR) {
+            s.addConsola("Caracter\n");
+        }
+        else if (tmp.type == type_1.Type.STRING) {
+            s.addConsola("cadena\n");
         }
     };
-    return IWhile;
+    return Type_Of;
 }(instruccion_1.Instruccion));
-exports.IWhile = IWhile;
+exports.Type_Of = Type_Of;

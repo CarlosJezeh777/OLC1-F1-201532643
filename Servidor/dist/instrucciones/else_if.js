@@ -15,34 +15,33 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.IWhile = void 0;
+exports.Else_If = void 0;
 var instruccion_1 = require("../abstract/instruccion");
-var enviroment_1 = require("../Symbols/enviroment");
-var type_1 = require("../Symbols/type");
-var IWhile = /** @class */ (function (_super) {
-    __extends(IWhile, _super);
-    function IWhile(condicion, instrucciones, line, colum) {
+var UtilesArrays_1 = require("../Singleton/UtilesArrays");
+var Else_If = /** @class */ (function (_super) {
+    __extends(Else_If, _super);
+    function Else_If(expresion, instrucccion, line, colum) {
         var _this = _super.call(this, line, colum) || this;
-        _this.condicion = condicion;
-        _this.instrucciones = instrucciones;
+        _this.expresion = expresion;
+        _this.instrucccion = instrucccion;
         return _this;
     }
-    IWhile.prototype.ejecutar = function (env) {
-        var band = true;
-        var new_env = new enviroment_1.Enviroment(env);
-        while (band == true) {
-            //console.log(index);
-            var cond = this.condicion.ejecutar(env);
-            //console.log(cond);
-            if (cond.value == false) {
-                break;
-            }
-            if (cond.type != type_1.Type.BOOLEAN) {
-                throw new Error("la condicion tiene que ser un boolean");
-            }
-            this.instrucciones.ejecutar(env);
+    Else_If.prototype.ejecutar = function (env) {
+        /*const new_env = new  Enviroment(env);
+        const result = this.expresion.ejecutar(env);
+        
+        if(result.type != Type.BOOLEAN){
+            throw new Error("la condidicion tiene que ser una expresion booleana");
+            
         }
+
+        if(result.value == true){
+            this.instrucccion.ejecutar(new_env);
+        }*/
+        var util = UtilesArrays_1.utilesArrays.getInstance();
+        util.addElseIf(this);
+        //console.log(expresion);
     };
-    return IWhile;
+    return Else_If;
 }(instruccion_1.Instruccion));
-exports.IWhile = IWhile;
+exports.Else_If = Else_If;

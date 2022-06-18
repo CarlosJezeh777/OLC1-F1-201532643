@@ -29,28 +29,62 @@
 string a = "si entro";
     
 int a1 = 6;
-if(a1>2){
+if(a1>10){
     Println("esta en el true");
-}else{
-    Println("esta en false")
+}else if(a1 < 4){
+    Println("esta en el else if 1");
+}else if(a1 == 6){
+    Println("esta en el else if 2");
+}else if(a1 <= 4){
+    Println("esta en el else if 3");
 }
 
-/*int a2 = 5;
-while(a2 >1){
-    Println("probando");
-    a2--;
-}*/
+int b1 = 1;
+{
+    b1 = 3;
+    Println(b1);
+}
+
+switch(b1){
+    case 1:
+        Println("switch 1");
+        break;
+    case 2:
+        Println("switch 2");
+        break;
+    case 3:
+        Println("switch 3");
+        break;
+}
+
+int a3 = 0;
+while(a3<5){
+    Println("probando while");
+    a3++;
+}
 
 
-a2++;
-a2--;
---a2;
-++a2;
+int a5 = 0;
+boolean bandera = true;
+do{
+    Println("probando do while");
+    if(a5 == 6){
+        bandera = false;
+    }
+    a5++;
+}while(bandera);
 
-Println(a2);
 
+int a2 = 5;
+{
+    a2++;
+    Println(a2);
+}
 string hola = "mi nombre es carlos";
 
 Println(hola);
 
 
+/*for(int i = 0; i<10 ; i++){
+    Println("Probando if ");
+}*/

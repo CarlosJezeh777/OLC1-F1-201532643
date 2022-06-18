@@ -66,11 +66,38 @@ var Enviroment = /** @class */ (function () {
             }
         }
     };
+    Enviroment.prototype.actualizar_variable2 = function (nombre, new_valor, env) {
+        for (var _i = 0, _a = Array.from(env.tablaSimbolos.entries()); _i < _a.length; _i++) {
+            var entry = _a[_i];
+            if (entry[0] == nombre) {
+                entry[1].value = new_valor;
+            }
+        }
+    };
     Enviroment.prototype.get_variable = function (nombre) {
         var env = this;
         while (env != null) {
             if (env.tablaSimbolos.has(nombre))
                 return env.tablaSimbolos.get(nombre);
+            env = env.anterior;
+        }
+        return null;
+    };
+    Enviroment.prototype.get_metodo = function (nombre) {
+        var env = this;
+        while (env != null) {
+            if (env.tablaSimbolos_metodos.has(nombre))
+                return env.tablaSimbolos_metodos.get(nombre);
+            env = env.anterior;
+        }
+        return null;
+    };
+    Enviroment.prototype.get_Enviroment = function (nombre) {
+        var env = this;
+        while (env != null) {
+            if (env.buscar_variable(nombre)) {
+                return env;
+            }
             env = env.anterior;
         }
         return null;

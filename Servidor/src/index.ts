@@ -6,7 +6,7 @@ const singleton = Singleton.getInstance()
 
 const parser = require('./gramatica/gramatica');
 const fs = require("fs");
-
+/*
 import express from 'express'
 import morgan from 'morgan'
 import cors from 'cors'
@@ -70,9 +70,9 @@ class servidorProyecto{
 
 }
 
-new servidorProyecto();
+new servidorProyecto();*/
 
-/*try { 
+try { 
     const entrada =  fs.readFileSync("src/entrada.txt");
     const ast = parser.parse(entrada.toString());
     const env_padre =  new Enviroment(null);
@@ -100,4 +100,4 @@ new servidorProyecto();
     
 } catch (error) {
     console.log(error)   
-}*/
+}

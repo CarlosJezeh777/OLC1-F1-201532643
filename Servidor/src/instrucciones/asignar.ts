@@ -5,7 +5,7 @@ import { Enviroment } from "../Symbols/enviroment";
 
 export class Asignar extends Instruccion{
     constructor(
-        public nombre: Acces,
+        public nombre: string,
         public expresion: Expression,
         line: number,
         column: number
@@ -13,11 +13,27 @@ export class Asignar extends Instruccion{
         super(line,column)
     }
     public ejecutar(env:Enviroment) {
-        const acces =  this.nombre.ejecutar(env)
+        const verificar = new Acces(this.nombre,this.line,this.colum)
+        const acces =  verificar.ejecutar(env)
         const expresion = this.expresion.ejecutar(env)
+        //console.log(expresion);
+        
+
+        if(env.buscar_variable(this.nombre)){
+            console.log("si esta");
+            
+        }else{
+            console.log("no esta");
+            
+        }
+
+        const tmp = env.get_Enviroment(this.nombre);
+        //console.log(tmp);
+        
         //console.log("haciendo una asinacion: " + this.nombre)
-        //console.log(expresion.value)
+        console.log(expresion.value)
         //console.log(expresion.type)
-        env.actualizar_variable(acces.value,expresion.value)
+        tmp?.actualizar_variable(this.nombre,expresion.value)
+        
     }
 }

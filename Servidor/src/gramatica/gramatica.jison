@@ -18,6 +18,13 @@
 	const {Bloque} = require('../instrucciones/Bloque')
 	const {Imprimir} = require('../instrucciones/imprimir')
 	const {IWhile} = require('../instrucciones/InstWhile')
+	const {Type_Of} = require('../instrucciones/TypeOf')
+	const {Else_If} = require('../instrucciones/else_if')
+	const {If_Else_If} = require('../instrucciones/IF2')
+	const {Casos} = require('../instrucciones/Cases')
+	const {Switch_I} = require('../instrucciones/Switch_I')
+	const {DoWhile} = require('../instrucciones/DoWhile')
+	const {For_Inst} = require('../instrucciones/For_I')
 %}
 
 %lex
@@ -298,10 +305,10 @@ INTRUCCIONES : INTRUCCIONES INTRUCCION 	{ $1.push($2); $$ = $1;}
 INTRUCCION:DVARIABLES 	{$$=$1}
 	|ASIGNACION 		{$$ = $1}
 	|IF 				{$$ = $1}
-	|SWITCH
-	|FOR
+	|SWITCH				{$$ = $1}
+	|FOR				{$$ = $1}
 	|WHILE				{$$ = $1}
-	|DO_WHILE
+	|DO_WHILE			{$$ = $1}
 	|MET_FUN
 	|LLAMADA
 	|BLOQUE				{$$ = $1}
@@ -321,38 +328,39 @@ IF:CUERPO_IF
 
 CUERPO_IF:r_if EXPRESION BLOQUE  {$$ = new Iif($2,$3,@1.first_line,@1.first_column);} 
 		|r_if EXPRESION BLOQUE r_else BLOQUE {$$ = new If_Else($2,$3,$5,@1.first_line,@1.first_column);}
+		|r_if EXPRESION BLOQUE ELSE_IF {$$ = new If_Else_If($2,$3,$4,@1.first_line,@1.first_column);}
 ;
 
 
-ELSE_IF:ELSE_IF I_ELSE_IF 
-	|I_ELSE_IF
+ELSE_IF:ELSE_IF I_ELSE_IF 	{$1.push($2); $$ = $1;}
+	|I_ELSE_IF {$$ = [$1]}
 ;
 
-I_ELSE_IF:r_else r_if EXPRESION BLOQUE
+I_ELSE_IF:r_else r_if EXPRESION BLOQUE	{$$ = new Else_If($3,$4,@1.first_line,@1.first_column);}
 ;
 
-SWITCH:r_switch parentesis_a identificador parentesis_c llave_a CASE llave_c 
+SWITCH:r_switch parentesis_a identificador parentesis_c llave_a CASE llave_c {$$ = new Switch_I($3,$6,@1.first_line,@1.first_column)}
 ;
 
-CASE:CASE I_CASE
-	|I_CASE
+CASE:CASE I_CASE {$1.push($2); $$ = $1;}
+	|I_CASE {$$ = [$1]}
 ;
 
-I_CASE: r_case TIPO_LITERAL dos_puntos INTRUCCIONES r_break punto_coma
+I_CASE: r_case TIPO_LITERAL dos_puntos INTRUCCIONES r_break punto_coma {$$ = new Casos($2,$4,@1.first_line,@1.first_column)}
 	|default dos_puntos INTRUCCIONES 
 ;
 
-FOR:r_for parentesis_a ASIG_FOR parentesis_c BLOQUE
+FOR:r_for parentesis_a ASIG_FOR parentesis_c BLOQUE	{$$ = new For_Inst($3[0],$3[1],$3[2],$5,@1.first_line,@1.first_column);}
 ;
 
-ASIG_FOR:TIPO_DATO EXPRESION punto_coma EXPRESION punto_coma EXPRESION
-	|EXPRESION punto_coma EXPRESION punto_coma EXPRESION
+ASIG_FOR:DVARIABLES punto_coma EXPRESION punto_coma INCREMENTOS {$$ = [$1,$3,$5]}
+	|ASIGNACION punto_coma EXPRESION punto_coma INCREMENTOS	{$$ = [$1,$3,$5]}
 ;
 
 WHILE:r_while EXPRESION  BLOQUE {$$ = new IWhile($2,$3,@1.first_line,@1.first_column);}
 ;
 
-DO_WHILE:r_do BLOQUE r_while EXPRESION punto_coma
+DO_WHILE:r_do BLOQUE r_while EXPRESION punto_coma {$$ = new DoWhile($4,$2,@1.first_line,@1.first_column);}
 ;
 
 MET_FUN:r_void identificador parentesis_a parentesis_c BLOQUE
@@ -402,7 +410,7 @@ FUNCIONES_NATIVAS
 	|r_println parentesis_a parentesis_c punto_coma				{$$ = new Imprimir(2,null,@1.first_line,@1.first_column);}
 	|r_print parentesis_a  EXPRESION parentesis_c punto_coma	{$$ = new Imprimir(0,$3,@1.first_line,@1.first_column);}	
 	|r_print parentesis_a  MET_FUN parentesis_c punto_coma
-	|r_typeof parentesis_a EXPRESION parentesis_c punto_coma
+	|r_typeof parentesis_a EXPRESION parentesis_c punto_coma	{$$ = new Type_Of($3,@1.first_line,@1.first_column);}
 ;
 
 EXPRESION:EXPRESION or EXPRESION		{$$ = new Logica($1,$3,OpcionesLogicas.OR,@1.first_line,@1.first_column)}

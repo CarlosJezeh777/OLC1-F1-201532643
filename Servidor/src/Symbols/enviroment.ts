@@ -1,4 +1,6 @@
 import { Retorno } from "../abstract/Retorno";
+import { Else_If } from "../instrucciones/else_if";
+import { Metodo } from "../instrucciones/metodos";
 import { Symbolos } from "./symbols";
 import { Type } from "./type";
 
@@ -68,6 +70,13 @@ export class Enviroment{
         }
     }
 
+    public actualizar_variable2(nombre: string, new_valor: any, env: Enviroment) {
+        for (let entry of Array.from(env.tablaSimbolos.entries())) {
+          if (entry[0] == nombre) {
+              entry[1].value = new_valor;
+          }
+        }
+    }
     
   public get_variable(nombre: string): Symbolos | undefined | null {
     let env: Enviroment| null = this;
@@ -76,5 +85,25 @@ export class Enviroment{
         env = env.anterior;
     }
     return null;
-}
+    }
+    
+    public get_metodo(nombre: string): Metodo| undefined | null {
+        let env: Enviroment | null = this;
+        while (env != null) {
+            if (env.tablaSimbolos_metodos.has(nombre)) return env.tablaSimbolos_metodos.get(nombre);
+            env = env.anterior;
+        }
+        return null;
+    }
+
+    public get_Enviroment(nombre: string): Enviroment | null {
+        let env: Enviroment | null = this;
+        while (env != null) {
+            if (env.buscar_variable(nombre)){
+                return env
+            }
+            env = env.anterior;
+        }
+        return null;
+    }
 }

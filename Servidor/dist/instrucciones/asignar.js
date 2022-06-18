@@ -17,6 +17,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Asignar = void 0;
 var instruccion_1 = require("../abstract/instruccion");
+var Acceso_1 = require("../Expresiones/Acceso");
 var Asignar = /** @class */ (function (_super) {
     __extends(Asignar, _super);
     function Asignar(nombre, expresion, line, column) {
@@ -26,12 +27,22 @@ var Asignar = /** @class */ (function (_super) {
         return _this;
     }
     Asignar.prototype.ejecutar = function (env) {
-        var acces = this.nombre.ejecutar(env);
+        var verificar = new Acceso_1.Acces(this.nombre, this.line, this.colum);
+        var acces = verificar.ejecutar(env);
         var expresion = this.expresion.ejecutar(env);
+        //console.log(expresion);
+        if (env.buscar_variable(this.nombre)) {
+            console.log("si esta");
+        }
+        else {
+            console.log("no esta");
+        }
+        var tmp = env.get_Enviroment(this.nombre);
+        //console.log(tmp);
         //console.log("haciendo una asinacion: " + this.nombre)
-        //console.log(expresion.value)
+        console.log(expresion.value);
         //console.log(expresion.type)
-        env.actualizar_variable(acces.value, expresion.value);
+        tmp === null || tmp === void 0 ? void 0 : tmp.actualizar_variable(this.nombre, expresion.value);
     };
     return Asignar;
 }(instruccion_1.Instruccion));

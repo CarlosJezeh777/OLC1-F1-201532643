@@ -32,21 +32,23 @@ var InDe = /** @class */ (function (_super) {
         var nuevo;
         var id = new Acceso_1.Acces(this.nombre, this.line, this.colum);
         var valor = id.ejecutar(env);
+        console.log(valor);
+        var tmp = env.get_Enviroment(this.nombre);
         if (this.lado == 0 && this.tipo == IncrementosOpc_1.OpcionesInDe.MAMA) {
             nuevo = ++valor.value;
-            env.actualizar_variable(this.nombre, nuevo);
+            tmp === null || tmp === void 0 ? void 0 : tmp.actualizar_variable(this.nombre, nuevo);
         }
         else if (this.lado == 1 && this.tipo == IncrementosOpc_1.OpcionesInDe.MAMA) {
             nuevo = valor.value + 1;
-            env.actualizar_variable(this.nombre, nuevo);
+            tmp === null || tmp === void 0 ? void 0 : tmp.actualizar_variable(this.nombre, nuevo);
         }
         else if (this.lado == 0 && this.tipo == IncrementosOpc_1.OpcionesInDe.MEME) {
             nuevo = --valor.value;
-            env.actualizar_variable(this.nombre, nuevo);
+            tmp === null || tmp === void 0 ? void 0 : tmp.actualizar_variable(this.nombre, nuevo);
         }
         else if (this.lado == 1 && this.tipo == IncrementosOpc_1.OpcionesInDe.MEME) {
             nuevo = valor.value - 1;
-            env.actualizar_variable(this.nombre, nuevo);
+            tmp === null || tmp === void 0 ? void 0 : tmp.actualizar_variable(this.nombre, nuevo);
         }
     };
     return InDe;

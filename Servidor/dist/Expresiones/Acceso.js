@@ -26,6 +26,7 @@ var Acces = /** @class */ (function (_super) {
     }
     Acces.prototype.ejecutar = function (env) {
         var variable_ts = env.get_variable(this.id);
+        //console.log(variable_ts);
         if (variable_ts == null || variable_ts == undefined) {
             throw "Error Semantico, esta variable no existe";
         }

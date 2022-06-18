@@ -21,23 +21,27 @@ export class InDe extends Instruccion{
         
         const id =  new Acces(this.nombre,this.line,this.colum);
         let valor = id.ejecutar(env);
+
+        
+        console.log(valor);
+        const tmp = env.get_Enviroment(this.nombre);
         
         
         if(this.lado == 0 && this.tipo == OpcionesInDe.MAMA){
 
                 nuevo = ++valor.value;                                
-                env.actualizar_variable(this.nombre,nuevo);  
+                tmp?.actualizar_variable(this.nombre,nuevo);  
         }else if(this.lado == 1 && this.tipo == OpcionesInDe.MAMA){
             nuevo = valor.value + 1;                
-            env.actualizar_variable(this.nombre,nuevo);  
+            tmp?.actualizar_variable(this.nombre,nuevo);  
     
         }else if(this.lado == 0 && this.tipo == OpcionesInDe.MEME){
             nuevo = --valor.value;                
-            env.actualizar_variable(this.nombre,nuevo);  
+            tmp?.actualizar_variable(this.nombre,nuevo);  
     
         }else if(this.lado == 1 && this.tipo == OpcionesInDe.MEME){
             nuevo = valor.value - 1;                
-            env.actualizar_variable(this.nombre,nuevo);  
+            tmp?.actualizar_variable(this.nombre,nuevo);  
     
         }   
         
