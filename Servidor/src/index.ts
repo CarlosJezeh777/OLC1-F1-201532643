@@ -41,6 +41,7 @@ class servidorProyecto{
 
     
     public postDatos(){
+        let texto : string = " ";
         this.app.post('/recibir',function(request, response){
             try { 
                 console.log(request.body["editor"]);
@@ -56,7 +57,7 @@ class servidorProyecto{
                         singleton.addErrores(error)
                     }
                 }
-                let texto : string = " ";
+                
                 texto = singleton.getConsola();
                 
                 response.json({respuest: texto});
@@ -71,8 +72,9 @@ class servidorProyecto{
 }
 
 new servidorProyecto();
-/*
-try { 
+
+
+/*try { 
     const entrada =  fs.readFileSync("src/entrada.txt");
     const ast = parser.parse(entrada.toString());
     const env_padre =  new Enviroment(null);

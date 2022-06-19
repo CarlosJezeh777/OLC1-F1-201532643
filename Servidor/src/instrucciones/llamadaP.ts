@@ -16,38 +16,36 @@ export class LlamadaP extends Instruccion{
 
     public ejecutar(env:Enviroment) {
         
-        //console.log(this);
         let metodo= env.get_metodoP(this.id)
-        //console.log(metodo?.parametros);
-        //console.log(this.parametros);
-        
-        
-    
-        //si lo encontro
-        //new env para declarar los parametros
         let env_parametros= new Enviroment(env); 
-        let env_instrucciones = new Enviroment(env_parametros);        
-        let valores: any[] = [];
-        let nombres: any[] = [];
+        let env_instrucciones = new Enviroment(env_parametros);   
 
-        for (const dec of metodo?.parametros) {
-            let name = dec.nombre
-            nombres.push(name)                     
-        }
-        for (const elemento of this.parametros) {
-            const element =  elemento.ejecutar(env)
-            valores.push(element)
-            
-        }
-        let declaraciones: Declaracion[] = []
-        for (let i = 0; i < nombres.length; i++) {
-            declaraciones.push(new Declaracion(valores[i].type,nombres[i],valores[i].value,true,this.line,this.colum));       
-        }
-    
+        let nombres: any[] = [];
+        let asignaciones:Asignar[] = [];
         
-        for (const elemento of declaraciones) {    
-            elemento.ejecutar(env_instrucciones)            
+        for (const dec of metodo?.parametros) {
+            nombres.push(dec.nombre)
+            try {
+                dec.ejecutar(env_parametros)
+            } catch (error) {
+                console.log(error);
+                
+            }                   
         }
+        
+        for (let i = 0; i < nombres.length; i++) {
+            asignaciones.push(new Asignar(nombres[i],this.parametros[i],this.line,this.colum));       
+        }
+        
+        for (const elemento of asignaciones) {
+            try {
+                elemento.ejecutar(env_parametros)
+            } catch (error) {
+                console.log(error);
+                
+            }
+        }
+       
 
         console.log(env_parametros);
         

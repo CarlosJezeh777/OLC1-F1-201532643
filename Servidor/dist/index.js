@@ -41,6 +41,7 @@ var servidorProyecto = /** @class */ (function () {
         });
     };
     servidorProyecto.prototype.postDatos = function () {
+        var texto = " ";
         this.app.post('/recibir', function (request, response) {
             try {
                 console.log(request.body["editor"]);
@@ -57,7 +58,6 @@ var servidorProyecto = /** @class */ (function () {
                         singleton.addErrores(error);
                     }
                 }
-                var texto = " ";
                 texto = singleton.getConsola();
                 response.json({ respuest: texto });
             }
@@ -69,8 +69,7 @@ var servidorProyecto = /** @class */ (function () {
     return servidorProyecto;
 }());
 new servidorProyecto();
-/*
-try {
+/*try {
     const entrada =  fs.readFileSync("src/entrada.txt");
     const ast = parser.parse(entrada.toString());
     const env_padre =  new Enviroment(null);

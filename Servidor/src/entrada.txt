@@ -79,8 +79,8 @@ println("Calificacion= "+calificacion);
 println("SENTENCIA TYPEOF:--------------------------");
 //println(typeof(calificacion));
 println("SENTENCIA TYPEOF:--------------------------");
-//println(typeof(calificacion));
-//println(typeof(15/12.0));
+println(typeof(calificacion));
+println(typeof(15/12.0));
 calificacion= calificacion+2;
 println("Calificacion= "+calificacion);
 calificacion= calificacion+1;  // manejo DE println
@@ -181,3 +181,14 @@ call expresiones();
 return 4+3;
 break;
 continue;
+
+
+void holaMundo(int numero1, string mundo){
+    Println(mundo);
+}
+
+call holaMundo(5, "hola");
+
+int jaja;
+
+Println(jaja);

@@ -52,6 +52,8 @@ export class Declaracion extends Instruccion{
                     }
             }
         }
+
+
         const expresion = this.expresion.ejecutar(env)
         
         //console.log(expresion.value);

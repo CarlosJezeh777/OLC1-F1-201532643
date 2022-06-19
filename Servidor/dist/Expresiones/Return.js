@@ -15,26 +15,28 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MetodosP = void 0;
-var instruccion_1 = require("../abstract/instruccion");
-var MetodosP = /** @class */ (function (_super) {
-    __extends(MetodosP, _super);
-    function MetodosP(nombre, parametros, instrucciones, line, colum) {
-        var _this = _super.call(this, line, colum) || this;
-        _this.nombre = nombre;
-        _this.parametros = parametros;
-        _this.instrucciones = instrucciones;
+exports.ReturnE = void 0;
+var expression_1 = require("../abstract/expression");
+var type_1 = require("../Symbols/type");
+var ReturnE = /** @class */ (function (_super) {
+    __extends(ReturnE, _super);
+    function ReturnE(expresion, line, column) {
+        var _this = _super.call(this, line, column) || this;
+        _this.expresion = expresion;
         return _this;
     }
-    MetodosP.prototype.ejecutar = function (env) {
-        //console.log(this);
-        if (this.parametros == null) {
-            throw new Error("Error semantico: tiene que traer parametros");
-        }
-        if (env.guardar_funcion(this.nombre, this)) {
-            console.log("se guardo");
-        }
+    ReturnE.prototype.ejecutar = function (env) {
+        var resultado = {
+            value: null,
+            type: type_1.Type.error
+        };
+        var tmp = this.expresion.ejecutar(env);
+        resultado = {
+            value: tmp.value,
+            type: tmp.type
+        };
+        return resultado;
     };
-    return MetodosP;
-}(instruccion_1.Instruccion));
-exports.MetodosP = MetodosP;
+    return ReturnE;
+}(expression_1.Expression));
+exports.ReturnE = ReturnE;

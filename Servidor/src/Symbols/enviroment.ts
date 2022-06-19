@@ -1,5 +1,6 @@
 import { Retorno } from "../abstract/Retorno";
 import { Else_If } from "../instrucciones/else_if";
+import { Funcion } from "../instrucciones/Funcion";
 import { Metodos } from "../instrucciones/IMetdos";
 import { MetodosP } from "../instrucciones/MetodoPara";
 import { Symbolos } from "./symbols";
@@ -99,6 +100,16 @@ export class Enviroment{
         return null;
     }
     public get_metodoP(nombre: string): null | MetodosP{
+        let env: Enviroment | null = this;
+        while (env != null) {
+            if (env.tablaSimbolos_metodos.has(nombre)) return env.tablaSimbolos_metodos.get(nombre);
+            env = env.anterior;
+        }
+        return null;
+    }
+
+            
+    public get_Funcion(nombre: string): null | Funcion{
         let env: Enviroment | null = this;
         while (env != null) {
             if (env.tablaSimbolos_metodos.has(nombre)) return env.tablaSimbolos_metodos.get(nombre);

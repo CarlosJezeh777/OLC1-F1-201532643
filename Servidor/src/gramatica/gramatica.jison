@@ -287,6 +287,7 @@
 /lex
 
 /* Asociación de operadores y precedencia */
+%left 'r_typeof'
 %left 'igual' 'coma' 'incremento' 'decremento'
 %left 'or' 'xor' 'and' 'not'
 %left 'mayor' 'mayor_igual' 'menor' 'menor_igual' 'igual_que' 'no_igual'
@@ -370,7 +371,7 @@ DO_WHILE:r_do BLOQUE r_while EXPRESION punto_coma {$$ = new DoWhile($4,$2,@1.fir
 
 MET_FUN:r_void identificador parentesis_a parentesis_c BLOQUE 	{$$ = new Metodos($2,$5,@1.first_line,@1.first_column);}
 	|r_void identificador parentesis_a ASIG_PARAMETROS parentesis_c BLOQUE 	{$$ = new MetodosP($2,$4,$6,@1.first_line,@1.first_column);}
-	|TIPO_DATO identificador parentesis_a parentesis_c BLOQUE
+	|TIPO_DATO identificador parentesis_a parentesis_c llave_a INTRUCCIONES RETORNO llave_c
 	|TIPO_DATO identificador parentesis_a ASIG_PARAMETROS parentesis_c BLOQUE
 ;
 
@@ -415,10 +416,11 @@ FUNCIONES_NATIVAS
 	|r_println parentesis_a parentesis_c punto_coma				{$$ = new Imprimir(2,null,@1.first_line,@1.first_column);}
 	|r_print EXPRESION punto_coma	{$$ = new Imprimir(0,$2,@1.first_line,@1.first_column);}	
 	|r_print parentesis_a  MET_FUN parentesis_c punto_coma
-	|r_typeof EXPRESION 	{$$ = new Type_Of($2,@1.first_line,@1.first_column);}
+
 ;
 
-EXPRESION:EXPRESION or EXPRESION		{$$ = new Logica($1,$3,OpcionesLogicas.OR,@1.first_line,@1.first_column)}
+EXPRESION: r_typeof EXPRESION 	{$$ = new Type_Of($2,@1.first_line,@1.first_column);}
+	|EXPRESION or EXPRESION		{$$ = new Logica($1,$3,OpcionesLogicas.OR,@1.first_line,@1.first_column)}
 	|not EXPRESION						{$$ = new Logica($2,$2,OpcionesLogicas.NOT,@1.first_line,@1.first_column)}
 	|EXPRESION xor EXPRESION			{$$ = new Logica($1,$3,OpcionesLogicas.XOR,@1.first_line,@1.first_column)}
 	|EXPRESION and EXPRESION			{$$ = new Logica($1,$3,OpcionesLogicas.AND,@1.first_line,@1.first_column)}
@@ -437,7 +439,6 @@ EXPRESION:EXPRESION or EXPRESION		{$$ = new Logica($1,$3,OpcionesLogicas.OR,@1.f
 	|parentesis_a EXPRESION parentesis_c{$$ = $2}       						
 	|identificador						{$$ = new Acces($1,@1.first_line,@1.first_column);} 
 	|TIPO_LITERAL						{$$ = $1}	
-	      	          	
 	;
 
 TIPO_LITERAL:entero						{$$ = new Literal($1,Type.INT,		@1.first_line,@1.first_column)}  
@@ -450,3 +451,4 @@ RETORNO:r_return EXPRESION punto_coma {}
 	|r_break punto_coma
 	|r_continue punto_coma
 	;
+

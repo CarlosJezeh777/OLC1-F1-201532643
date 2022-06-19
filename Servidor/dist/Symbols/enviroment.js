@@ -103,6 +103,15 @@ var Enviroment = /** @class */ (function () {
         }
         return null;
     };
+    Enviroment.prototype.get_Funcion = function (nombre) {
+        var env = this;
+        while (env != null) {
+            if (env.tablaSimbolos_metodos.has(nombre))
+                return env.tablaSimbolos_metodos.get(nombre);
+            env = env.anterior;
+        }
+        return null;
+    };
     Enviroment.prototype.get_Enviroment = function (nombre) {
         var env = this;
         while (env != null) {

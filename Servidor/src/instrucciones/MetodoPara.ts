@@ -15,6 +15,10 @@ export class MetodosP extends Instruccion{
     }
     public ejecutar(env: Enviroment) {
         //console.log(this);
+        if(this.parametros == null){
+            throw new Error("Error semantico: tiene que traer parametros");
+            
+        }
         if(env.guardar_funcion(this.nombre,this)){
             console.log("se guardo");
             

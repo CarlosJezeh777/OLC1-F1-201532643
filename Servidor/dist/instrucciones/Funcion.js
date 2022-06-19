@@ -15,26 +15,21 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MetodosP = void 0;
+exports.Funcion = void 0;
 var instruccion_1 = require("../abstract/instruccion");
-var MetodosP = /** @class */ (function (_super) {
-    __extends(MetodosP, _super);
-    function MetodosP(nombre, parametros, instrucciones, line, colum) {
+var Funcion = /** @class */ (function (_super) {
+    __extends(Funcion, _super);
+    function Funcion(tipo, nombre, instrucciones, retorno, line, colum) {
         var _this = _super.call(this, line, colum) || this;
+        _this.tipo = tipo;
         _this.nombre = nombre;
-        _this.parametros = parametros;
         _this.instrucciones = instrucciones;
+        _this.retorno = retorno;
         return _this;
     }
-    MetodosP.prototype.ejecutar = function (env) {
-        //console.log(this);
-        if (this.parametros == null) {
-            throw new Error("Error semantico: tiene que traer parametros");
-        }
-        if (env.guardar_funcion(this.nombre, this)) {
-            console.log("se guardo");
-        }
+    Funcion.prototype.ejecutar = function (env) {
+        env.guardar_funcion(this.nombre, this);
     };
-    return MetodosP;
+    return Funcion;
 }(instruccion_1.Instruccion));
-exports.MetodosP = MetodosP;
+exports.Funcion = Funcion;
