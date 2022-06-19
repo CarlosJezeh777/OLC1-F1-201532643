@@ -15,31 +15,21 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.If_Else = void 0;
+exports.Casos = void 0;
 var instruccion_1 = require("../abstract/instruccion");
-var enviroment_1 = require("../Symbols/enviroment");
-var If_Else = /** @class */ (function (_super) {
-    __extends(If_Else, _super);
-    function If_Else(expresion, instrucTrue, instrucFalse, line, colum) {
+var UtilesArrays_1 = require("../Singleton/UtilesArrays");
+var Casos = /** @class */ (function (_super) {
+    __extends(Casos, _super);
+    function Casos(valor, instrucccion, line, colum) {
         var _this = _super.call(this, line, colum) || this;
-        _this.expresion = expresion;
-        _this.instrucTrue = instrucTrue;
-        _this.instrucFalse = instrucFalse;
+        _this.valor = valor;
+        _this.instrucccion = instrucccion;
         return _this;
     }
-    If_Else.prototype.ejecutar = function (env) {
-        var new_env = new enviroment_1.Enviroment(env);
-        var expresion = this.expresion.ejecutar(env);
-        //console.log(expresion);
-        if (expresion.value == true) {
-            //console.log("aqui van las instrucicones");
-            this.instrucTrue.ejecutar(new_env);
-        }
-        else if (expresion.value == false) {
-            this.instrucFalse.ejecutar(new_env);
-        }
-        //console.log(expresion);
+    Casos.prototype.ejecutar = function (env) {
+        var utiles = UtilesArrays_1.utilesArrays.getInstance();
+        utiles.addCasos(this);
     };
-    return If_Else;
+    return Casos;
 }(instruccion_1.Instruccion));
-exports.If_Else = If_Else;
+exports.Casos = Casos;

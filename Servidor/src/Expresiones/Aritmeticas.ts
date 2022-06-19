@@ -34,7 +34,7 @@ export class Aritmeticas extends Expression{
                 return resultado
             }else if(nodIzq.type == Type.INT && nodDer.type == Type.DOUBLE){
                 resultado = {
-                    value : (nodIzq.value + nodDer.value).toFixed(2),
+                    value : (Number(nodIzq.value) + Number(nodDer.value)).toFixed(2),
                     type: Type.DOUBLE
                 }
             }else if(nodIzq.type == Type.INT && nodDer.type == Type.CHAR){
@@ -51,17 +51,17 @@ export class Aritmeticas extends Expression{
                 }
             }else if(nodIzq.type == Type.DOUBLE && nodDer.type == Type.INT){
                 resultado = {
-                    value : (nodIzq.value +nodDer.value).toFixed(2),
+                    value : (Number(nodIzq.value) +Number(nodDer.value)).toFixed(2),
                     type: Type.DOUBLE
                 }
             }else if(nodIzq.type == Type.DOUBLE && nodDer.type == Type.DOUBLE){
                 resultado = {
-                    value : (nodIzq.value +nodDer.value).toFixed(2),
+                    value : (Number(nodIzq.value) +Number(nodDer.value)).toFixed(2),
                     type: Type.DOUBLE
                 }
             }else if(nodIzq.type == Type.DOUBLE && nodDer.type == Type.CHAR){
                 resultado = {
-                    value : (nodIzq.value +nodDer.value.charCodeAt()).toFixed(2),
+                    value : (Number(nodIzq.value) +Number(nodDer.value.charCodeAt())).toFixed(2),
                     type: Type.DOUBLE
                 }
             }else if(nodIzq.type == Type.DOUBLE && nodDer.type == Type.STRING){
@@ -76,7 +76,7 @@ export class Aritmeticas extends Expression{
                 }
             }else if(nodIzq.type == Type.CHAR && nodDer.type == Type.DOUBLE){
                 resultado = {
-                    value : (nodIzq.value.charCodeAt() +nodDer.value).toFixed(2),
+                    value : (Number(nodIzq.value.charCodeAt()) +Number(nodDer.value)).toFixed(2),
                     type: Type.DOUBLE
                 }
             }else if(nodIzq.type == Type.CHAR && nodDer.type == Type.CHAR){
@@ -124,7 +124,7 @@ export class Aritmeticas extends Expression{
                 }
             }else if(nodIzq.type == Type.INT && nodDer.type == Type.DOUBLE){
                 resultado = {
-                    value : (nodIzq.value - nodDer.value).toFixed(2),
+                    value : (Number(nodIzq.value) - Number(nodDer.value)).toFixed(2),
                     type: Type.DOUBLE
                 }
             }else if(nodIzq.type == Type.INT && nodDer.type == Type.CHAR){
@@ -134,17 +134,17 @@ export class Aritmeticas extends Expression{
                 }
             }else if(nodIzq.type == Type.DOUBLE && nodDer.type == Type.INT){
                 resultado = {
-                    value : (nodIzq.value -nodDer.value).toFixed(2),
+                    value : (Number(nodIzq.value) -Number(nodDer.value)).toFixed(2),
                     type: Type.DOUBLE
                 }
             }else if(nodIzq.type == Type.DOUBLE && nodDer.type == Type.DOUBLE){
                 resultado = {
-                    value : (nodIzq.value -nodDer.value).toFixed(2),
+                    value : (Number(nodIzq.value) -Number(nodDer.value)).toFixed(2),
                     type: Type.DOUBLE
                 }
             }else if(nodIzq.type == Type.DOUBLE && nodDer.type == Type.CHAR){
                 resultado = {
-                    value : (nodIzq.value - nodDer.value.charCodeAt()).toFixed(2),
+                    value : (Number(nodIzq.value) - Number(nodDer.value.charCodeAt())).toFixed(2),
                     type: Type.DOUBLE
                 }
             }else if(nodIzq.type == Type.CHAR && nodDer.type == Type.INT){
@@ -154,7 +154,7 @@ export class Aritmeticas extends Expression{
                 }
             }else if(nodIzq.type == Type.CHAR && nodDer.type == Type.DOUBLE){
                 resultado = {
-                    value : (nodIzq.value.charCodeAt() - nodDer.value).toFixed(2),
+                    value : (Number(nodIzq.value.charCodeAt()) - Number(nodDer.value)).toFixed(2),
                     type: Type.DOUBLE
                 }
             }else if(nodIzq.type == Type.CHAR && nodDer.type == Type.CHAR){
@@ -172,7 +172,7 @@ export class Aritmeticas extends Expression{
                 }
             }else if(nodIzq.type == Type.INT && nodDer.type == Type.DOUBLE){
                 resultado = {
-                    value : (nodIzq.value * nodDer.value).toFixed(2),
+                    value : (Number(nodIzq.value) * Number(nodDer.value)).toFixed(2),
                     type: Type.DOUBLE
                 }
             }else if(nodIzq.type == Type.INT && nodDer.type == Type.CHAR){
@@ -182,17 +182,17 @@ export class Aritmeticas extends Expression{
                 }
             }else if(nodIzq.type == Type.DOUBLE && nodDer.type == Type.INT){
                 resultado = {
-                    value : (nodIzq.value * nodDer.value).toFixed(2),
+                    value : (Number(nodIzq.value) * Number(nodDer.value)).toFixed(2),
                     type: Type.DOUBLE
                 }
             }else if(nodIzq.type == Type.DOUBLE && nodDer.type == Type.DOUBLE){
                 resultado = {
-                    value : (nodIzq.value * nodDer.value).toFixed(2),
+                    value : (Number(nodIzq.value) * Number(nodDer.value)).toFixed(2),
                     type: Type.DOUBLE
                 }
             }else if(nodIzq.type == Type.DOUBLE && nodDer.type == Type.CHAR){
                 resultado = {
-                    value : (nodIzq.value *  nodDer.value.charCodeAt()).toFixed(2),
+                    value : (Number(nodIzq.value) * Number( nodDer.value.charCodeAt())).toFixed(2),
                     type: Type.DOUBLE
                 }
             }else if(nodIzq.type == Type.CHAR && nodDer.type == Type.INT){
@@ -202,7 +202,7 @@ export class Aritmeticas extends Expression{
                 }
             }else if(nodIzq.type == Type.CHAR && nodDer.type == Type.DOUBLE){
                 resultado = {
-                    value : (nodIzq.value.charCodeAt() * nodDer.value).toFixed(2),
+                    value : (Number(nodIzq.value.charCodeAt()) * Number(nodDer.value)).toFixed(2),
                     type: Type.DOUBLE
                 }
             }else if(nodIzq.type == Type.CHAR && nodDer.type == Type.CHAR){
@@ -221,7 +221,7 @@ export class Aritmeticas extends Expression{
             }
         }else if(nodIzq.type == Type.INT && nodDer.type == Type.DOUBLE){
             resultado = {
-                value : (nodIzq.value / nodDer.value).toFixed(2),
+                value : (Number(nodIzq.value) / Number(nodDer.value)).toFixed(2),
                 type: Type.DOUBLE
             }
         }else if(nodIzq.type == Type.INT && nodDer.type == Type.CHAR){
@@ -231,17 +231,17 @@ export class Aritmeticas extends Expression{
             }
         }else if(nodIzq.type == Type.DOUBLE && nodDer.type == Type.INT){
             resultado = {
-                value : (nodIzq.value / nodDer.value).toFixed(2),
+                value : (Number(nodIzq.value) / Number(nodDer.value)).toFixed(2),
                 type: Type.DOUBLE
             }
         }else if(nodIzq.type == Type.DOUBLE && nodDer.type == Type.DOUBLE){
             resultado = {
-                value : (nodIzq.value / nodDer.value).toFixed(2),
+                value : (Number(nodIzq.value) / Number(nodDer.value)).toFixed(2),
                 type: Type.DOUBLE
             }
         }else if(nodIzq.type == Type.DOUBLE && nodDer.type == Type.CHAR){
             resultado = {
-                value : (nodIzq.value /  nodDer.value.charCodeAt()).toFixed(2),
+                value : (Number(nodIzq.value) /  Number(nodDer.value.charCodeAt())).toFixed(2),
                 type: Type.DOUBLE
             }
         }else if(nodIzq.type == Type.CHAR && nodDer.type == Type.INT){
@@ -251,7 +251,7 @@ export class Aritmeticas extends Expression{
             }
         }else if(nodIzq.type == Type.CHAR && nodDer.type == Type.DOUBLE){
             resultado = {
-                value : (nodIzq.value.charCodeAt() / nodDer.value).toFixed(2),
+                value : (Number(nodIzq.value.charCodeAt()) / Number(nodDer.value)).toFixed(2),
                 type: Type.DOUBLE
             }
         }else if(nodIzq.type == Type.CHAR && nodDer.type == Type.CHAR){
@@ -312,47 +312,47 @@ export class Aritmeticas extends Expression{
         }else if(this.tipo == AritmeticasOptions.MODULO){
             if(nodIzq.type == Type.INT && nodDer.type == Type.INT){
                 resultado = {
-                    value : (nodIzq.value % nodDer.value).toFixed(2),
+                    value : (Number(nodIzq.value) % Number(nodDer.value)).toFixed(2),
                     type: Type.DOUBLE
                 }
             }else if(nodIzq.type == Type.INT && nodDer.type == Type.DOUBLE){
                 resultado = {
-                    value : (nodIzq.value % nodDer.value).toFixed(2),
+                    value : (Number(nodIzq.value) % Number(nodDer.value)).toFixed(2),
                     type: Type.DOUBLE
                 }
             }else if(nodIzq.type == Type.INT && nodDer.type == Type.CHAR){
                 resultado = {
-                    value : (nodIzq.value % nodDer.value.charCodeAt()).toFixed(2),
+                    value : (Number(nodIzq.value) % Number(nodDer.value.charCodeAt())).toFixed(2),
                     type: Type.DOUBLE
                 }
             }else if(nodIzq.type == Type.DOUBLE && nodDer.type == Type.INT){
                 resultado = {
-                    value : (nodIzq.value % nodDer.value),
+                    value : (Number(nodIzq.value) % Number(nodDer.value)),
                     type: Type.DOUBLE
                 }
             }else if(nodIzq.type == Type.DOUBLE && nodDer.type == Type.DOUBLE){
                 resultado = {
-                    value : (nodIzq.value % nodDer.value).toFixed(2),
+                    value : (Number(nodIzq.value) % Number(nodDer.value)).toFixed(2),
                     type: Type.DOUBLE
                 }
             }else if(nodIzq.type == Type.DOUBLE && nodDer.type == Type.CHAR){
                 resultado = {
-                    value : (nodIzq.value %  nodDer.value.charCodeAt()).toFixed(2),
+                    value : (Number(nodIzq.value) %  Number(nodDer.value.charCodeAt())).toFixed(2),
                     type: Type.DOUBLE
                 }
             }else if(nodIzq.type == Type.CHAR && nodDer.type == Type.INT){
                 resultado = {
-                    value : (nodIzq.value.charCodeAt() % nodDer.value).toFixed(2),
+                    value : (Number(nodIzq.value.charCodeAt()) % Number(nodDer.value)).toFixed(2),
                     type: Type.DOUBLE
                 }
             }else if(nodIzq.type == Type.CHAR && nodDer.type == Type.DOUBLE){
                 resultado = {
-                    value : (nodIzq.value.charCodeAt() % nodDer.value).toFixed(2),
+                    value : (Number(nodIzq.value.charCodeAt()) % Number(nodDer.value)).toFixed(2),
                     type: Type.DOUBLE
                 }
             }else if(nodIzq.type == Type.CHAR && nodDer.type == Type.CHAR){
                 resultado = {
-                    value : Math.trunc(nodIzq.value.charCodeAt() % nodDer.value.charCodeAt()).toFixed(2),
+                    value : Math.trunc(Number(nodIzq.value.charCodeAt()) % Number(nodDer.value.charCodeAt())).toFixed(2),
                     type: Type.DOUBLE
                 }
             }

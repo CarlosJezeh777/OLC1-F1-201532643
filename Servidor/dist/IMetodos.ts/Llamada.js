@@ -15,31 +15,30 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.If_Else = void 0;
+exports.Llamada = void 0;
 var instruccion_1 = require("../abstract/instruccion");
 var enviroment_1 = require("../Symbols/enviroment");
-var If_Else = /** @class */ (function (_super) {
-    __extends(If_Else, _super);
-    function If_Else(expresion, instrucTrue, instrucFalse, line, colum) {
-        var _this = _super.call(this, line, colum) || this;
-        _this.expresion = expresion;
-        _this.instrucTrue = instrucTrue;
-        _this.instrucFalse = instrucFalse;
+var Llamada = /** @class */ (function (_super) {
+    __extends(Llamada, _super);
+    function Llamada(id, parametros, line, column) {
+        var _this = _super.call(this, line, column) || this;
+        _this.id = id;
+        _this.parametros = parametros;
         return _this;
     }
-    If_Else.prototype.ejecutar = function (env) {
-        var new_env = new enviroment_1.Enviroment(env);
-        var expresion = this.expresion.ejecutar(env);
-        //console.log(expresion);
-        if (expresion.value == true) {
-            //console.log("aqui van las instrucicones");
-            this.instrucTrue.ejecutar(new_env);
+    Llamada.prototype.ejecutar = function (env) {
+        console.log(this);
+        var metodo = env.get_metodo(this.id);
+        console.log(metodo);
+        //si lo encontro
+        //new env para declarar los parametros
+        var env_para_parametros = new enviroment_1.Enviroment(env);
+        if (metodo == null) {
+            throw "Error semantico, no ecnontre esta funcion";
         }
-        else if (expresion.value == false) {
-            this.instrucFalse.ejecutar(new_env);
-        }
-        //console.log(expresion);
+        metodo === null || metodo === void 0 ? void 0 : metodo.Bloque.ejecutar(env_para_parametros);
+        return "este dato nunca lo he usado";
     };
-    return If_Else;
+    return Llamada;
 }(instruccion_1.Instruccion));
-exports.If_Else = If_Else;
+exports.Llamada = Llamada;

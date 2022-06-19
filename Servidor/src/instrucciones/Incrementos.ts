@@ -23,7 +23,7 @@ export class InDe extends Instruccion{
         let valor = id.ejecutar(env);
 
         
-        console.log(valor);
+        //console.log(valor);
         const tmp = env.get_Enviroment(this.nombre);
         
         

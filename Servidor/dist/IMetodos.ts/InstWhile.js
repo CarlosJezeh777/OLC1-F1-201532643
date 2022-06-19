@@ -15,41 +15,34 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.For_Inst = void 0;
+exports.IWhile = void 0;
 var instruccion_1 = require("../abstract/instruccion");
 var enviroment_1 = require("../Symbols/enviroment");
 var type_1 = require("../Symbols/type");
-var For_Inst = /** @class */ (function (_super) {
-    __extends(For_Inst, _super);
-    function For_Inst(variable, condicion, in_de, instrucciones, line, colum) {
+var IWhile = /** @class */ (function (_super) {
+    __extends(IWhile, _super);
+    function IWhile(condicion, instrucciones, line, colum) {
         var _this = _super.call(this, line, colum) || this;
-        _this.variable = variable;
         _this.condicion = condicion;
-        _this.in_de = in_de;
         _this.instrucciones = instrucciones;
         return _this;
     }
-    For_Inst.prototype.ejecutar = function (env) {
-        //console.log("Estoy en el for");
-        //console.log(this);
+    IWhile.prototype.ejecutar = function (env) {
         var band = true;
-        var env_for = new enviroment_1.Enviroment(env);
-        var env_Block = new enviroment_1.Enviroment(env_for);
-        this.variable.ejecutar(env_for);
-        while (band) {
+        var new_env = new enviroment_1.Enviroment(env);
+        while (band == true) {
             //console.log(index);
-            var cond = this.condicion.ejecutar(env_for);
-            this.in_de.ejecutar(env_for);
+            var cond = this.condicion.ejecutar(env);
             //console.log(cond);
-            if (cond.type != type_1.Type.BOOLEAN) {
-                throw new Error("la condicion tiene que ser un boolean");
-            }
             if (cond.value == false) {
                 break;
             }
-            this.instrucciones.ejecutar(env_Block);
+            if (cond.type != type_1.Type.BOOLEAN) {
+                throw new Error("la condicion tiene que ser un boolean");
+            }
+            this.instrucciones.ejecutar(env);
         }
     };
-    return For_Inst;
+    return IWhile;
 }(instruccion_1.Instruccion));
-exports.For_Inst = For_Inst;
+exports.IWhile = IWhile;

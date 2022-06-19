@@ -20,10 +20,10 @@ export class DoWhile extends Instruccion{
         this.instrucciones.ejecutar(new_env)
  
         while(band == true){
-            console.log("no entra aqui dowhile");
+            //console.log("no entra aqui dowhile");
             
             let cond = this.condicion.ejecutar(env)
-            console.log(cond);
+            //console.log(cond);
             if(cond.value == false){
                 break
             }

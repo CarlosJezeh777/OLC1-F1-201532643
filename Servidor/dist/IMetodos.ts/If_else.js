@@ -28,6 +28,7 @@ var If_Else = /** @class */ (function (_super) {
         return _this;
     }
     If_Else.prototype.ejecutar = function (env) {
+        console.log("Estoy en el for");
         var new_env = new enviroment_1.Enviroment(env);
         var expresion = this.expresion.ejecutar(env);
         //console.log(expresion);

@@ -15,7 +15,10 @@ var Enviroment = /** @class */ (function () {
     Enviroment.prototype.guardar_funcion = function (nombre, valor) {
         if (!this.buscar_metodo(nombre)) {
             this.tablaSimbolos_metodos.set(nombre, valor);
+            return true;
         }
+        console.log("este metodo [" + nombre + "] ya existe...");
+        return false;
     };
     Enviroment.prototype.buscar_metodo = function (nombre) {
         for (var _i = 0, _a = Array.from(this.tablaSimbolos_metodos.entries()); _i < _a.length; _i++) {
@@ -23,12 +26,11 @@ var Enviroment = /** @class */ (function () {
             if (entry[0] == nombre)
                 return true;
         }
-        console.log("El nomnbre del metodo ya existe");
         return false;
     };
-    Enviroment.prototype.guardar_varible = function (nombre, valor, type) {
+    Enviroment.prototype.guardar_varible = function (nombre, valor, type, editable) {
         if (!this.buscar_variable(nombre)) {
-            this.tablaSimbolos.set(nombre, new symbols_1.Symbolos(valor, nombre, type, true));
+            this.tablaSimbolos.set(nombre, new symbols_1.Symbolos(valor, nombre, type, editable));
             return true;
         }
         console.log("esta variable [" + nombre + "] ya existe...");
@@ -84,6 +86,15 @@ var Enviroment = /** @class */ (function () {
         return null;
     };
     Enviroment.prototype.get_metodo = function (nombre) {
+        var env = this;
+        while (env != null) {
+            if (env.tablaSimbolos_metodos.has(nombre))
+                return env.tablaSimbolos_metodos.get(nombre);
+            env = env.anterior;
+        }
+        return null;
+    };
+    Enviroment.prototype.get_metodoP = function (nombre) {
         var env = this;
         while (env != null) {
             if (env.tablaSimbolos_metodos.has(nombre))

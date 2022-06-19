@@ -14,7 +14,7 @@ export class Switch_I extends Instruccion{
         super(line,colum)
     }
     public ejecutar(env:Enviroment) {
-        console.log("esoy en el switch");
+        //console.log("esoy en el switch");
         
         const new_env =  new Enviroment(env)
         
@@ -35,7 +35,7 @@ export class Switch_I extends Instruccion{
             
             for (const element of elementos) {
                 
-                const valor_caso = element.valor.ejecutar()
+                const valor_caso = element.valor.ejecutar(new_env)
                 //console.log(valor_caso);
                 //console.log(valor);
                 const Instrucciones = element.instrucccion

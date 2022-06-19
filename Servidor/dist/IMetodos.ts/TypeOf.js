@@ -15,31 +15,33 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.If_Else = void 0;
+exports.Type_Of = void 0;
 var instruccion_1 = require("../abstract/instruccion");
-var enviroment_1 = require("../Symbols/enviroment");
-var If_Else = /** @class */ (function (_super) {
-    __extends(If_Else, _super);
-    function If_Else(expresion, instrucTrue, instrucFalse, line, colum) {
-        var _this = _super.call(this, line, colum) || this;
+var Singleton_1 = require("../Singleton/Singleton");
+var type_1 = require("../Symbols/type");
+var Type_Of = /** @class */ (function (_super) {
+    __extends(Type_Of, _super);
+    function Type_Of(expresion, line, column) {
+        var _this = _super.call(this, line, column) || this;
         _this.expresion = expresion;
-        _this.instrucTrue = instrucTrue;
-        _this.instrucFalse = instrucFalse;
         return _this;
     }
-    If_Else.prototype.ejecutar = function (env) {
-        var new_env = new enviroment_1.Enviroment(env);
-        var expresion = this.expresion.ejecutar(env);
-        //console.log(expresion);
-        if (expresion.value == true) {
-            //console.log("aqui van las instrucicones");
-            this.instrucTrue.ejecutar(new_env);
+    Type_Of.prototype.ejecutar = function (env) {
+        var tmp = this.expresion.ejecutar(env);
+        var s = Singleton_1.Singleton.getInstance();
+        if (tmp.type == type_1.Type.INT) {
+            s.addConsola("Integer\n");
         }
-        else if (expresion.value == false) {
-            this.instrucFalse.ejecutar(new_env);
+        else if (tmp.type == type_1.Type.BOOLEAN) {
+            s.addConsola("Boolean\n");
         }
-        //console.log(expresion);
+        else if (tmp.type == type_1.Type.CHAR) {
+            s.addConsola("Caracter\n");
+        }
+        else if (tmp.type == type_1.Type.STRING) {
+            s.addConsola("cadena\n");
+        }
     };
-    return If_Else;
+    return Type_Of;
 }(instruccion_1.Instruccion));
-exports.If_Else = If_Else;
+exports.Type_Of = Type_Of;

@@ -45,7 +45,7 @@ var Aritmeticas = /** @class */ (function (_super) {
             }
             else if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.DOUBLE) {
                 resultado = {
-                    value: (nodIzq.value + nodDer.value).toFixed(2),
+                    value: (Number(nodIzq.value) + Number(nodDer.value)).toFixed(2),
                     type: type_1.Type.DOUBLE
                 };
             }
@@ -63,19 +63,19 @@ var Aritmeticas = /** @class */ (function (_super) {
             }
             else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.INT) {
                 resultado = {
-                    value: (nodIzq.value + nodDer.value).toFixed(2),
+                    value: (Number(nodIzq.value) + Number(nodDer.value)).toFixed(2),
                     type: type_1.Type.DOUBLE
                 };
             }
             else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.DOUBLE) {
                 resultado = {
-                    value: (nodIzq.value + nodDer.value).toFixed(2),
+                    value: (Number(nodIzq.value) + Number(nodDer.value)).toFixed(2),
                     type: type_1.Type.DOUBLE
                 };
             }
             else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.CHAR) {
                 resultado = {
-                    value: (nodIzq.value + nodDer.value.charCodeAt()).toFixed(2),
+                    value: (Number(nodIzq.value) + Number(nodDer.value.charCodeAt())).toFixed(2),
                     type: type_1.Type.DOUBLE
                 };
             }
@@ -93,7 +93,7 @@ var Aritmeticas = /** @class */ (function (_super) {
             }
             else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.DOUBLE) {
                 resultado = {
-                    value: (nodIzq.value.charCodeAt() + nodDer.value).toFixed(2),
+                    value: (Number(nodIzq.value.charCodeAt()) + Number(nodDer.value)).toFixed(2),
                     type: type_1.Type.DOUBLE
                 };
             }
@@ -150,7 +150,7 @@ var Aritmeticas = /** @class */ (function (_super) {
             }
             else if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.DOUBLE) {
                 resultado = {
-                    value: (nodIzq.value - nodDer.value).toFixed(2),
+                    value: (Number(nodIzq.value) - Number(nodDer.value)).toFixed(2),
                     type: type_1.Type.DOUBLE
                 };
             }
@@ -162,19 +162,19 @@ var Aritmeticas = /** @class */ (function (_super) {
             }
             else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.INT) {
                 resultado = {
-                    value: (nodIzq.value - nodDer.value).toFixed(2),
+                    value: (Number(nodIzq.value) - Number(nodDer.value)).toFixed(2),
                     type: type_1.Type.DOUBLE
                 };
             }
             else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.DOUBLE) {
                 resultado = {
-                    value: (nodIzq.value - nodDer.value).toFixed(2),
+                    value: (Number(nodIzq.value) - Number(nodDer.value)).toFixed(2),
                     type: type_1.Type.DOUBLE
                 };
             }
             else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.CHAR) {
                 resultado = {
-                    value: (nodIzq.value - nodDer.value.charCodeAt()).toFixed(2),
+                    value: (Number(nodIzq.value) - Number(nodDer.value.charCodeAt())).toFixed(2),
                     type: type_1.Type.DOUBLE
                 };
             }
@@ -186,7 +186,7 @@ var Aritmeticas = /** @class */ (function (_super) {
             }
             else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.DOUBLE) {
                 resultado = {
-                    value: (nodIzq.value.charCodeAt() - nodDer.value).toFixed(2),
+                    value: (Number(nodIzq.value.charCodeAt()) - Number(nodDer.value)).toFixed(2),
                     type: type_1.Type.DOUBLE
                 };
             }
@@ -207,7 +207,7 @@ var Aritmeticas = /** @class */ (function (_super) {
             }
             else if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.DOUBLE) {
                 resultado = {
-                    value: (nodIzq.value * nodDer.value).toFixed(2),
+                    value: (Number(nodIzq.value) * Number(nodDer.value)).toFixed(2),
                     type: type_1.Type.DOUBLE
                 };
             }
@@ -219,19 +219,19 @@ var Aritmeticas = /** @class */ (function (_super) {
             }
             else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.INT) {
                 resultado = {
-                    value: (nodIzq.value * nodDer.value).toFixed(2),
+                    value: (Number(nodIzq.value) * Number(nodDer.value)).toFixed(2),
                     type: type_1.Type.DOUBLE
                 };
             }
             else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.DOUBLE) {
                 resultado = {
-                    value: (nodIzq.value * nodDer.value).toFixed(2),
+                    value: (Number(nodIzq.value) * Number(nodDer.value)).toFixed(2),
                     type: type_1.Type.DOUBLE
                 };
             }
             else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.CHAR) {
                 resultado = {
-                    value: (nodIzq.value * nodDer.value.charCodeAt()).toFixed(2),
+                    value: (Number(nodIzq.value) * Number(nodDer.value.charCodeAt())).toFixed(2),
                     type: type_1.Type.DOUBLE
                 };
             }
@@ -243,7 +243,7 @@ var Aritmeticas = /** @class */ (function (_super) {
             }
             else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.DOUBLE) {
                 resultado = {
-                    value: (nodIzq.value.charCodeAt() * nodDer.value).toFixed(2),
+                    value: (Number(nodIzq.value.charCodeAt()) * Number(nodDer.value)).toFixed(2),
                     type: type_1.Type.DOUBLE
                 };
             }
@@ -264,7 +264,7 @@ var Aritmeticas = /** @class */ (function (_super) {
             }
             else if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.DOUBLE) {
                 resultado = {
-                    value: (nodIzq.value / nodDer.value).toFixed(2),
+                    value: (Number(nodIzq.value) / Number(nodDer.value)).toFixed(2),
                     type: type_1.Type.DOUBLE
                 };
             }
@@ -276,19 +276,19 @@ var Aritmeticas = /** @class */ (function (_super) {
             }
             else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.INT) {
                 resultado = {
-                    value: (nodIzq.value / nodDer.value).toFixed(2),
+                    value: (Number(nodIzq.value) / Number(nodDer.value)).toFixed(2),
                     type: type_1.Type.DOUBLE
                 };
             }
             else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.DOUBLE) {
                 resultado = {
-                    value: (nodIzq.value / nodDer.value).toFixed(2),
+                    value: (Number(nodIzq.value) / Number(nodDer.value)).toFixed(2),
                     type: type_1.Type.DOUBLE
                 };
             }
             else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.CHAR) {
                 resultado = {
-                    value: (nodIzq.value / nodDer.value.charCodeAt()).toFixed(2),
+                    value: (Number(nodIzq.value) / Number(nodDer.value.charCodeAt())).toFixed(2),
                     type: type_1.Type.DOUBLE
                 };
             }
@@ -300,7 +300,7 @@ var Aritmeticas = /** @class */ (function (_super) {
             }
             else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.DOUBLE) {
                 resultado = {
-                    value: (nodIzq.value.charCodeAt() / nodDer.value).toFixed(2),
+                    value: (Number(nodIzq.value.charCodeAt()) / Number(nodDer.value)).toFixed(2),
                     type: type_1.Type.DOUBLE
                 };
             }
@@ -372,55 +372,55 @@ var Aritmeticas = /** @class */ (function (_super) {
         else if (this.tipo == aritmeticasOpc_1.AritmeticasOptions.MODULO) {
             if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.INT) {
                 resultado = {
-                    value: (nodIzq.value % nodDer.value).toFixed(2),
+                    value: (Number(nodIzq.value) % Number(nodDer.value)).toFixed(2),
                     type: type_1.Type.DOUBLE
                 };
             }
             else if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.DOUBLE) {
                 resultado = {
-                    value: (nodIzq.value % nodDer.value).toFixed(2),
+                    value: (Number(nodIzq.value) % Number(nodDer.value)).toFixed(2),
                     type: type_1.Type.DOUBLE
                 };
             }
             else if (nodIzq.type == type_1.Type.INT && nodDer.type == type_1.Type.CHAR) {
                 resultado = {
-                    value: (nodIzq.value % nodDer.value.charCodeAt()).toFixed(2),
+                    value: (Number(nodIzq.value) % Number(nodDer.value.charCodeAt())).toFixed(2),
                     type: type_1.Type.DOUBLE
                 };
             }
             else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.INT) {
                 resultado = {
-                    value: (nodIzq.value % nodDer.value),
+                    value: (Number(nodIzq.value) % Number(nodDer.value)),
                     type: type_1.Type.DOUBLE
                 };
             }
             else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.DOUBLE) {
                 resultado = {
-                    value: (nodIzq.value % nodDer.value).toFixed(2),
+                    value: (Number(nodIzq.value) % Number(nodDer.value)).toFixed(2),
                     type: type_1.Type.DOUBLE
                 };
             }
             else if (nodIzq.type == type_1.Type.DOUBLE && nodDer.type == type_1.Type.CHAR) {
                 resultado = {
-                    value: (nodIzq.value % nodDer.value.charCodeAt()).toFixed(2),
+                    value: (Number(nodIzq.value) % Number(nodDer.value.charCodeAt())).toFixed(2),
                     type: type_1.Type.DOUBLE
                 };
             }
             else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.INT) {
                 resultado = {
-                    value: (nodIzq.value.charCodeAt() % nodDer.value).toFixed(2),
+                    value: (Number(nodIzq.value.charCodeAt()) % Number(nodDer.value)).toFixed(2),
                     type: type_1.Type.DOUBLE
                 };
             }
             else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.DOUBLE) {
                 resultado = {
-                    value: (nodIzq.value.charCodeAt() % nodDer.value).toFixed(2),
+                    value: (Number(nodIzq.value.charCodeAt()) % Number(nodDer.value)).toFixed(2),
                     type: type_1.Type.DOUBLE
                 };
             }
             else if (nodIzq.type == type_1.Type.CHAR && nodDer.type == type_1.Type.CHAR) {
                 resultado = {
-                    value: Math.trunc(nodIzq.value.charCodeAt() % nodDer.value.charCodeAt()).toFixed(2),
+                    value: Math.trunc(Number(nodIzq.value.charCodeAt()) % Number(nodDer.value.charCodeAt())).toFixed(2),
                     type: type_1.Type.DOUBLE
                 };
             }

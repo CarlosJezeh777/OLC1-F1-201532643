@@ -15,31 +15,19 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.If_Else = void 0;
+exports.Metodos = void 0;
 var instruccion_1 = require("../abstract/instruccion");
-var enviroment_1 = require("../Symbols/enviroment");
-var If_Else = /** @class */ (function (_super) {
-    __extends(If_Else, _super);
-    function If_Else(expresion, instrucTrue, instrucFalse, line, colum) {
+var Metodos = /** @class */ (function (_super) {
+    __extends(Metodos, _super);
+    function Metodos(nombre, instrucciones, line, colum) {
         var _this = _super.call(this, line, colum) || this;
-        _this.expresion = expresion;
-        _this.instrucTrue = instrucTrue;
-        _this.instrucFalse = instrucFalse;
+        _this.nombre = nombre;
+        _this.instrucciones = instrucciones;
         return _this;
     }
-    If_Else.prototype.ejecutar = function (env) {
-        var new_env = new enviroment_1.Enviroment(env);
-        var expresion = this.expresion.ejecutar(env);
-        //console.log(expresion);
-        if (expresion.value == true) {
-            //console.log("aqui van las instrucicones");
-            this.instrucTrue.ejecutar(new_env);
-        }
-        else if (expresion.value == false) {
-            this.instrucFalse.ejecutar(new_env);
-        }
-        //console.log(expresion);
+    Metodos.prototype.ejecutar = function (env) {
+        env.guardar_funcion(this.nombre, this);
     };
-    return If_Else;
+    return Metodos;
 }(instruccion_1.Instruccion));
-exports.If_Else = If_Else;
+exports.Metodos = Metodos;

@@ -1,6 +1,7 @@
 import { Retorno } from "../abstract/Retorno";
 import { Else_If } from "../instrucciones/else_if";
-import { Metodo } from "../instrucciones/metodos";
+import { Metodos } from "../instrucciones/IMetdos";
+import { MetodosP } from "../instrucciones/MetodoPara";
 import { Symbolos } from "./symbols";
 import { Type } from "./type";
 
@@ -17,24 +18,26 @@ export class Enviroment{
         return this.tablaSimbolos
     }
 
-    public guardar_funcion(nombre: string, valor:any) {
+    public guardar_funcion(nombre: string, valor:any): boolean {
         if(!this.buscar_metodo(nombre)){
             this.tablaSimbolos_metodos.set(nombre, valor);
+            return true
         } 
+        console.log("este metodo ["+nombre+"] ya existe...");
+        return false
+        
       }
 
     public buscar_metodo(nombre:string){
         for(let entry of Array.from(this.tablaSimbolos_metodos.entries())){
             if(entry[0] == nombre) return true
         }
-        console.log("El nomnbre del metodo ya existe");
-        
         return false
     }
 
-    public guardar_varible(nombre: string, valor: any, type: Type):boolean{
+    public guardar_varible(nombre: string, valor: any, type: Type, editable: boolean):boolean{
         if(!this.buscar_variable(nombre)){
-            this.tablaSimbolos.set(nombre, new Symbolos(valor,nombre,type,true));
+            this.tablaSimbolos.set(nombre, new Symbolos(valor,nombre,type,editable));
             return true
         }
         console.log("esta variable ["+nombre+"] ya existe...");
@@ -87,7 +90,15 @@ export class Enviroment{
     return null;
     }
     
-    public get_metodo(nombre: string): Metodo| undefined | null {
+    public get_metodo(nombre: string): Metodos| undefined | null{
+        let env: Enviroment | null = this;
+        while (env != null) {
+            if (env.tablaSimbolos_metodos.has(nombre)) return env.tablaSimbolos_metodos.get(nombre);
+            env = env.anterior;
+        }
+        return null;
+    }
+    public get_metodoP(nombre: string): null | MetodosP{
         let env: Enviroment | null = this;
         while (env != null) {
             if (env.tablaSimbolos_metodos.has(nombre)) return env.tablaSimbolos_metodos.get(nombre);

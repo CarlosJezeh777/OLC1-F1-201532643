@@ -57,6 +57,30 @@ export class PrincipalComponent implements OnInit {
       }
     )}
 
+    
+    
+    /*public abrirArchivo(evento){
+      let archivo = evento.target.files[0];
+      if(!archivo){
+        let lector = new FileReader();
+        lector.onload = function(e){
+        const contenido = e.target.result;
+        document.getElementById('editor_LF').innerText = contenido;
+      };  
+      lector.readAsText(archivo);
+
+      }
+      
+      lector.readAsText(archivo);
+
+    }*/
+
+
+    
+
+
+
   }
+  
 
 

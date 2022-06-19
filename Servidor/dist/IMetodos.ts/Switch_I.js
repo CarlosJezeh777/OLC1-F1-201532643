@@ -44,7 +44,7 @@ var Switch_I = /** @class */ (function (_super) {
         //console.log(elementos);
         for (var _b = 0, elementos_1 = elementos; _b < elementos_1.length; _b++) {
             var element = elementos_1[_b];
-            var valor_caso = element.valor.ejecutar(new_env);
+            var valor_caso = element.valor.ejecutar();
             //console.log(valor_caso);
             //console.log(valor);
             var Instrucciones = element.instrucccion;

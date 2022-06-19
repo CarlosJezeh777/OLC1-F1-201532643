@@ -18,13 +18,17 @@
 	const {Bloque} = require('../instrucciones/Bloque')
 	const {Imprimir} = require('../instrucciones/imprimir')
 	const {IWhile} = require('../instrucciones/InstWhile')
-	const {Type_Of} = require('../instrucciones/TypeOf')
+	const {Type_Of} = require('../Expresiones/TypeOf')
 	const {Else_If} = require('../instrucciones/else_if')
 	const {If_Else_If} = require('../instrucciones/IF2')
 	const {Casos} = require('../instrucciones/Cases')
 	const {Switch_I} = require('../instrucciones/Switch_I')
 	const {DoWhile} = require('../instrucciones/DoWhile')
 	const {For_Inst} = require('../instrucciones/For_I')
+	const {Metodos} = require('../instrucciones/IMetdos')
+	const {Llamada} = require('../instrucciones/Llamada')
+	const {MetodosP} = require('../instrucciones/MetodoPara')
+	const {LlamadaP} = require('../instrucciones/llamadaP')
 %}
 
 %lex
@@ -309,24 +313,25 @@ INTRUCCION:DVARIABLES 	{$$=$1}
 	|FOR				{$$ = $1}
 	|WHILE				{$$ = $1}
 	|DO_WHILE			{$$ = $1}
-	|MET_FUN
-	|LLAMADA
+	|MET_FUN			{$$ = $1}
+	|LLAMADA			{$$ = $1}
 	|BLOQUE				{$$ = $1}
 	|FUNCIONES_NATIVAS	{$$ = $1}
 	|INCREMENTOS		{$$ = $1}
+	|RETORNO			{$$ = $1}
 ;
 
-DVARIABLES: TIPO_DATO identificador igual EXPRESION punto_coma {$$ = new Declaracion($1,$2,$4,@1.first_line,@1.first_column);}
-	|r_const identificador igual EXPRESION punto_coma
+DVARIABLES: TIPO_DATO identificador igual EXPRESION punto_coma {$$ = new Declaracion($1,$2,$4,true,@1.first_line,@1.first_column);}
+	|r_const  TIPO_DATO identificador igual EXPRESION punto_coma		{$$ = new Declaracion($2,$3,$5,false,@1.first_line,@1.first_column);}
+	|TIPO_DATO identificador punto_coma									{$$ = new Declaracion($1,$2,null,true,@1.first_line,@1.first_column);}
+	| r_const  TIPO_DATO identificador punto_coma						{$$ = new Declaracion($2,$3,null,true,@1.first_line,@1.first_column);}
 ;
 
 ASIGNACION: identificador igual EXPRESION punto_coma	{$$ = new Asignar($1,$3,@1.first_line,@1.first_column);}		
+			|INCREMENTOS punto_coma {$$=$1}
 ;
 
-IF:CUERPO_IF
-; 
-
-CUERPO_IF:r_if EXPRESION BLOQUE  {$$ = new Iif($2,$3,@1.first_line,@1.first_column);} 
+IF:r_if EXPRESION BLOQUE  {$$ = new Iif($2,$3,@1.first_line,@1.first_column);} 
 		|r_if EXPRESION BLOQUE r_else BLOQUE {$$ = new If_Else($2,$3,$5,@1.first_line,@1.first_column);}
 		|r_if EXPRESION BLOQUE ELSE_IF {$$ = new If_Else_If($2,$3,$4,@1.first_line,@1.first_column);}
 ;
@@ -353,8 +358,8 @@ I_CASE: r_case TIPO_LITERAL dos_puntos INTRUCCIONES r_break punto_coma {$$ = new
 FOR:r_for parentesis_a ASIG_FOR parentesis_c BLOQUE	{$$ = new For_Inst($3[0],$3[1],$3[2],$5,@1.first_line,@1.first_column);}
 ;
 
-ASIG_FOR:DVARIABLES punto_coma EXPRESION punto_coma INCREMENTOS {$$ = [$1,$3,$5]}
-	|ASIGNACION punto_coma EXPRESION punto_coma INCREMENTOS	{$$ = [$1,$3,$5]}
+ASIG_FOR: DVARIABLES  EXPRESION punto_coma INCREMENTOS {$$ = [$1,$2,$4]}
+	|ASIGNACION  EXPRESION punto_coma INCREMENTOS	{$$ = [$1,$2,$4]}
 ;
 
 WHILE:r_while EXPRESION  BLOQUE {$$ = new IWhile($2,$3,@1.first_line,@1.first_column);}
@@ -363,26 +368,26 @@ WHILE:r_while EXPRESION  BLOQUE {$$ = new IWhile($2,$3,@1.first_line,@1.first_co
 DO_WHILE:r_do BLOQUE r_while EXPRESION punto_coma {$$ = new DoWhile($4,$2,@1.first_line,@1.first_column);}
 ;
 
-MET_FUN:r_void identificador parentesis_a parentesis_c BLOQUE
-	|r_void identificador parentesis_a ASIG_PARAMETROS parentesis_c BLOQUE
+MET_FUN:r_void identificador parentesis_a parentesis_c BLOQUE 	{$$ = new Metodos($2,$5,@1.first_line,@1.first_column);}
+	|r_void identificador parentesis_a ASIG_PARAMETROS parentesis_c BLOQUE 	{$$ = new MetodosP($2,$4,$6,@1.first_line,@1.first_column);}
 	|TIPO_DATO identificador parentesis_a parentesis_c BLOQUE
 	|TIPO_DATO identificador parentesis_a ASIG_PARAMETROS parentesis_c BLOQUE
 ;
 
-LLAMADA:r_call identificador parentesis_a parentesis_c punto_coma
-	|r_call identificador parentesis_a PARAMETROS parentesis_c  punto_coma
+LLAMADA:r_call identificador parentesis_a parentesis_c punto_coma {$$ =new Llamada($2,@1.first_line,@1.first_column)}
+	|r_call identificador parentesis_a PARAMETROS parentesis_c  punto_coma	{$$ =new LlamadaP($2,$4,@1.first_line,@1.first_column)}
 ;
 
-ASIG_PARAMETROS: ASIG_PARAMETROS coma A_P
-	|A_P
+ASIG_PARAMETROS: ASIG_PARAMETROS coma A_P {$1.push($3); $$ = $1;}
+	|A_P {$$ = [$1]}
 ;
 
-A_P	: TIPO_DATO identificador
+A_P	: TIPO_DATO identificador {$$ = new Declaracion($1,$2,null,true,@1.first_line,@1.first_column);}
 ;	
 
 PARAMETROS	
-	: PARAMETROS coma identificador
-	| identificador
+	: PARAMETROS coma EXPRESION {$1.push($3); $$ = $1;}
+	| EXPRESION    {$$ = [$1]}
 ;
 
 BLOQUE
@@ -398,19 +403,19 @@ TIPO_DATO
 	|r_bool		{$$=Type.BOOLEAN}
 ;
 
-INCREMENTOS:identificador incremento punto_coma	{$$ =  new InDe(1,$1,OpcionesInDe.MAMA,@1.first_line,@1.first_column);}
-			|identificador decremento punto_coma	{$$ =  new InDe(1,$1,OpcionesInDe.MEME,@1.first_line,@1.first_column);}
-			|incremento identificador punto_coma 	{$$ =  new InDe(0,$2,OpcionesInDe.MAMA,@1.first_line,@1.first_column);}
-			|decremento identificador punto_coma	{$$ =  new InDe(0,$2,OpcionesInDe.MEME,@1.first_line,@1.first_column);}
+INCREMENTOS:identificador incremento 	{$$ =  new InDe(1,$1,OpcionesInDe.MAMA,@1.first_line,@1.first_column);}
+			|identificador decremento 	{$$ =  new InDe(1,$1,OpcionesInDe.MEME,@1.first_line,@1.first_column);}
+			|incremento identificador  	{$$ =  new InDe(0,$2,OpcionesInDe.MAMA,@1.first_line,@1.first_column);}
+			|decremento identificador 	{$$ =  new InDe(0,$2,OpcionesInDe.MEME,@1.first_line,@1.first_column);}
 ;
 
 FUNCIONES_NATIVAS
-	:r_println parentesis_a EXPRESION parentesis_c punto_coma 	{$$ = new Imprimir(1,$3,@1.first_line,@1.first_column);}
+	:r_println  EXPRESION punto_coma 	{$$ = new Imprimir(1,$2,@1.first_line,@1.first_column);}
 	|r_println parentesis_a MET_FUN parentesis_c punto_coma		
 	|r_println parentesis_a parentesis_c punto_coma				{$$ = new Imprimir(2,null,@1.first_line,@1.first_column);}
-	|r_print parentesis_a  EXPRESION parentesis_c punto_coma	{$$ = new Imprimir(0,$3,@1.first_line,@1.first_column);}	
+	|r_print EXPRESION punto_coma	{$$ = new Imprimir(0,$2,@1.first_line,@1.first_column);}	
 	|r_print parentesis_a  MET_FUN parentesis_c punto_coma
-	|r_typeof parentesis_a EXPRESION parentesis_c punto_coma	{$$ = new Type_Of($3,@1.first_line,@1.first_column);}
+	|r_typeof EXPRESION 	{$$ = new Type_Of($2,@1.first_line,@1.first_column);}
 ;
 
 EXPRESION:EXPRESION or EXPRESION		{$$ = new Logica($1,$3,OpcionesLogicas.OR,@1.first_line,@1.first_column)}
@@ -441,3 +446,7 @@ TIPO_LITERAL:entero						{$$ = new Literal($1,Type.INT,		@1.first_line,@1.first_
 	|caracter							{$$ = new Literal($1,Type.CHAR,		@1.first_line,@1.first_column)}
 	|boolean							{$$ = new Literal($1,Type.BOOLEAN,	@1.first_line,@1.first_column)}
 ;
+RETORNO:r_return EXPRESION punto_coma {}
+	|r_break punto_coma
+	|r_continue punto_coma
+	;

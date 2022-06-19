@@ -19,19 +19,19 @@ export class Asignar extends Instruccion{
         //console.log(expresion);
         
 
-        if(env.buscar_variable(this.nombre)){
+        /*if(env.buscar_variable(this.nombre)){
             console.log("si esta");
             
         }else{
             console.log("no esta");
             
-        }
+        }*/
 
         const tmp = env.get_Enviroment(this.nombre);
         //console.log(tmp);
         
         //console.log("haciendo una asinacion: " + this.nombre)
-        console.log(expresion.value)
+        //console.log(expresion.value)
         //console.log(expresion.type)
         tmp?.actualizar_variable(this.nombre,expresion.value)
         

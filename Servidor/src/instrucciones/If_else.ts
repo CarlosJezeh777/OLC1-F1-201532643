@@ -15,11 +15,13 @@ export class If_Else extends Instruccion{
         super(line,colum)
     }
     public ejecutar(env:Enviroment) {
+        
 
         const new_env =  new Enviroment(env)
 
         const expresion = this.expresion.ejecutar(env)
-        console.log(expresion);
+        
+        //console.log(expresion);
         
         if(expresion.value == true){
             //console.log("aqui van las instrucicones");

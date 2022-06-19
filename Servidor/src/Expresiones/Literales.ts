@@ -13,7 +13,7 @@ export class Literal extends Expression{
     ){
     super(line,column)    
     }
-    public ejecutar(): Retorno {
+    public ejecutar(env:Enviroment): Retorno {
 
         let resultado :Retorno = {
             value: this.valor,

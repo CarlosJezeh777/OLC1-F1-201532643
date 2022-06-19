@@ -30,8 +30,8 @@ var For_Inst = /** @class */ (function (_super) {
         return _this;
     }
     For_Inst.prototype.ejecutar = function (env) {
-        //console.log("Estoy en el for");
-        //console.log(this);
+        console.log("Estoy en el for");
+        console.log(this);
         var band = true;
         var env_for = new enviroment_1.Enviroment(env);
         var env_Block = new enviroment_1.Enviroment(env_for);
@@ -40,7 +40,7 @@ var For_Inst = /** @class */ (function (_super) {
             //console.log(index);
             var cond = this.condicion.ejecutar(env_for);
             this.in_de.ejecutar(env_for);
-            //console.log(cond);
+            console.log(cond);
             if (cond.type != type_1.Type.BOOLEAN) {
                 throw new Error("la condicion tiene que ser un boolean");
             }
