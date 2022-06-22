@@ -47,234 +47,74 @@
 "\r"                 return 'RETORNO';
 "\t"                 return 'TABULACION';
 
-"int"           	{
-					//	console.log("Se reconocio el lexema: " + yytext);
-						return 'r_int';
-					}
-"double"       		{
-					//	console.log("Se reconocio el lexema: " + yytext);
-						return 'r_double';
-					}
-"char"           	{
-					//	console.log("Se reconocio el lexema: " + yytext);
-						return 'r_char';
-					}
-"boolean"           {
-					//	console.log("Se reconocio el lexema: " + yytext);
-						return 'r_bool';
-					}
-"string"           	{
-					//	console.log("Se reconocio el lexema: " + yytext);
-						return 'r_string';
-					}
+"int"           		return 'r_int';
+"double"       			return 'r_double';
+"char"           		return 'r_char';
+"boolean"           	return 'r_bool';
+"string"           		return 'r_string';
+					
+"const"           		return 'r_const';
+"if"           			return 'r_if';
+"else"           		return 'r_else';
+"switch"           		return 'r_switch';
+"case"           		return 'r_case';
+"default"           	return 'r_default';
+"for"           		return 'r_for';
+"while"           		return 'r_while';
+"do"           			return 'r_do';
+"break"           		return 'r_break';
+"continue"          	return 'r_continue';
+"void"           		return 'r_void';
+					
+"return"           		return 'r_return';
+"call"           		return 'r_call';
+"Println"           	return 'r_println';
+"Print"           		return 'r_print';
+"Typeof"           		return 'r_typeof';
+"ToLower"           	return 'r_tolower';
+"ToUpper"           	return 'r_toupper';
 
-"const"           	{
-					//	console.log("Se reconocio el lexema: " + yytext);
-						return 'r_const';
-					}
-"if"           		{
-					//	console.log("Se reconocio el lexema: " + yytext);
-						return 'r_if';
-					}
-"else"           	{
-					//	console.log("Se reconocio el lexema: " + yytext);
-						return 'r_else';
-					}
-"switch"           	{
-					//	console.log("Se reconocio el lexema: " + yytext);
-						return 'r_switch';
-					}
-"case"           	{
-					//	console.log("Se reconocio el lexema: " + yytext);
-						return 'r_case';
-					}
-"default"           {
-					//	console.log("Se reconocio el lexema: " + yytext);
-						return 'r_default';
-					}
-"for"           	{
-					//	console.log("Se reconocio el lexema: " + yytext);
-						return 'r_for';
-					}
-"while"           	{
-					//	console.log("Se reconocio el lexema: " + yytext);
-						return 'r_while';
-					}
-"do"           		{
-					//	console.log("Se reconocio el lexema: " + yytext);
-						return 'r_do';
-					}
-"break"           	{
-					//	console.log("Se reconocio el lexema: " + yytext);
-						return 'r_break';
-					}
-"continue"          {
-					//	console.log("Se reconocio el lexema: " + yytext);
-						return 'r_continue';
-					}
-"void"           	{
-						//console.log("Se reconocio el lexema: " + yytext);
-						return 'r_void';
-					}
-"return"           	{
-						//console.log("Se reconocio el lexema: " + yytext);
-						return 'r_return';
-					}
-"call"           	{
-						//console.log("Se reconocio el lexema: " + yytext);
-						return 'r_call';
-					}
-"Println"           {
-						//console.log("Se reconocio el lexema: " + yytext);
-						return 'r_println';
-					}
-"Print"           	{
-						//console.log("Se reconocio el lexema: " + yytext);
-						return 'r_print';
-					}
-"Typeof"           	{
-						//console.log("Se reconocio el lexema: " + yytext);
-						return 'r_typeof';
-					}
-">="                {
-						//console.log("Se reconocio el lexema: " + yytext);
-						return 'mayor_igual';
-					}
-"<="                {
-						//console.log("Se reconocio el lexema: " + yytext);
-						return 'menor_igual';
-					}
-"=="                {
-						//console.log("Se reconocio el lexema: " + yytext);
-						return 'igual_que';
-					}
-"."					{
-						return '.'
-					}
-"!="                {
-						//console.log("Se reconocio el lexema: " + yytext);
-						return 'no_igual';
-					}
-">"                 {
-						//console.log("Se reconocio el lexema: " + yytext);
-						return 'mayor';
-					}
-"<"                 {
-						//console.log("Se reconocio el lexema: " + yytext);
-						return 'menor';
-					}
 
-"||"                {
-						//console.log("Se reconocio el lexema: " + yytext);
-						return 'or';
-					}
-"&&"                {
-						//console.log("Se reconocio el lexema: " + yytext);
-						return 'and';
-					}
-"^"                 {
-						//console.log("Se reconocio el lexema: " + yytext);
-						return 'xor';
-					}
-"!"                 {
-						//console.log("Se reconocio el lexema: " + yytext);
-						return 'not';
-					}
+">="                	return 'mayor_igual';
+"<="                	return 'menor_igual';
+"=="                	return 'igual_que';
+"!="                	return 'no_igual';
+">"                 	return 'mayor';
+"<"                 	return 'menor';
+					
+"||"                	return 'or';
+"&&"                	return 'and';
+"^"                 	return 'xor';
+"!"                 	return 'not';
+					
 
-"="                 {
-						//console.log("Se reconocio el lexema: " + yytext);
-						return 'igual';
-					}
-";"                 {
-						//console.log("Se reconocio el lexema: " + yytext);
-						return 'punto_coma';
-					}
-","                 {
-						//console.log("Se reconocio el lexema: " + yytext);
-						return 'coma';
-					}
-":"                 {
-						//console.log("Se reconocio el lexema: " + yytext);
-						return 'dos_puntos';
-					}
+"="                 	return 'igual';
+";"                 	return 'punto_coma';
+","                 	return 'coma';
+":"                 	return 'dos_puntos';
+"("                 	return 'parentesis_a';
+")"                 	return 'parentesis_c';
+"{"                 	return 'llave_a';
+"}"                 	return 'llave_c';
 
-"("                 {
-						//console.log("Se reconocio el lexema: " + yytext);
-						return 'parentesis_a';
-					}
+"++"                	return 'incremento';
+"--"                	return 'decremento';
+"**"                	return 'potencia';
+"+"                 	return 'suma';
+"-"                 	return 'resta';
+"*"                 	return 'por';
+"/"                 	return 'div';
+"%"                 	return 'mod';
+					
 
-")"                 {
-						//console.log("Se reconocio el lexema: " + yytext);
-						return 'parentesis_c';
-					}
-"{"                 {
-						//console.log("Se reconocio el lexema: " + yytext);
-						return 'llave_a';
-					}
-"}"                 {
-						//console.log("Se reconocio el lexema: " + yytext);
-						return 'llave_c';
-					}
-
-"++"                {
-						//console.log("Se reconocio el lexema: " + yytext);
-						return 'incremento';
-					}
-"--"                {
-						//console.log("Se reconocio el lexema: " + yytext);
-						return 'decremento';
-					}
-
-"**"                {
-						//console.log("Se reconocio el lexema: " + yytext);
-						return 'potencia';
-					}
-"+"                 {
-						//console.log("Se reconocio el lexema: " + yytext);
-						return 'suma';
-					}
-"-"                 {
-						//console.log("Se reconocio el lexema: " + yytext);
-						return 'resta';
-					}
-"*"                 {
-						//console.log("Se reconocio el lexema: " + yytext);
-						return 'por';
-					}
-"/"                 {
-						//console.log("Se reconocio el lexema: " + yytext);
-						return 'div';
-					}
-"%"                 {
-						//console.log("Se reconocio el lexema: " + yytext);
-						return 'mod';
-					}
-
-[0-9]+"."[0-9]+		{
-							//console.log("Se reconocio el lexema: " + yytext);
-							return 'decimal';
-						}
-[0-9]+               {
-							//console.log("Se reconocio el lexema: " + yytext);
-							return 'entero';
-						}
-
-"\""[^\"]*"\"" 	{
-							//console.log("Se reconocio el lexema: " + yytext);
-							return 'cadena';
-						}
-"'"[^\"]?"'"			{
-							//console.log("Se reconocio el lexema: " + yytext);
-							return 'caracter';
-						}
-"true"|"false"			{
-							//console.log("Se reconocio el lexema: " + yytext);
-							return 'boolean';
-						}	
-([a-zA-Z])[a-zA-Z0-9_]*	{
-							//console.log("Se reconocio el lexema: " + yytext);
-							return 'identificador';
-						}
+[0-9]+"."[0-9]+			return 'decimal';
+[0-9]+               	return 'entero';
+"\""[^\"]*"\"" 		return 'cadena';
+"'"[^\"]?"'"				return 'caracter';
+"true"|"false"				return 'boolean';
+						
+([a-zA-Z])[a-zA-Z0-9_]*		return 'identificador';
+						
 
 
 /* Espacios en blanco */
