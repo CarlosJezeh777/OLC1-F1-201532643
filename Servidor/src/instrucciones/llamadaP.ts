@@ -47,7 +47,7 @@ export class LlamadaP extends Instruccion{
         }
        
 
-        console.log(env_parametros);
+        //.log(env_parametros);
         
 
         if (metodo== null) {

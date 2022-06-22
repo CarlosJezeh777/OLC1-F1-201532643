@@ -29,6 +29,12 @@
 	const {Llamada} = require('../instrucciones/Llamada')
 	const {MetodosP} = require('../instrucciones/MetodoPara')
 	const {LlamadaP} = require('../instrucciones/llamadaP')
+	const {TernarioI} = require('../instrucciones/Ternario_I')
+	const {ToLower} = require('../Expresiones/ToLower')
+	const {ToUpper} = require('../Expresiones/ToUpper')
+	const {Round} = require('../Expresiones/Round')
+	const {ILength} = require('../Expresiones/Length')
+	const {TernarioE} = require('../Expresiones/Ternario_E')
 %}
 
 %lex
@@ -73,6 +79,9 @@
 "Typeof"           		return 'r_typeof';
 "ToLower"           	return 'r_tolower';
 "ToUpper"           	return 'r_toupper';
+"Round"           	return 'r_round';
+"Length"           	return 'r_length';
+
 
 
 ">="                	return 'mayor_igual';
@@ -96,6 +105,9 @@
 ")"                 	return 'parentesis_c';
 "{"                 	return 'llave_a';
 "}"                 	return 'llave_c';
+"["                 	return 'corchete_a';
+"]"                 	return 'corchete_c';
+"?"                 	return 'interrogacion';
 
 "++"                	return 'incremento';
 "--"                	return 'decremento';
@@ -127,7 +139,8 @@
 /lex
 
 /* Asociación de operadores y precedencia */
-%left 'r_typeof'
+%left 'interrogacion' 'dos_puntos'
+%left 'r_typeof' 'r_tolower' 'r_toupper' 'r_round' 'r_length'
 %left 'igual' 'coma' 'incremento' 'decremento'
 %left 'or' 'xor' 'and' 'not'
 %left 'mayor' 'mayor_igual' 'menor' 'menor_igual' 'igual_que' 'no_igual'
@@ -158,8 +171,8 @@ INTRUCCION:DVARIABLES 	{$$=$1}
 	|LLAMADA			{$$ = $1}
 	|BLOQUE				{$$ = $1}
 	|FUNCIONES_NATIVAS	{$$ = $1}
-	|INCREMENTOS		{$$ = $1}
 	|RETORNO			{$$ = $1}
+	|TERNARIO			{$$ = $1}
 ;
 
 DVARIABLES: TIPO_DATO identificador igual EXPRESION punto_coma {$$ = new Declaracion($1,$2,$4,true,@1.first_line,@1.first_column);}
@@ -236,6 +249,9 @@ BLOQUE
 ;
 
 
+TERNARIO: EXPRESION interrogacion INTRUCCIONES dos_puntos INTRUCCIONES punto_coma {$$ = new TernarioI($1,$3,$5,@1.first_line,@1.first_column);}
+;
+
 TIPO_DATO
 	:r_int  	{$$=Type.INT}
 	|r_double	{$$=Type.DOUBLE}
@@ -259,8 +275,13 @@ FUNCIONES_NATIVAS
 
 ;
 
-EXPRESION: r_typeof EXPRESION 	{$$ = new Type_Of($2,@1.first_line,@1.first_column);}
-	|EXPRESION or EXPRESION		{$$ = new Logica($1,$3,OpcionesLogicas.OR,@1.first_line,@1.first_column)}
+EXPRESION:EXPRESION interrogacion EXPRESION dos_puntos EXPRESION {$$ = new TernarioE($1,$3,$5,@1.first_line,@1.first_column);}
+	|r_round EXPRESION					{$$ = new Round($2,@1.first_line,@1.first_column);}
+	|r_toupper EXPRESION				{$$ = new ToUpper($2,@1.first_line,@1.first_column);}
+	|r_length EXPRESION					{$$ = new ILength($2,@1.first_line,@1.first_column);}
+	|r_tolower EXPRESION 	 			{$$ = new ToLower($2,@1.first_line,@1.first_column);}
+	|r_typeof EXPRESION 				{$$ = new Type_Of($2,@1.first_line,@1.first_column);}
+	|EXPRESION or EXPRESION				{$$ = new Logica($1,$3,OpcionesLogicas.OR,@1.first_line,@1.first_column)}
 	|not EXPRESION						{$$ = new Logica($2,$2,OpcionesLogicas.NOT,@1.first_line,@1.first_column)}
 	|EXPRESION xor EXPRESION			{$$ = new Logica($1,$3,OpcionesLogicas.XOR,@1.first_line,@1.first_column)}
 	|EXPRESION and EXPRESION			{$$ = new Logica($1,$3,OpcionesLogicas.AND,@1.first_line,@1.first_column)}

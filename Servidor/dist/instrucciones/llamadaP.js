@@ -55,7 +55,7 @@ var LlamadaP = /** @class */ (function (_super) {
                 console.log(error);
             }
         }
-        console.log(env_parametros);
+        //.log(env_parametros);
         if (metodo == null) {
             throw "Error semantico, no ecnontre esta funcion";
         }

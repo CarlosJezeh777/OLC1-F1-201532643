@@ -1,0 +1,19 @@
+string mayus = ToUpper("HoLa MuNDo");
+Println(mayus);
+
+
+string minus = ToLower("HoLa MuNDo");
+Println(minus);
+
+int numero1 = Round(3.4);
+int numero2 = Round(3.8);
+Println(numero1);
+Println(numero2);
+
+int largo = Length("hola mundo");
+Println(largo);
+
+(largo == 10) ? Println("siii"); : Println("noo");;
+
+string preba= (largo != 10) ? "siii" : "noo";
+Println(preba);
