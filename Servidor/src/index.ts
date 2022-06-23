@@ -7,7 +7,7 @@ const singleton = Singleton.getInstance()
 const parser = require('./gramatica/gramatica');
 const fs = require("fs");
 
-/*import express from 'express'
+import express from 'express'
 import morgan from 'morgan'
 import cors from 'cors'
 
@@ -44,8 +44,8 @@ class servidorProyecto{
         let texto : string = " ";
         this.app.post('/recibir',function(request, response){
             try { 
-                console.log(request.body["editor"]);
-                const entrada = request.body["editor"];
+                console.log(request.body["edit"]);
+                const entrada = request.body["edit"];
                 const ast = parser.parse(entrada.toString());
                 const env_padre =  new Enviroment(null);
                 
@@ -72,8 +72,7 @@ class servidorProyecto{
 }
 
 new servidorProyecto();
-*/
-
+/*
 try { 
     const entrada =  fs.readFileSync("src/entrada2.txt");
     const ast = parser.parse(entrada.toString());
@@ -102,4 +101,4 @@ try {
     
 } catch (error) {
     console.log(error)   
-}
+}*/
