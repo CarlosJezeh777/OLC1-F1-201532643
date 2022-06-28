@@ -8,6 +8,7 @@ var Enviroment = /** @class */ (function () {
         this.anterior = anterior;
         this.tablaSimbolos = new Map();
         this.tablaSimbolos_metodos = new Map();
+        this.tablaSimbolos_vectores = new Map();
     }
     Enviroment.prototype.getEnv = function () {
         return this.tablaSimbolos;
@@ -43,6 +44,39 @@ var Enviroment = /** @class */ (function () {
                 return true;
         }
         return false;
+    };
+    Enviroment.prototype.guardar_vector = function (nombre, valor, type, index, dimension) {
+        if (!this.buscar_vector(nombre)) {
+            this.tablaSimbolos_vectores.set(nombre, new symbols_1.Symbol_Vector(valor, nombre, type, index, dimension));
+            return true;
+        }
+        console.log("esta variable [" + nombre + "] ya existe...");
+        return false;
+    };
+    Enviroment.prototype.buscar_vector = function (nombre) {
+        for (var _i = 0, _a = Array.from(this.tablaSimbolos_vectores.entries()); _i < _a.length; _i++) {
+            var entry = _a[_i];
+            if (entry[0] == nombre)
+                return true;
+        }
+        return false;
+    };
+    Enviroment.prototype.get_vector = function (nombre) {
+        var env = this;
+        while (env != null) {
+            if (env.tablaSimbolos_vectores.has(nombre))
+                return env.tablaSimbolos_vectores.get(nombre);
+            env = env.anterior;
+        }
+        return null;
+    };
+    Enviroment.prototype.actualizar_vector = function (nombre, new_valor) {
+        for (var _i = 0, _a = Array.from(this.tablaSimbolos.entries()); _i < _a.length; _i++) {
+            var entry = _a[_i];
+            if (entry[0] == nombre) {
+                entry[1].value = new_valor;
+            }
+        }
     };
     Enviroment.prototype.getTipo_variable = function (nombre) {
         for (var _i = 0, _a = Array.from(this.tablaSimbolos.entries()); _i < _a.length; _i++) {

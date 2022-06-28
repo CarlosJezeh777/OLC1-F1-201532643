@@ -15,38 +15,33 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ILength = void 0;
+exports.EVector = void 0;
 var expression_1 = require("../abstract/expression");
 var type_1 = require("../Symbols/type");
-var ILength = /** @class */ (function (_super) {
-    __extends(ILength, _super);
-    function ILength(expresion, line, column) {
+var EVector = /** @class */ (function (_super) {
+    __extends(EVector, _super);
+    function EVector(nombre, expresion, line, column) {
         var _this = _super.call(this, line, column) || this;
+        _this.nombre = nombre;
         _this.expresion = expresion;
         return _this;
     }
-    ILength.prototype.ejecutar = function (env) {
+    EVector.prototype.ejecutar = function (env) {
         var resultado = {
             value: null,
             type: type_1.Type.error
         };
+        var vector = env.get_vector(this.nombre);
         var tmp = this.expresion.ejecutar(env);
-        if (tmp.type == type_1.Type.STRING) {
-            var palabra = String(tmp.value);
-            resultado = {
-                value: palabra.length,
-                type: type_1.Type.INT
-            };
+        if (vector == null) {
+            throw new Error("error semantico");
         }
-        else {
-            var splitted = tmp.value.split(",");
-            resultado = {
-                value: splitted.length,
-                type: type_1.Type.INT
-            };
-        }
+        resultado = {
+            value: vector.value[tmp.value],
+            type: vector.type
+        };
         return resultado;
     };
-    return ILength;
+    return EVector;
 }(expression_1.Expression));
-exports.ILength = ILength;
+exports.EVector = EVector;

@@ -17,3 +17,35 @@ Println(largo);
 
 string preba= (largo != 10) ? "siii" : "noo";
 Println(preba);
+
+int myVector[] = new int[4];
+
+myVector[0] = 123;
+myVector[1] = 233;
+myVector[3] = 243;
+Println("aqui esta el vector: " + myVector);
+
+myVector.pop();
+Println("aqui esta el vector: " + myVector);
+myVector.push(12);
+Println("aqui esta el vector: " + myVector);
+myVector.splice(1,16);
+Println("aqui esta el vector: " + myVector);
+
+
+int largo2 = Length(myVector);
+Println(largo2);
+Println(myVector[0]);
+
+int myVector2[][] = new int[4][4];
+
+
+Println(myVector.indexof(12));
+
+char PalabraSeparada [] = toCharArray("hola mi amor");
+Println(PalabraSeparada);
+Println(PalabraSeparada[1]);
+Println(PalabraSeparada.indexof('o'));
+
+
+graficar_ts();

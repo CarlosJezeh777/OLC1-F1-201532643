@@ -35,6 +35,14 @@
 	const {Round} = require('../Expresiones/Round')
 	const {ILength} = require('../Expresiones/Length')
 	const {TernarioE} = require('../Expresiones/Ternario_E')
+	const {VectorD1} = require('../instrucciones/Vector1')
+	const {AsignarV} = require('../instrucciones/asignarV');
+	const {Pop} = require('../instrucciones/Pop');
+	const {Push} = require('../instrucciones/Push');
+	const {Splice} = require('../instrucciones/Splice');
+	const {EVector} = require('../Expresiones/EVector')
+	const {CharArray} = require('../instrucciones/CharArray');
+	const {IndexOf} = require('../Expresiones/IndexOf')
 %}
 
 %lex
@@ -81,6 +89,13 @@
 "ToUpper"           	return 'r_toupper';
 "Round"           	return 'r_round';
 "Length"           	return 'r_length';
+"new"           	return 'r_new';
+"graficar_ts"           	return 'r_graficarTs';
+"pop"           	return 'r_pop';
+"push"           	return 'r_push';
+"splice"           	return 'r_splice';
+"indexof"           	return 'r_indexof';
+"toCharArray"           	return 'r_toChar';
 
 
 
@@ -108,6 +123,8 @@
 "["                 	return 'corchete_a';
 "]"                 	return 'corchete_c';
 "?"                 	return 'interrogacion';
+"."                 	return 'punto';
+
 
 "++"                	return 'incremento';
 "--"                	return 'decremento';
@@ -139,8 +156,8 @@
 /lex
 
 /* Asociación de operadores y precedencia */
-%left 'interrogacion' 'dos_puntos'
-%left 'r_typeof' 'r_tolower' 'r_toupper' 'r_round' 'r_length'
+%left 'interrogacion' 'dos_puntos' 
+%left 'r_typeof' 'r_tolower' 'r_toupper' 'r_round' 'r_length' 'r_indexof' 'r_toChar'
 %left 'igual' 'coma' 'incremento' 'decremento'
 %left 'or' 'xor' 'and' 'not'
 %left 'mayor' 'mayor_igual' 'menor' 'menor_igual' 'igual_que' 'no_igual'
@@ -173,6 +190,10 @@ INTRUCCION:DVARIABLES 	{$$=$1}
 	|FUNCIONES_NATIVAS	{$$ = $1}
 	|RETORNO			{$$ = $1}
 	|TERNARIO			{$$ = $1}
+	|DECLARACIONVECTORES			{$$ = $1}
+	|GRAFICARTS			{$$ = $1}
+	|ASIGNACIONVECTORES			{$$ = $1}
+	|METODOSVECTORES {$$ = $1}
 ;
 
 DVARIABLES: TIPO_DATO identificador igual EXPRESION punto_coma {$$ = new Declaracion($1,$2,$4,true,@1.first_line,@1.first_column);}
@@ -183,6 +204,22 @@ DVARIABLES: TIPO_DATO identificador igual EXPRESION punto_coma {$$ = new Declara
 
 ASIGNACION: identificador igual EXPRESION punto_coma	{$$ = new Asignar($1,$3,@1.first_line,@1.first_column);}		
 			|INCREMENTOS punto_coma {$$=$1}
+;
+
+DECLARACIONVECTORES: TIPO_DATO identificador corchete_a corchete_c igual r_new TIPO_DATO corchete_a EXPRESION corchete_c punto_coma {$$ = new VectorD1($1,$2,$7,$9,@1.first_line,@1.first_column);}
+					|TIPO_DATO identificador corchete_a corchete_c corchete_a corchete_c igual r_new TIPO_DATO corchete_a EXPRESION corchete_c corchete_a EXPRESION corchete_c punto_coma
+;
+
+ASIGNACIONVECTORES:identificador corchete_a EXPRESION corchete_c igual EXPRESION punto_coma {$$ = new AsignarV($1,$3,$6,@1.first_line,@1.first_column)}
+;
+
+METODOSVECTORES: identificador punto r_pop parentesis_a parentesis_c punto_coma		{$$ = new Pop($1,@1.first_line,@1.first_column)}
+				|identificador punto r_push parentesis_a  EXPRESION parentesis_c punto_coma	{$$ = new Push($1,$5,@1.first_line,@1.first_column)}
+				|identificador punto r_splice parentesis_a  entero coma EXPRESION parentesis_c punto_coma	{$$ = new Splice($1,$5,$7,@1.first_line,@1.first_column)}
+				|TIPO_DATO identificador corchete_a corchete_c igual r_toChar EXPRESION punto_coma {$$ = new CharArray($2,$7,@1.first_line,@1.first_column)}
+;
+
+GRAFICARTS: r_graficarTs parentesis_a parentesis_c punto_coma
 ;
 
 IF:r_if EXPRESION BLOQUE  {$$ = new Iif($2,$3,@1.first_line,@1.first_column);} 
@@ -276,6 +313,7 @@ FUNCIONES_NATIVAS
 ;
 
 EXPRESION:EXPRESION interrogacion EXPRESION dos_puntos EXPRESION {$$ = new TernarioE($1,$3,$5,@1.first_line,@1.first_column);}
+	|identificador punto r_indexof EXPRESION {$$ = new IndexOf($1,$4,@1.first_line,@1.first_column)}
 	|r_round EXPRESION					{$$ = new Round($2,@1.first_line,@1.first_column);}
 	|r_toupper EXPRESION				{$$ = new ToUpper($2,@1.first_line,@1.first_column);}
 	|r_length EXPRESION					{$$ = new ILength($2,@1.first_line,@1.first_column);}
@@ -298,6 +336,7 @@ EXPRESION:EXPRESION interrogacion EXPRESION dos_puntos EXPRESION {$$ = new Terna
 	|EXPRESION por EXPRESION			{$$ = new Aritmeticas($1,$3,AritmeticasOptions.MULTIPLICAR,@1.first_line,@1.first_column)}
 	|EXPRESION div EXPRESION			{$$ = new Aritmeticas($1,$3,AritmeticasOptions.DIVIDIR,@1.first_line,@1.first_column)}
 	|parentesis_a EXPRESION parentesis_c{$$ = $2}       						
+	|identificador corchete_a EXPRESION corchete_c	{$$ = new EVector($1,$3,@1.first_line,@1.first_column)}
 	|identificador						{$$ = new Acces($1,@1.first_line,@1.first_column);} 
 	|TIPO_LITERAL						{$$ = $1}	
 	;

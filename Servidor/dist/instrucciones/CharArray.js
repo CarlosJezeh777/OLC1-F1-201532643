@@ -15,38 +15,29 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ILength = void 0;
-var expression_1 = require("../abstract/expression");
+exports.CharArray = void 0;
+var instruccion_1 = require("../abstract/instruccion");
 var type_1 = require("../Symbols/type");
-var ILength = /** @class */ (function (_super) {
-    __extends(ILength, _super);
-    function ILength(expresion, line, column) {
+var CharArray = /** @class */ (function (_super) {
+    __extends(CharArray, _super);
+    function CharArray(nombre, valor, line, column) {
         var _this = _super.call(this, line, column) || this;
-        _this.expresion = expresion;
+        _this.nombre = nombre;
+        _this.valor = valor;
         return _this;
     }
-    ILength.prototype.ejecutar = function (env) {
-        var resultado = {
-            value: null,
-            type: type_1.Type.error
-        };
-        var tmp = this.expresion.ejecutar(env);
-        if (tmp.type == type_1.Type.STRING) {
-            var palabra = String(tmp.value);
-            resultado = {
-                value: palabra.length,
-                type: type_1.Type.INT
-            };
+    CharArray.prototype.ejecutar = function (env) {
+        if (this.valor == null) {
+            throw new Error("error semantico");
         }
-        else {
-            var splitted = tmp.value.split(",");
-            resultado = {
-                value: splitted.length,
-                type: type_1.Type.INT
-            };
+        var valor = this.valor.ejecutar(env);
+        if (valor.type != type_1.Type.STRING) {
+            throw new Error("error semantico");
         }
-        return resultado;
+        var ArrayChar = Array.from(String(valor.value));
+        env.guardar_vector(this.nombre, ArrayChar, type_1.Type.CHAR, ArrayChar.length, 1);
+        //console.log(env);
     };
-    return ILength;
-}(expression_1.Expression));
-exports.ILength = ILength;
+    return CharArray;
+}(instruccion_1.Instruccion));
+exports.CharArray = CharArray;

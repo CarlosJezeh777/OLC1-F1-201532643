@@ -17,6 +17,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Acces = void 0;
 var expression_1 = require("../abstract/expression");
+var type_1 = require("../Symbols/type");
 var Acces = /** @class */ (function (_super) {
     __extends(Acces, _super);
     function Acces(id, line, column) {
@@ -25,15 +26,29 @@ var Acces = /** @class */ (function (_super) {
         return _this;
     }
     Acces.prototype.ejecutar = function (env) {
-        var variable_ts = env.get_variable(this.id);
-        //console.log(variable_ts);
-        if (variable_ts == null || variable_ts == undefined) {
-            throw "Error Semantico, esta variable no existe";
-        }
-        return {
-            value: variable_ts.value,
-            type: variable_ts.type
+        var resultado = {
+            value: null,
+            type: type_1.Type.error
         };
+        var variable_ts = env.get_variable(this.id);
+        var variable_vector = env.get_vector(this.id);
+        //console.log(variable_ts);
+        if (variable_ts != null || variable_ts != undefined) {
+            resultado = {
+                value: variable_ts.value,
+                type: variable_ts.type
+            };
+        }
+        else if (variable_vector != null) {
+            resultado = {
+                value: "[" + variable_vector.value + "]",
+                type: variable_vector.type
+            };
+        }
+        else {
+            throw new Error("error semantico");
+        }
+        return resultado;
     };
     return Acces;
 }(expression_1.Expression));

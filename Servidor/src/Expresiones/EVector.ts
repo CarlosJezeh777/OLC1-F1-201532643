@@ -3,8 +3,9 @@ import { Retorno } from "../abstract/Retorno"
 import { Enviroment } from "../Symbols/enviroment"
 import { Type } from "../Symbols/type"
 
-export class ILength extends Expression{
+export class EVector extends Expression{
     constructor(
+        public nombre: string,
         public expresion: Expression,
         line: number,
         column: number
@@ -15,25 +16,20 @@ export class ILength extends Expression{
         let resultado: Retorno={
             value: null,
             type: Type.error
-        } 
+        }
+        
+        const vector = env.get_vector(this.nombre);
         const tmp =  this.expresion.ejecutar(env);
 
-        if(tmp.type == Type.STRING){
-            const palabra =  String(tmp.value)
-        
-            resultado = {
-            value: palabra.length,
-            type: Type.INT
-            }
-            
-        }else{
-            const splitted = tmp.value.split(",")   
-            resultado = {
-                value: splitted.length,
-                type: Type.INT
-            }
-            
+        if(vector == null){
+            throw new Error("error semantico");
         }
+
+        resultado = {
+            value: vector.value[tmp.value],
+            type: vector.type
+        }
+        
         
         return resultado
         

@@ -3,16 +3,18 @@ import { Else_If } from "../instrucciones/else_if";
 import { Funcion } from "../instrucciones/Funcion";
 import { Metodos } from "../instrucciones/IMetdos";
 import { MetodosP } from "../instrucciones/MetodoPara";
-import { Symbolos } from "./symbols";
+import { Symbolos , Symbol_Vector } from "./symbols";
 import { Type } from "./type";
 
 export class Enviroment{
     private tablaSimbolos:Map<string, Symbolos>;
-    private tablaSimbolos_metodos : Map<string, any>
+    private tablaSimbolos_metodos : Map<string, any>;
+    private tablaSimbolos_vectores : Map<string, any>;
 
     constructor(public anterior: Enviroment | null ){
         this.tablaSimbolos = new Map();
         this.tablaSimbolos_metodos =  new Map();
+        this.tablaSimbolos_vectores = new Map();
     }
 
     public getEnv(){
@@ -51,6 +53,40 @@ export class Enviroment{
         }
         return false
     }
+
+    public guardar_vector(nombre: string, valor: any, type: Type, index: number, dimension: number):boolean{
+        if(!this.buscar_vector(nombre)){
+            this.tablaSimbolos_vectores.set(nombre, new Symbol_Vector(valor,nombre,type,index,dimension));
+            return true
+        }
+        console.log("esta variable ["+nombre+"] ya existe...");
+        return false
+    }
+
+    public buscar_vector(nombre: string): boolean {
+        for (let entry of Array.from(this.tablaSimbolos_vectores.entries())) {
+            if (entry[0] == nombre) return true;
+        }
+        return false
+    }
+
+    public get_vector(nombre: string): Symbol_Vector|null{
+        let env: Enviroment | null = this;
+        while (env != null) {
+            if (env.tablaSimbolos_vectores.has(nombre)) return env.tablaSimbolos_vectores.get(nombre);
+            env = env.anterior;
+        }
+        return null;
+    }
+
+    public actualizar_vector(nombre: string, new_valor: any) {
+        for (let entry of Array.from(this.tablaSimbolos.entries())) {
+          if (entry[0] == nombre) {
+              entry[1].value = new_valor;
+          }
+        }
+    }
+
 
     public getTipo_variable(nombre: string): Type {
         for (let entry of Array.from(this.tablaSimbolos.entries())) {
