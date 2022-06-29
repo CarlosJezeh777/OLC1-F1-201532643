@@ -4,6 +4,7 @@ exports.Singleton = void 0;
 var Singleton = /** @class */ (function () {
     function Singleton() {
         this.consola = " ";
+        this.ast = " ";
         this.errores = [];
         this.elses_if = [];
     }
@@ -18,6 +19,12 @@ var Singleton = /** @class */ (function () {
     };
     Singleton.prototype.getConsola = function () {
         return this.consola;
+    };
+    Singleton.prototype.addAst = function (data) {
+        this.ast += data;
+    };
+    Singleton.prototype.getAst = function () {
+        return this.ast;
     };
     Singleton.prototype.addErrores = function (data) {
         this.errores.push(data);

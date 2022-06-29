@@ -18,6 +18,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Asignar = void 0;
 var instruccion_1 = require("../abstract/instruccion");
 var Acceso_1 = require("../Expresiones/Acceso");
+var Singleton_1 = require("../Singleton/Singleton");
 var Asignar = /** @class */ (function (_super) {
     __extends(Asignar, _super);
     function Asignar(nombre, expresion, line, column) {
@@ -44,6 +45,11 @@ var Asignar = /** @class */ (function (_super) {
         //console.log(expresion.value)
         //console.log(expresion.type)
         tmp === null || tmp === void 0 ? void 0 : tmp.actualizar_variable(this.nombre, expresion.value);
+    };
+    Asignar.prototype.ast = function () {
+        var s = Singleton_1.Singleton.getInstance();
+        var nombre_nodo = "node_".concat(this.line, "_").concat(this.colum, "_");
+        s.addAst("\n        ".concat(nombre_nodo, "[label=\"Asignacion\"];\n        ").concat(nombre_nodo, "1[label=\"Nombre: ").concat(this.nombre, "\"];\n        ").concat(nombre_nodo, "->").concat(nombre_nodo, "1;\n        ").concat(nombre_nodo, "->").concat(this.expresion.ast(), "\n        "));
     };
     return Asignar;
 }(instruccion_1.Instruccion));

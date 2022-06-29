@@ -427,6 +427,10 @@ var Aritmeticas = /** @class */ (function (_super) {
         }
         return resultado;
     };
+    Aritmeticas.prototype.ast = function () {
+        var name_nodo = "node_".concat(this.line, "_").concat(this.column, "_");
+        return "\n        ".concat(name_nodo, ";\n        ").concat(name_nodo, "[label=\"").concat((0, aritmeticasOpc_1.getSimbolo)(this.tipo), "\"];\n        ").concat(name_nodo, "->").concat(this.izquierda.ast(), "\n        ").concat(name_nodo, "->").concat(this.derecha.ast(), "\n        ");
+    };
     return Aritmeticas;
 }(expression_1.Expression));
 exports.Aritmeticas = Aritmeticas;

@@ -25,4 +25,8 @@ export class MetodosP extends Instruccion{
         }
         
     }
+
+    public ast(): void {
+        
+    }
 }

@@ -42,4 +42,13 @@ export class Acces extends Expression{
         return resultado
     }
 
+
+    public ast(): string {
+        const name_nodo = `node_${this.line}_${this.column}_`
+        return `
+        ${name_nodo};
+        ${name_nodo}[label="{${this.id}}"];
+        `
+    }
+
 } 

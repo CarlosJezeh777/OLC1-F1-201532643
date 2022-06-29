@@ -51,6 +51,8 @@ var InDe = /** @class */ (function (_super) {
             tmp === null || tmp === void 0 ? void 0 : tmp.actualizar_variable(this.nombre, nuevo);
         }
     };
+    InDe.prototype.ast = function () {
+    };
     return InDe;
 }(instruccion_1.Instruccion));
 exports.InDe = InDe;

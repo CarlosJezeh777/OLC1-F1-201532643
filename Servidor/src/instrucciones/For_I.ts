@@ -54,4 +54,7 @@ export class For_Inst extends Instruccion{
         
         
     }
+    public ast(): void {
+        
+    }
 }

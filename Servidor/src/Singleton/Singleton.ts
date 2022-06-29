@@ -4,6 +4,7 @@ export class Singleton{
     private static instance: Singleton
 
     private consola: string = " "
+    private ast: string = " "
     private errores: any[] = [] 
     private elses_if: Else_If[] = []
 
@@ -24,6 +25,14 @@ export class Singleton{
 
     public getConsola(): string{
         return this.consola
+    }
+
+    public addAst(data: string){
+        this.ast += data;
+    }
+
+    public getAst(): string{
+        return this.ast
     }
 
     public addErrores(data: any){

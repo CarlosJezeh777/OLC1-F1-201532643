@@ -42,6 +42,9 @@ var EVector = /** @class */ (function (_super) {
         };
         return resultado;
     };
+    EVector.prototype.ast = function () {
+        return "ast";
+    };
     return EVector;
 }(expression_1.Expression));
 exports.EVector = EVector;

@@ -8,5 +8,6 @@ export abstract class Instruccion {
         this.line  = line;
         this.colum  = colum;                                                                                                                                                                                                                                                   
     }                
-    public abstract ejecutar(env:Enviroment): any                                                                                                                                                                                                   
+    public abstract ejecutar(env:Enviroment): any   
+    public abstract ast(): void                                                                                                                                                                                                
 }

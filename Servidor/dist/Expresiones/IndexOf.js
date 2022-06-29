@@ -48,6 +48,9 @@ var IndexOf = /** @class */ (function (_super) {
         }
         return resultado;
     };
+    IndexOf.prototype.ast = function () {
+        return "ast";
+    };
     return IndexOf;
 }(expression_1.Expression));
 exports.IndexOf = IndexOf;

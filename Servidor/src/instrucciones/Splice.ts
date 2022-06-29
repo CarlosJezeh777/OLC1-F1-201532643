@@ -25,7 +25,7 @@ export class Splice extends Instruccion{
         }
 
         const valor =  this.valor.ejecutar(env)
-        console.log(valor);
+        //console.log(valor);
         
         if(valor.type != arreglo.type){
             throw new Error("error semantico");
@@ -36,13 +36,17 @@ export class Splice extends Instruccion{
         
         arreglo.index = arreglo.index + 1
 
-        console.log(arreglo);
+       // console.log(arreglo);
         
 
         env.actualizar_vector(this.nombre,arreglo)
         
         //console.log(expresion);
         
+        
+    }
+
+    public ast(): void {
         
     }
 }

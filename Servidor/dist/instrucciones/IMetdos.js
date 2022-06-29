@@ -28,6 +28,8 @@ var Metodos = /** @class */ (function (_super) {
     Metodos.prototype.ejecutar = function (env) {
         env.guardar_funcion(this.nombre, this);
     };
+    Metodos.prototype.ast = function () {
+    };
     return Metodos;
 }(instruccion_1.Instruccion));
 exports.Metodos = Metodos;

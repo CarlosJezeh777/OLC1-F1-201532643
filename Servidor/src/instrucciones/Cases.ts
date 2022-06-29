@@ -18,4 +18,12 @@ export class Casos extends Instruccion{
         const utiles = utilesArrays.getInstance()
         utiles.addCasos(this)
     }
+    public ast(): void {
+        const s = Singleton.getInstance()
+        const nombre_nodo =`node_${this.line}_${this.colum}_`
+        s.addAst(`
+        ${nombre_nodo}[label="Cases"];
+        `)
+        
+    }
 }

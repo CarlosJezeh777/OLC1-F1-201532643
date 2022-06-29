@@ -30,6 +30,8 @@ var Funcion = /** @class */ (function (_super) {
     Funcion.prototype.ejecutar = function (env) {
         env.guardar_funcion(this.nombre, this);
     };
+    Funcion.prototype.ast = function () {
+    };
     return Funcion;
 }(instruccion_1.Instruccion));
 exports.Funcion = Funcion;

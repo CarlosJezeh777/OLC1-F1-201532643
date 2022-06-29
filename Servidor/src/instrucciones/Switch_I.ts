@@ -58,6 +58,8 @@ export class Switch_I extends Instruccion{
         
         //console.log(expresion);
         
+        public ast(): void {
         
+        }
         
     }

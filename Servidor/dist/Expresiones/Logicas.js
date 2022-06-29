@@ -69,6 +69,10 @@ var Logica = /** @class */ (function (_super) {
         }
         return resultado;
     };
+    Logica.prototype.ast = function () {
+        var nombreNodo = "node_".concat(this.line, "_").concat(this.column, "_");
+        return "\n        ".concat(nombreNodo, ";\n        ").concat(nombreNodo, "[label=\"").concat((0, LogicasOpc_1.getSimbol)(this.tipo), "\"];\n        ").concat(nombreNodo, "->").concat(this.izquierda.ast(), "\n        ").concat(nombreNodo, "->").concat(this.derecha.ast());
+    };
     return Logica;
 }(expression_1.Expression));
 exports.Logica = Logica;

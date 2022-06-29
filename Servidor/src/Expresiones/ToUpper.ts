@@ -31,4 +31,7 @@ export class ToUpper extends Expression{
         return resultado
         
     }
+    public ast(): string {
+        return "ast"
+    }
 }

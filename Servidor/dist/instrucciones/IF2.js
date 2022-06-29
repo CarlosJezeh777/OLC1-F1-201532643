@@ -61,6 +61,8 @@ var If_Else_If = /** @class */ (function (_super) {
         }
         //console.log(expresion);
     };
+    If_Else_If.prototype.ast = function () {
+    };
     return If_Else_If;
 }(instruccion_1.Instruccion));
 exports.If_Else_If = If_Else_If;

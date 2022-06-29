@@ -37,6 +37,9 @@ var ReturnE = /** @class */ (function (_super) {
         };
         return resultado;
     };
+    ReturnE.prototype.ast = function () {
+        return "ast";
+    };
     return ReturnE;
 }(expression_1.Expression));
 exports.ReturnE = ReturnE;

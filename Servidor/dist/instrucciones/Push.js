@@ -41,6 +41,8 @@ var Push = /** @class */ (function (_super) {
         env.actualizar_vector(this.nombre, arreglo);
         //console.log(expresion);
     };
+    Push.prototype.ast = function () {
+    };
     return Push;
 }(instruccion_1.Instruccion));
 exports.Push = Push;

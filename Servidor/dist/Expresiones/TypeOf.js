@@ -65,6 +65,9 @@ var Type_Of = /** @class */ (function (_super) {
         }
         return resultado;
     };
+    Type_Of.prototype.ast = function () {
+        return "ast";
+    };
     return Type_Of;
 }(expression_1.Expression));
 exports.Type_Of = Type_Of;

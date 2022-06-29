@@ -36,6 +36,8 @@ var Pop = /** @class */ (function (_super) {
         env.actualizar_vector(this.nombre, arreglo);
         //console.log(expresion);
     };
+    Pop.prototype.ast = function () {
+    };
     return Pop;
 }(instruccion_1.Instruccion));
 exports.Pop = Pop;

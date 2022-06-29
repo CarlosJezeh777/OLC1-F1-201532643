@@ -50,6 +50,8 @@ var For_Inst = /** @class */ (function (_super) {
             this.instrucciones.ejecutar(env_Block);
         }
     };
+    For_Inst.prototype.ast = function () {
+    };
     return For_Inst;
 }(instruccion_1.Instruccion));
 exports.For_Inst = For_Inst;

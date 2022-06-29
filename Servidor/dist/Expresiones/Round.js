@@ -41,6 +41,9 @@ var Round = /** @class */ (function (_super) {
         };
         return resultado;
     };
+    Round.prototype.ast = function () {
+        return "ast";
+    };
     return Round;
 }(expression_1.Expression));
 exports.Round = Round;

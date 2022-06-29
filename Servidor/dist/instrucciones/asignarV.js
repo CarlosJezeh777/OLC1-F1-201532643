@@ -17,6 +17,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AsignarV = void 0;
 var instruccion_1 = require("../abstract/instruccion");
+var Singleton_1 = require("../Singleton/Singleton");
 var AsignarV = /** @class */ (function (_super) {
     __extends(AsignarV, _super);
     function AsignarV(nombre, index, valor, line, column) {
@@ -48,6 +49,11 @@ var AsignarV = /** @class */ (function (_super) {
         //console.log(arreglo);
         env.actualizar_vector(this.nombre, arreglo);
         //console.log(expresion);
+    };
+    AsignarV.prototype.ast = function () {
+        var s = Singleton_1.Singleton.getInstance();
+        var nombre_nodo = "node_".concat(this.line, "_").concat(this.colum, "_");
+        s.addAst("\n        ".concat(nombre_nodo, "[label=\"Asignacion Vector\"];\n        ").concat(nombre_nodo, "1[label=\"Nombre: ").concat(this.nombre, "\"];\n        ").concat(nombre_nodo, "->").concat(nombre_nodo, "1;\n        ").concat(nombre_nodo, "->").concat(this.valor.ast(), "\n        "));
     };
     return AsignarV;
 }(instruccion_1.Instruccion));

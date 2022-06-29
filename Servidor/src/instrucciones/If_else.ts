@@ -36,4 +36,8 @@ export class If_Else extends Instruccion{
         
         
     }
+
+    public ast(): void {
+        
+    }
 }

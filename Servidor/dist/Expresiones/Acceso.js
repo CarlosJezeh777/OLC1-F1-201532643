@@ -50,6 +50,10 @@ var Acces = /** @class */ (function (_super) {
         }
         return resultado;
     };
+    Acces.prototype.ast = function () {
+        var name_nodo = "node_".concat(this.line, "_").concat(this.column, "_");
+        return "\n        ".concat(name_nodo, ";\n        ").concat(name_nodo, "[label=\"{").concat(this.id, "}\"];\n        ");
+    };
     return Acces;
 }(expression_1.Expression));
 exports.Acces = Acces;

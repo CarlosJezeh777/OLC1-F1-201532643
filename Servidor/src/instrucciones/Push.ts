@@ -38,4 +38,7 @@ export class Push extends Instruccion{
         
         
     }
+    public ast(): void {
+        
+    }
 }

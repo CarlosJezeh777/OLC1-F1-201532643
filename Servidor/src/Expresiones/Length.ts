@@ -38,4 +38,8 @@ export class ILength extends Expression{
         return resultado
         
     }
+
+    public ast(): string {
+        return "ast"
+    }
 }

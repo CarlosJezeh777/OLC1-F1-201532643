@@ -2,7 +2,7 @@ import { Expression } from "../abstract/expression"
 import { Retorno } from "../abstract/Retorno"
 import { Enviroment } from "../Symbols/enviroment"
 import { Type } from "../Symbols/type"
-import { OpcionRelacional } from "./RelacionalOpc"
+import { getSimbolo, OpcionRelacional } from "./RelacionalOpc"
 
 export class Relacional extends Expression{
     constructor(
@@ -331,5 +331,15 @@ export class Relacional extends Expression{
         }
 
         return resultado
+    }
+
+    public ast(): string {
+        const nombreNodo = `node_${this.line}_${this.column}_`
+        return `
+        ${nombreNodo};
+        ${nombreNodo}[label="${getSimbolo(this.tipo)}"];
+        ${nombreNodo}->${this.izquierda.ast()}
+        ${nombreNodo}->${this.derecha.ast()}
+        `
     }
 }

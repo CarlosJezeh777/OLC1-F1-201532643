@@ -47,4 +47,7 @@ export class TernarioE extends Expression{
         
         return resultado
     }
+    public ast(): string {
+        return "ast"
+    }
 }

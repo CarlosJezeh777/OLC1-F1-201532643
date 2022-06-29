@@ -47,6 +47,9 @@ var ILength = /** @class */ (function (_super) {
         }
         return resultado;
     };
+    ILength.prototype.ast = function () {
+        return "ast";
+    };
     return ILength;
 }(expression_1.Expression));
 exports.ILength = ILength;

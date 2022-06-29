@@ -397,6 +397,10 @@ var Relacional = /** @class */ (function (_super) {
         }
         return resultado;
     };
+    Relacional.prototype.ast = function () {
+        var nombreNodo = "node_".concat(this.line, "_").concat(this.column, "_");
+        return "\n        ".concat(nombreNodo, ";\n        ").concat(nombreNodo, "[label=\"").concat((0, RelacionalOpc_1.getSimbolo)(this.tipo), "\"];\n        ").concat(nombreNodo, "->").concat(this.izquierda.ast(), "\n        ").concat(nombreNodo, "->").concat(this.derecha.ast(), "\n        ");
+    };
     return Relacional;
 }(expression_1.Expression));
 exports.Relacional = Relacional;

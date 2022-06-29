@@ -41,6 +41,9 @@ var ToLower = /** @class */ (function (_super) {
         };
         return resultado;
     };
+    ToLower.prototype.ast = function () {
+        return "ast";
+    };
     return ToLower;
 }(expression_1.Expression));
 exports.ToLower = ToLower;

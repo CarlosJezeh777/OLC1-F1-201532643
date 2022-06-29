@@ -38,6 +38,8 @@ var CharArray = /** @class */ (function (_super) {
         env.guardar_vector(this.nombre, ArrayChar, type_1.Type.CHAR, ArrayChar.length, 1);
         //console.log(env);
     };
+    CharArray.prototype.ast = function () {
+    };
     return CharArray;
 }(instruccion_1.Instruccion));
 exports.CharArray = CharArray;

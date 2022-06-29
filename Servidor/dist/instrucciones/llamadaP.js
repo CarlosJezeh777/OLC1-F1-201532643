@@ -61,6 +61,8 @@ var LlamadaP = /** @class */ (function (_super) {
         }
         metodo.instrucciones.ejecutar(env_instrucciones);
     };
+    LlamadaP.prototype.ast = function () {
+    };
     return LlamadaP;
 }(instruccion_1.Instruccion));
 exports.LlamadaP = LlamadaP;

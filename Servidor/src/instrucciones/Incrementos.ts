@@ -46,4 +46,8 @@ export class InDe extends Instruccion{
         }   
         
     }
+
+    public ast(): void {
+        
+    }
 }

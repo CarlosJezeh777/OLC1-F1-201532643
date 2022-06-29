@@ -34,4 +34,8 @@ export class EVector extends Expression{
         return resultado
         
     }
+
+    public ast(): string {
+        return "ast"
+    }
 }

@@ -54,6 +54,9 @@ var TernarioE = /** @class */ (function (_super) {
         //console.log(expresion);
         return resultado;
     };
+    TernarioE.prototype.ast = function () {
+        return "ast";
+    };
     return TernarioE;
 }(expression_1.Expression));
 exports.TernarioE = TernarioE;

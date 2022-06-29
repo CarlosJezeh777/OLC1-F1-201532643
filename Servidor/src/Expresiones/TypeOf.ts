@@ -52,4 +52,7 @@ export class Type_Of extends Expression{
         return resultado
         
     }
+    public ast(): string {
+        return "ast"
+    }
 }

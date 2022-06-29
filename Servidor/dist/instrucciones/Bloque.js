@@ -17,6 +17,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Bloque = void 0;
 var instruccion_1 = require("../abstract/instruccion");
+var Singleton_1 = require("../Singleton/Singleton");
 var enviroment_1 = require("../Symbols/enviroment");
 var Bloque = /** @class */ (function (_super) {
     __extends(Bloque, _super);
@@ -37,6 +38,21 @@ var Bloque = /** @class */ (function (_super) {
             }
         }
         //console.log(env);
+    };
+    Bloque.prototype.ast = function () {
+        var s = Singleton_1.Singleton.getInstance();
+        var nombre_nodo = "node_".concat(this.line, "_").concat(this.colum, "_");
+        s.addAst("".concat(nombre_nodo, "[label=\"Bloque\"];"));
+        for (var _i = 0, _a = this.instruccion; _i < _a.length; _i++) {
+            var elemento = _a[_i];
+            try {
+                elemento.ast();
+                s.addAst("".concat(nombre_nodo, "->node_").concat(elemento.line, "_").concat(elemento.colum, "_;"));
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }
     };
     return Bloque;
 }(instruccion_1.Instruccion));

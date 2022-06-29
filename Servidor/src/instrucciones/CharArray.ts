@@ -33,4 +33,7 @@ export class CharArray extends Instruccion{
         
  
     }
+    public ast(): void {
+        
+    }
 }

@@ -1,6 +1,7 @@
 import e from "cors";
 import { Singleton } from "./Singleton/Singleton";
 import { Enviroment } from "./Symbols/enviroment";
+import { exec } from "child_process";
 
 const singleton = Singleton.getInstance()
 
@@ -13,7 +14,8 @@ import cors from 'cors'
 const app: express.Application = express()
 const port: number = 3000
 const corsOption: cors.CorsOptions = {origin: true, optionsSuccessStatus: 200}
-/*app.use(express.json());
+
+app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cors(corsOption));
 app.use(morgan('dev'));
@@ -22,33 +24,46 @@ app.listen(port, ()=>{
     console.log("Server listening: => "+ port );
     
 })
-    
-    
-app.get('/enviar',function(req, res){
-    res.json({respuesta: "hola mundo"});
-});
-    
+        
+const env_padre =  new Enviroment(null);
+singleton.addAst(`nodeOriginal[label="Instrucciones"];`)
 
 app.post('/recibir',function(request, response){
     try { 
-        console.log(request.body["edit"]);
+        //console.log(request.body["edit"]);
         const entrada = request.body["edit"];
         const ast = parser.parse(entrada.toString());
-        const env_padre =  new Enviroment(null);
         
+
         for (const elemento of ast) {
             try {
                 //console.log(elemento);
-                elemento.ejecutar(env_padre);
+                elemento.ast();
+                console.log(elemento);
+                const linea = elemento.line
+                const columna = elemento.colum
+                singleton.addAst(`nodeOriginal->node_${elemento.line}_${elemento.colum}_;`)
             } catch (error) {
                 singleton.addErrores(error)
             }
         }
         
+        for (const elemento of ast) {
+            try {
+                //console.log(elemento);
+                elemento.ejecutar(env_padre);
+
+            } catch (error) {
+                singleton.addErrores(error)
+            }
+        }
         
+
         
-        let texto = singleton.getConsola();
-        
+
+
+        let texto = singleton.getConsola()
+    
         response.json({respuest: texto});
 
     } catch (error) {
@@ -56,11 +71,52 @@ app.post('/recibir',function(request, response){
     }
             
 });
-*/
+
+
+app.get('/enviarTS',function(req, res){
+    const taba_sim = env_padre.getEnv()
+    const TS: any[] = []
+    taba_sim.forEach((value,key)=>{
+        TS.push(value)    
+    })
+    
+    //console.log(TS);    
+    res.json({respuesta: TS});
+});
+    
+
+app.get('/enviarConsola',function(req, res){
+    let texto = singleton.getConsola()
+    res.json({respuesta: texto});
+});
+
+app.get('/enviarAst',function(req, res){
+    const arbol = singleton.getAst()
+    console.log(arbol);
+    crearArchivo()
+    
+    res.json({respuesta: "ok"});
+});
+
+function crearArchivo(){
+    exec('mkdir out/')
+    createFile("out/ast.dot", "digraph G {\nnode[shape=box];" + singleton.getAst() + "\n}")
+    exec('dot -Tpng out/ast.dot -o out/ast.png ')
+
+}
+
+
+function createFile(nameFile: string, data: string) {
+    fs.writeFile(nameFile, data, () => {
+        console.log('>> The file ' + nameFile + ' has been saved!');
+    })
+}
 
 
 
-try { 
+
+
+/*try { 
     const entrada =  fs.readFileSync("src/entrada2.txt");
     const ast = parser.parse(entrada.toString());
     const env_padre =  new Enviroment(null);
@@ -76,23 +132,6 @@ try {
     //console.log(env_padre);
     const taba_sim = env_padre.getEnv()
     //console.log(taba_sim);
-    let tabSym:string = "[";
-    taba_sim.forEach((value,key)=>{
-        tabSym += "{\n"
-        tabSym += "nombre:"+ String(value.id)+",\n"
-        tabSym += "valor:"+ String(value.value)+",\n"
-        if(value.type == 0) {tabSym += "tipo: Int ,\n"}
-        else if(value.type == 1){tabSym += "tipo: String ,\n"}
-        else if(value.type == 2){tabSym += "tipo: Double ,\n"}
-        else if(value.type == 3){tabSym += "tipo: Char ,\n"}
-        else if(value.type == 4){tabSym += "tipo: Boolean ,\n"}
-        
-        tabSym += "editable:"+ String(value.editable)+",\n"
-        tabSym += "},\n"
-    })
-    tabSym += "]\n"
-
-    //console.log(tabSym);
     //console.log(env_padre);
     
     
@@ -111,4 +150,4 @@ try {
     
 } catch (error) {
     console.log(error)   
-}
+}*/

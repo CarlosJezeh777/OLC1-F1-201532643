@@ -37,6 +37,8 @@ var VectorD1 = /** @class */ (function (_super) {
         }
         //console.log(env);
     };
+    VectorD1.prototype.ast = function () {
+    };
     return VectorD1;
 }(instruccion_1.Instruccion));
 exports.VectorD1 = VectorD1;

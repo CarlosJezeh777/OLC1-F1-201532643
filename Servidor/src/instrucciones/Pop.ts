@@ -31,4 +31,7 @@ export class Pop extends Instruccion{
         
         
     }
+    public ast(): void {
+        
+    }
 }

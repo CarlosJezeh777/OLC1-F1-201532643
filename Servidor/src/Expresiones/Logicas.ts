@@ -2,7 +2,7 @@ import { Expression } from "../abstract/expression"
 import { Retorno } from "../abstract/Retorno"
 import { Enviroment } from "../Symbols/enviroment"
 import { Type } from "../Symbols/type"
-import { OpcionesLogicas } from "./LogicasOpc"
+import { getSimbol, OpcionesLogicas } from "./LogicasOpc"
 
 export class Logica extends Expression{
     constructor(
@@ -65,5 +65,13 @@ export class Logica extends Expression{
         return resultado
     }
 
+    public ast(): string {
+        const nombreNodo = `node_${this.line}_${this.column}_`
+        return `
+        ${nombreNodo};
+        ${nombreNodo}[label="${getSimbol(this.tipo)}"];
+        ${nombreNodo}->${this.izquierda.ast()}
+        ${nombreNodo}->${this.derecha.ast()}`
+    }
     
 }

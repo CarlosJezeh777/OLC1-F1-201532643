@@ -35,6 +35,8 @@ var Llamada = /** @class */ (function (_super) {
         }
         metodo.instrucciones.ejecutar(env_instrucciones);
     };
+    Llamada.prototype.ast = function () {
+    };
     return Llamada;
 }(instruccion_1.Instruccion));
 exports.Llamada = Llamada;

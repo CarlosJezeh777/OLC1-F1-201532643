@@ -60,6 +60,8 @@ var TernarioI = /** @class */ (function (_super) {
         }
         //console.log(expresion);
     };
+    TernarioI.prototype.ast = function () {
+    };
     return TernarioI;
 }(instruccion_1.Instruccion));
 exports.TernarioI = TernarioI;

@@ -17,6 +17,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Casos = void 0;
 var instruccion_1 = require("../abstract/instruccion");
+var Singleton_1 = require("../Singleton/Singleton");
 var UtilesArrays_1 = require("../Singleton/UtilesArrays");
 var Casos = /** @class */ (function (_super) {
     __extends(Casos, _super);
@@ -29,6 +30,11 @@ var Casos = /** @class */ (function (_super) {
     Casos.prototype.ejecutar = function (env) {
         var utiles = UtilesArrays_1.utilesArrays.getInstance();
         utiles.addCasos(this);
+    };
+    Casos.prototype.ast = function () {
+        var s = Singleton_1.Singleton.getInstance();
+        var nombre_nodo = "node_".concat(this.line, "_").concat(this.colum, "_");
+        s.addAst("\n        ".concat(nombre_nodo, "[label=\"Cases\"];\n        "));
     };
     return Casos;
 }(instruccion_1.Instruccion));

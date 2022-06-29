@@ -49,6 +49,9 @@ var LlamadaF = /** @class */ (function (_super) {
         }
         return resultado;
     };
+    LlamadaF.prototype.ast = function () {
+        return "ast";
+    };
     return LlamadaF;
 }(expression_1.Expression));
 exports.LlamadaF = LlamadaF;

@@ -41,6 +41,7 @@ function Mostrar_Cerrar(idAbrir,idOverlay,idCerrar){
 
   }
 
+
   
 
 
@@ -57,25 +58,24 @@ function Mostrar_Cerrar(idAbrir,idOverlay,idCerrar){
       body: JSON.stringify(envio) 
     }).then(res => res.json())
     .then(data => {
-      console.log(data)
+      //console.log(data)
       consola.setValue(data.respuest)
-      /*for ( i in data) {
-          console.log(data[i]);
-        // var inp = document.createElement('input');
-        // inp.type = "radio"
-        // inp.className = "form-check-input"
-        // inp.value = data[i]
-        // inp.id = data[i]
-        // var lab = document.createElement("label")
-        // lab.htmlFor = data[i]
-        // lab.className = "form-check-label"
-        // lab.innerHTML = data[i]+"<br/>"
-        // document.getElementById("lista_desordenada").appendChild(inp)
-        // document.getElementById("lista_desordenada").appendChild(lab)
-        }*/
       alert("Datos enviados al servidor")
     });
   }
+
+  function recibirConsola(){
+    fetch("http://localhost:3000/enviarConsola",{
+          method: "GET"
+      })
+      .then((res) => res.json())
+      .then((respuesta) => {
+          //console.log(respuesta.respuesta);
+          consola.setValue(respuesta.respuesta)
+      });
+  }
+
+  
 
 
 

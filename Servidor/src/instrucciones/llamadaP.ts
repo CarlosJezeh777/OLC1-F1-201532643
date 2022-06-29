@@ -58,4 +58,8 @@ export class LlamadaP extends Instruccion{
 
     }
 
+    public ast(): void {
+        
+    }
+
 }

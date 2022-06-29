@@ -15,4 +15,8 @@ export class Metodos extends Instruccion{
         
         env.guardar_funcion(this.nombre,this)
     }
+
+    public ast(): void {
+        
+    }
 }

@@ -41,6 +41,9 @@ var ToUpper = /** @class */ (function (_super) {
         };
         return resultado;
     };
+    ToUpper.prototype.ast = function () {
+        return "ast";
+    };
     return ToUpper;
 }(expression_1.Expression));
 exports.ToUpper = ToUpper;

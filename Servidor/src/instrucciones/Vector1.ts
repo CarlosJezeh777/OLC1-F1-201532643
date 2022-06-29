@@ -33,4 +33,8 @@ export class VectorD1 extends Instruccion{
         
         
     }
+
+    public ast(): void {
+        
+    }
 }

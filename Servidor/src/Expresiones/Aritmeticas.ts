@@ -3,7 +3,7 @@ import { Expression } from "../abstract/expression";
 import { Retorno } from "../abstract/Retorno";
 import { Enviroment } from "../Symbols/enviroment";
 import { Type } from "../Symbols/type";
-import { AritmeticasOptions } from "./aritmeticasOpc";
+import { AritmeticasOptions, getSimbolo } from "./aritmeticasOpc";
 
 export class Aritmeticas extends Expression{
     constructor(
@@ -358,5 +358,15 @@ export class Aritmeticas extends Expression{
             }
         }
         return resultado
+    }
+
+    public ast(): string {
+        const name_nodo = `node_${this.line}_${this.column}_`
+        return `
+        ${name_nodo};
+        ${name_nodo}[label="${getSimbolo(this.tipo)}"];
+        ${name_nodo}->${this.izquierda.ast()}
+        ${name_nodo}->${this.derecha.ast()}
+        `
     }
 }

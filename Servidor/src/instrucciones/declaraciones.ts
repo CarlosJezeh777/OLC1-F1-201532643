@@ -1,6 +1,7 @@
 import { Expression } from "../abstract/expression";
 import { Instruccion } from "../abstract/instruccion";
 import { Acces } from "../Expresiones/Acceso";
+import { Singleton } from "../Singleton/Singleton";
 import { Enviroment } from "../Symbols/enviroment";
 import { Type } from "../Symbols/type";
 
@@ -68,5 +69,18 @@ export class Declaracion extends Instruccion{
             }else{
             env.guardar_varible(this.nombre,expresion.value ,expresion.type,this.editable)
             }
+    }
+
+    public ast(): void {
+        const s = Singleton.getInstance()
+        const nombreNodo = `node_${this.line}_${this.colum}_`
+        s.addAst(`
+        ${nombreNodo}[label="Declaracion"];
+        ${nombreNodo}1[label="Nombre: ${this.nombre}"];
+        ${nombreNodo}2[label="Tipo: ${this.tipo}"];
+        ${nombreNodo}->${nombreNodo}1
+        ${nombreNodo}->${nombreNodo}2
+        ${nombreNodo}->${this.expresion.ast()}`)
+        
     }
 }

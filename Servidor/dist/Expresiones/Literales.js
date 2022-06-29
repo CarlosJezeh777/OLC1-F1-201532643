@@ -74,6 +74,13 @@ var Literal = /** @class */ (function (_super) {
         }
         return resultado;
     };
+    Literal.prototype.ast = function () {
+        var nombre = "node_".concat(this.line, "_").concat(this.column, "_");
+        if (this.tipo == type_1.Type.STRING)
+            return "\n        ".concat(nombre, ";\n        ").concat(nombre, "[label=").concat(this.valor.toString(), "];");
+        else
+            return "\n        ".concat(nombre, ";\n        ").concat(nombre, "[label=\"").concat(this.valor.toString(), "\"];");
+    };
     return Literal;
 }(expression_1.Expression));
 exports.Literal = Literal;

@@ -27,4 +27,7 @@ export class ReturnE extends Expression{
         }        
         return resultado      
     }
+    public ast(): string {
+        return "ast"
+    }
 }

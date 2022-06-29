@@ -34,15 +34,17 @@ var Splice = /** @class */ (function (_super) {
             throw new Error("Error semantico");
         }
         var valor = this.valor.ejecutar(env);
-        console.log(valor);
+        //console.log(valor);
         if (valor.type != arreglo.type) {
             throw new Error("error semantico");
         }
         arreglo.value.splice(Number(this.indice), 0, valor.value);
         arreglo.index = arreglo.index + 1;
-        console.log(arreglo);
+        // console.log(arreglo);
         env.actualizar_vector(this.nombre, arreglo);
         //console.log(expresion);
+    };
+    Splice.prototype.ast = function () {
     };
     return Splice;
 }(instruccion_1.Instruccion));

@@ -1,5 +1,6 @@
 import { Expression } from "../abstract/expression";
 import { Instruccion } from "../abstract/instruccion";
+import { Singleton } from "../Singleton/Singleton";
 import { Enviroment } from "../Symbols/enviroment";
 import { Type } from "../Symbols/type";
 import { Bloque } from "./Bloque";
@@ -36,5 +37,18 @@ export class DoWhile extends Instruccion{
             
         
         }
+    }
+
+    public ast(): void {
+        const s = Singleton.getInstance()
+        const name_node = `node_${this.line}_${this.colum}_`
+        s.addAst(`
+        ${name_node}[label="Do While"];
+        ${name_node}1[label="Condicion"];
+        ${name_node}->${name_node}1;
+        ${name_node}1->${this.condicion.ast()}
+        ${name_node}->node_${this.instrucciones.line}_${this.instrucciones.colum}_;        
+        `)
+        this.instrucciones.ast()
     }
 }

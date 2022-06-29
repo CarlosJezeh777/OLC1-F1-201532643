@@ -8,4 +8,5 @@ export abstract class Expression {
         this.column =  column +1
     }
     public abstract ejecutar(env:Enviroment): Retorno
+    public abstract ast():string
 }

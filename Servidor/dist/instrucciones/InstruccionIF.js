@@ -36,6 +36,8 @@ var Iif = /** @class */ (function (_super) {
         }
         //console.log(expresion);
     };
+    Iif.prototype.ast = function () {
+    };
     return Iif;
 }(instruccion_1.Instruccion));
 exports.Iif = Iif;

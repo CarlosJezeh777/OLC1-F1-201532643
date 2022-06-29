@@ -42,6 +42,14 @@ var Imprimir = /** @class */ (function (_super) {
             s.addConsola("\n\r");
         }
     };
+    Imprimir.prototype.ast = function () {
+        var s = Singleton_1.Singleton.getInstance();
+        var nombreNodo = "node_".concat(this.line, "_").concat(this.colum, "_");
+        s.addAst("\n        ".concat(nombreNodo, "[label=\"\\<Instruccion\\>\\nconsole\"];"));
+        if (this.expresion != null) {
+            s.addAst("".concat(nombreNodo, "->").concat(this.expresion.ast()));
+        }
+    };
     return Imprimir;
 }(instruccion_1.Instruccion));
 exports.Imprimir = Imprimir;

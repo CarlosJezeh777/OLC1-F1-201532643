@@ -53,4 +53,7 @@ export class TernarioI extends Instruccion{
         
         
     }
+    public ast(): void {
+        
+    }
 }

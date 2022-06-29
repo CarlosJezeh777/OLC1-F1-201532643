@@ -17,6 +17,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Declaracion = void 0;
 var instruccion_1 = require("../abstract/instruccion");
+var Singleton_1 = require("../Singleton/Singleton");
 var type_1 = require("../Symbols/type");
 var Declaracion = /** @class */ (function (_super) {
     __extends(Declaracion, _super);
@@ -84,6 +85,11 @@ var Declaracion = /** @class */ (function (_super) {
         else {
             env.guardar_varible(this.nombre, expresion.value, expresion.type, this.editable);
         }
+    };
+    Declaracion.prototype.ast = function () {
+        var s = Singleton_1.Singleton.getInstance();
+        var nombreNodo = "node_".concat(this.line, "_").concat(this.colum, "_");
+        s.addAst("\n        ".concat(nombreNodo, "[label=\"Declaracion\"];\n        ").concat(nombreNodo, "1[label=\"Nombre: ").concat(this.nombre, "\"];\n        ").concat(nombreNodo, "2[label=\"Tipo: ").concat(this.tipo, "\"];\n        ").concat(nombreNodo, "->").concat(nombreNodo, "1\n        ").concat(nombreNodo, "->").concat(nombreNodo, "2\n        ").concat(nombreNodo, "->").concat(this.expresion.ast()));
     };
     return Declaracion;
 }(instruccion_1.Instruccion));

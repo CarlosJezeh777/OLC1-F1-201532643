@@ -31,4 +31,8 @@ export class Iif extends Instruccion{
         
         
     }
+
+    public ast(): void {
+        
+    }
 }

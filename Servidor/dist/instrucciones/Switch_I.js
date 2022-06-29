@@ -59,6 +59,9 @@ var Switch_I = /** @class */ (function (_super) {
         }
         util.deleteCasos();
     };
+    //console.log(expresion);
+    Switch_I.prototype.ast = function () {
+    };
     return Switch_I;
 }(instruccion_1.Instruccion));
 exports.Switch_I = Switch_I;

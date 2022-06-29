@@ -35,6 +35,8 @@ var MetodosP = /** @class */ (function (_super) {
             console.log("se guardo");
         }
     };
+    MetodosP.prototype.ast = function () {
+    };
     return MetodosP;
 }(instruccion_1.Instruccion));
 exports.MetodosP = MetodosP;

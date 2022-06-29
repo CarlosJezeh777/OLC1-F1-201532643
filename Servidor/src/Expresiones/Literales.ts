@@ -61,4 +61,14 @@ export class Literal extends Expression{
         return resultado;
     }
     
+    public ast(): string {
+        const nombre = `node_${this.line}_${this.column}_`
+        if(this.tipo==Type.STRING) return `
+        ${nombre};
+        ${nombre}[label=${this.valor.toString()}];`
+ 
+        else return `
+        ${nombre};
+        ${nombre}[label="${this.valor.toString()}"];`
+    }
 }

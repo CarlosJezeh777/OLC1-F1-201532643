@@ -29,4 +29,8 @@ export class Llamada extends Instruccion{
 
     }
 
+    public ast(): void {
+        
+    }
+
 }

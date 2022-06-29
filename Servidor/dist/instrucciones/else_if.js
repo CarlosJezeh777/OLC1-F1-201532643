@@ -42,6 +42,8 @@ var Else_If = /** @class */ (function (_super) {
         util.addElseIf(this);
         //console.log(expresion);
     };
+    Else_If.prototype.ast = function () {
+    };
     return Else_If;
 }(instruccion_1.Instruccion));
 exports.Else_If = Else_If;
