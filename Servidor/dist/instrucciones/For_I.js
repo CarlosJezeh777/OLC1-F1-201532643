@@ -17,8 +17,11 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.For_Inst = void 0;
 var instruccion_1 = require("../abstract/instruccion");
+var Errores_1 = require("../Singleton/Errores");
+var Singleton_1 = require("../Singleton/Singleton");
 var enviroment_1 = require("../Symbols/enviroment");
 var type_1 = require("../Symbols/type");
+var s = Singleton_1.Singleton.getInstance();
 var For_Inst = /** @class */ (function (_super) {
     __extends(For_Inst, _super);
     function For_Inst(variable, condicion, in_de, instrucciones, line, colum) {
@@ -42,6 +45,7 @@ var For_Inst = /** @class */ (function (_super) {
             this.in_de.ejecutar(env_for);
             //console.log(cond);
             if (cond.type != type_1.Type.BOOLEAN) {
+                s.addErrores(new Errores_1.Errores("For: La condicion tiene que ser un boolean", "Semantico", this.line, this.colum));
                 throw new Error("la condicion tiene que ser un boolean");
             }
             if (cond.value == false) {
@@ -51,6 +55,9 @@ var For_Inst = /** @class */ (function (_super) {
         }
     };
     For_Inst.prototype.ast = function () {
+        var name_node = "node_".concat(this.line, "_").concat(this.colum, "_");
+        s.addAst("\n        ".concat(name_node, "[label=\"For\"];\n        ").concat(name_node, "1[label=\"Condicion\"];\n        ").concat(name_node, "->").concat(name_node, "1;\n        ").concat(name_node, "1->").concat(this.condicion.ast(), "\n        ").concat(name_node, "->node_").concat(this.instrucciones.line, "_").concat(this.instrucciones.colum, "_;        \n        "));
+        this.instrucciones.ast();
     };
     return For_Inst;
 }(instruccion_1.Instruccion));

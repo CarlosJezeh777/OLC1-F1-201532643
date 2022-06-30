@@ -1,7 +1,9 @@
 import { Instruccion } from "../abstract/instruccion";
+import { Errores } from "../Singleton/Errores";
 import { Singleton } from "../Singleton/Singleton";
 import { Enviroment } from "../Symbols/enviroment";
 
+const singleton = Singleton.getInstance()
 export class Bloque extends Instruccion{
     constructor(
         private instruccion: any[],
@@ -18,7 +20,7 @@ export class Bloque extends Instruccion{
             try {
                 elemento.ejecutar(new_env);
             } catch (error) {
-                console.log(error);
+                singleton.addErrores(new Errores("Bloque: Error en el bloque","Semantico",elemento.line,elemento.colum))
                 
             }
         }

@@ -15,36 +15,46 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VectorD1 = void 0;
+exports.Matriz = void 0;
 var instruccion_1 = require("../abstract/instruccion");
 var Errores_1 = require("../Singleton/Errores");
 var Singleton_1 = require("../Singleton/Singleton");
 var s = Singleton_1.Singleton.getInstance();
-var VectorD1 = /** @class */ (function (_super) {
-    __extends(VectorD1, _super);
-    function VectorD1(tipo, id, tipo2, valor, line, column) {
+var Matriz = /** @class */ (function (_super) {
+    __extends(Matriz, _super);
+    function Matriz(tipo, id, tipo2, valor, valor2, line, column) {
         var _this = _super.call(this, line, column) || this;
         _this.tipo = tipo;
         _this.id = id;
         _this.tipo2 = tipo2;
         _this.valor = valor;
+        _this.valor2 = valor2;
         return _this;
     }
-    VectorD1.prototype.ejecutar = function (env) {
+    Matriz.prototype.ejecutar = function (env) {
+        //console.log(this);
         if (this.valor == null) {
             s.addErrores(new Errores_1.Errores("Vector: Especifique el tamaño", "Semantico", this.line, this.colum));
             throw new Error("error semantico");
         }
+        if (this.valor2 == null) {
+            s.addErrores(new Errores_1.Errores("Vector: Especifique el tamaño", "Semantico", this.line, this.colum));
+            throw new Error("error semantico");
+        }
         var valor = this.valor.ejecutar(env);
+        var valor2 = this.valor2.ejecutar(env);
+        var nuevoArray = new Array(2);
+        nuevoArray[0] = new Array(valor.value);
+        nuevoArray[1] = new Array(valor2.value);
         if (this.tipo == this.tipo2) {
-            env.guardar_vector(this.id, [], this.tipo, valor.value, 1);
+            env.guardar_Matriz(this.id, nuevoArray, this.tipo, valor.value, valor2.value);
         }
         //console.log(env);
     };
-    VectorD1.prototype.ast = function () {
+    Matriz.prototype.ast = function () {
         var nombre_nodo = "node_".concat(this.line, "_").concat(this.colum, "_");
         s.addAst("\n        ".concat(nombre_nodo, "[label=\"Splice\"];\n        ").concat(nombre_nodo, "1[label=\"Nombre: ").concat(this.id, "\"];\n        ").concat(nombre_nodo, "2[label=\"Tipo: ").concat(this.tipo, "\"];\n        ").concat(nombre_nodo, "->").concat(nombre_nodo, "1;\n        ").concat(nombre_nodo, "->").concat(nombre_nodo, "2;\n        ").concat(nombre_nodo, "->").concat(this.valor.ast(), "\n        "));
     };
-    return VectorD1;
+    return Matriz;
 }(instruccion_1.Instruccion));
-exports.VectorD1 = VectorD1;
+exports.Matriz = Matriz;

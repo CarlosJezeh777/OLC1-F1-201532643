@@ -17,7 +17,9 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Else_If = void 0;
 var instruccion_1 = require("../abstract/instruccion");
+var Singleton_1 = require("../Singleton/Singleton");
 var UtilesArrays_1 = require("../Singleton/UtilesArrays");
+var s = Singleton_1.Singleton.getInstance();
 var Else_If = /** @class */ (function (_super) {
     __extends(Else_If, _super);
     function Else_If(expresion, instrucccion, line, colum) {
@@ -43,6 +45,8 @@ var Else_If = /** @class */ (function (_super) {
         //console.log(expresion);
     };
     Else_If.prototype.ast = function () {
+        var name_node = "node_".concat(this.line, "_").concat(this.colum, "_");
+        s.addAst("\n        ".concat(name_node, "[label=\"else if\"];\n        ").concat(name_node, "1->").concat(this.expresion.ast(), "\n        ").concat(name_node, "->node").concat(this.instrucccion.ast(), ";        \n        "));
     };
     return Else_If;
 }(instruccion_1.Instruccion));

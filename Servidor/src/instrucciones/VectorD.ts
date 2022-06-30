@@ -8,13 +8,12 @@ import { Type } from "../Symbols/type";
 
 const s = Singleton.getInstance()
         
-export class VectorD1 extends Instruccion{
+export class VectorD1D extends Instruccion{
 
     constructor(
         public tipo: Type,
         public id: string,
-        public tipo2: Type,
-        public valor: Expression,
+        public valor: Expression[],
         line: number,
         column: number
 
@@ -23,21 +22,27 @@ export class VectorD1 extends Instruccion{
     }
 
     public ejecutar(env: Enviroment) {
+
         
-        
-        if(this.valor == null){
-            s.addErrores(new Errores("Vector: Especifique el tamaño","Semantico",this.line,this.colum))
-            throw new Error("error semantico");           
+        let diferente: boolean = false;
+        let valor: any[] = []
+        for (const element of this.valor) {
+            const e =  element.ejecutar(env)
+            valor.push(e.value)
+            if(e.type != this.tipo){
+                diferente = true;
+                break
+            }
         }
         
-        const valor = this.valor.ejecutar(env); 
+        let tamanio = valor.length
         
-        if(this.tipo == this.tipo2){
-            env.guardar_vector(this.id,[],this.tipo,valor.value,1)
+        if(diferente == false){
+            env.guardar_vector(this.id,valor,this.tipo,tamanio,1)
+        }else{
+            s.addErrores(new Errores("No son del mismo tipo", "semantico",this.line,this.colum))
         }
-        //console.log(env);
-        
-        
+       
     }
 
     public ast(): void {
@@ -48,7 +53,6 @@ export class VectorD1 extends Instruccion{
         ${nombre_nodo}2[label="Tipo: ${this.tipo}"];
         ${nombre_nodo}->${nombre_nodo}1;
         ${nombre_nodo}->${nombre_nodo}2;
-        ${nombre_nodo}->${this.valor.ast()}
         `)
         
     }

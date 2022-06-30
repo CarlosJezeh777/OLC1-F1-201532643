@@ -3,18 +3,20 @@ import { Else_If } from "../instrucciones/else_if";
 import { Funcion } from "../instrucciones/Funcion";
 import { Metodos } from "../instrucciones/IMetdos";
 import { MetodosP } from "../instrucciones/MetodoPara";
-import { Symbolos , Symbol_Vector } from "./symbols";
+import { Symbolos , Symbol_Matriz, Symbol_Vector } from "./symbols";
 import { Type } from "./type";
 
 export class Enviroment{
     private tablaSimbolos:Map<string, Symbolos>;
     private tablaSimbolos_metodos : Map<string, any>;
     private tablaSimbolos_vectores : Map<string, any>;
+    private tablaSimbolos_Matrices : Map<string, any>;
 
     constructor(public anterior: Enviroment | null ){
         this.tablaSimbolos = new Map();
         this.tablaSimbolos_metodos =  new Map();
         this.tablaSimbolos_vectores = new Map();
+        this.tablaSimbolos_Matrices = new Map();
     }
 
     public getEnv(){
@@ -80,6 +82,39 @@ export class Enviroment{
     }
 
     public actualizar_vector(nombre: string, new_valor: any) {
+        for (let entry of Array.from(this.tablaSimbolos.entries())) {
+          if (entry[0] == nombre) {
+              entry[1].value = new_valor;
+          }
+        }
+    }
+
+    public guardar_Matriz(nombre: string, valor: any, type: Type, index: number, index2: number):boolean{
+        if(!this.buscar_vector(nombre)){
+            this.tablaSimbolos_Matrices.set(nombre, new Symbol_Matriz(valor,nombre,type,index,index2));
+            return true
+        }
+        console.log("esta variable ["+nombre+"] ya existe...");
+        return false
+    }
+
+    public buscar_Matriz(nombre: string): boolean {
+        for (let entry of Array.from(this.tablaSimbolos_Matrices.entries())) {
+            if (entry[0] == nombre) return true;
+        }
+        return false
+    }
+
+    public get_Matriz(nombre: string): Symbol_Matriz|null{
+        let env: Enviroment | null = this;
+        while (env != null) {
+            if (env.tablaSimbolos_Matrices.has(nombre)) return env.tablaSimbolos_Matrices.get(nombre);
+            env = env.anterior;
+        }
+        return null;
+    }
+
+    public actualizar_Matriz(nombre: string, new_valor: any) {
         for (let entry of Array.from(this.tablaSimbolos.entries())) {
           if (entry[0] == nombre) {
               entry[1].value = new_valor;

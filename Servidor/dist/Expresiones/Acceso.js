@@ -17,7 +17,10 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Acces = void 0;
 var expression_1 = require("../abstract/expression");
+var Errores_1 = require("../Singleton/Errores");
+var Singleton_1 = require("../Singleton/Singleton");
 var type_1 = require("../Symbols/type");
+var s = Singleton_1.Singleton.getInstance();
 var Acces = /** @class */ (function (_super) {
     __extends(Acces, _super);
     function Acces(id, line, column) {
@@ -32,7 +35,7 @@ var Acces = /** @class */ (function (_super) {
         };
         var variable_ts = env.get_variable(this.id);
         var variable_vector = env.get_vector(this.id);
-        //console.log(variable_ts);
+        var variable_Matriz = env.get_Matriz(this.id);
         if (variable_ts != null || variable_ts != undefined) {
             resultado = {
                 value: variable_ts.value,
@@ -41,11 +44,40 @@ var Acces = /** @class */ (function (_super) {
         }
         else if (variable_vector != null) {
             resultado = {
-                value: "[" + variable_vector.value + "]",
+                value: variable_vector.value,
                 type: variable_vector.type
             };
         }
+        else if (variable_Matriz != null) {
+            var matriz = void 0;
+            var index = variable_Matriz === null || variable_Matriz === void 0 ? void 0 : variable_Matriz.index;
+            var cont = 0;
+            var cont2 = 0;
+            matriz = "[";
+            for (var i = 0; i < index; i++) {
+                if (cont2 >= 1) {
+                    matriz += ",";
+                }
+                cont = 0;
+                matriz += "[";
+                for (var j = 0; j < variable_Matriz.index2; j++) {
+                    if (cont >= 1) {
+                        matriz += ",";
+                    }
+                    matriz += variable_Matriz.value[i][j];
+                    cont++;
+                }
+                matriz += "]";
+                cont2++;
+            }
+            matriz += "]";
+            resultado = {
+                value: variable_Matriz.value,
+                type: variable_Matriz.type
+            };
+        }
         else {
+            s.addErrores(new Errores_1.Errores("Acceso: no se encontro la variable en la tabla de simbolos", "Semantico", this.line, this.column));
             throw new Error("error semantico aqui");
         }
         return resultado;

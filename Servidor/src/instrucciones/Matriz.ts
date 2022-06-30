@@ -8,13 +8,14 @@ import { Type } from "../Symbols/type";
 
 const s = Singleton.getInstance()
         
-export class VectorD1 extends Instruccion{
+export class Matriz extends Instruccion{
 
     constructor(
         public tipo: Type,
         public id: string,
         public tipo2: Type,
         public valor: Expression,
+        public valor2: Expression,
         line: number,
         column: number
 
@@ -24,16 +25,26 @@ export class VectorD1 extends Instruccion{
 
     public ejecutar(env: Enviroment) {
         
+        //console.log(this);
         
         if(this.valor == null){
             s.addErrores(new Errores("Vector: Especifique el tamaño","Semantico",this.line,this.colum))
             throw new Error("error semantico");           
         }
-        
+        if(this.valor2 == null){
+            s.addErrores(new Errores("Vector: Especifique el tamaño","Semantico",this.line,this.colum))
+            throw new Error("error semantico");           
+        }
         const valor = this.valor.ejecutar(env); 
+        const valor2 = this.valor2.ejecutar(env); 
+
+        var nuevoArray = new Array(2);
+        nuevoArray[0] = new Array(valor.value);
+        nuevoArray[1] = new Array(valor2.value);
+    
         
         if(this.tipo == this.tipo2){
-            env.guardar_vector(this.id,[],this.tipo,valor.value,1)
+            env.guardar_Matriz(this.id,nuevoArray,this.tipo,valor.value,valor2.value)
         }
         //console.log(env);
         

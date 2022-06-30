@@ -27,6 +27,7 @@ var Literal = /** @class */ (function (_super) {
         return _this;
     }
     Literal.prototype.ejecutar = function (env) {
+        //console.log(this);
         var resultado = {
             value: this.valor,
             type: type_1.Type.error

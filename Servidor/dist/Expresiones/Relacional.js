@@ -33,6 +33,7 @@ var Relacional = /** @class */ (function (_super) {
             value: null,
             type: type_1.Type.error
         };
+        //console.log(this);
         var nodIzq = this.izquierda.ejecutar(env);
         var nodDer = this.derecha.ejecutar(env);
         if (this.tipo == RelacionalOpc_1.OpcionRelacional.MAYORQUE) {

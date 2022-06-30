@@ -35,11 +35,12 @@ var Splice = /** @class */ (function (_super) {
             throw new Error("Error semantico");
         }
         var valor = this.valor.ejecutar(env);
+        var indi = this.indice.ejecutar(env);
         //console.log(valor);
         if (valor.type != arreglo.type) {
             throw new Error("error semantico");
         }
-        arreglo.value.splice(Number(this.indice), 0, valor.value);
+        arreglo.value.splice(Number(indi.value), 0, valor.value);
         arreglo.index = arreglo.index + 1;
         // console.log(arreglo);
         env.actualizar_vector(this.nombre, arreglo);

@@ -15,36 +15,44 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VectorD1 = void 0;
+exports.VectorD1D = void 0;
 var instruccion_1 = require("../abstract/instruccion");
 var Errores_1 = require("../Singleton/Errores");
 var Singleton_1 = require("../Singleton/Singleton");
 var s = Singleton_1.Singleton.getInstance();
-var VectorD1 = /** @class */ (function (_super) {
-    __extends(VectorD1, _super);
-    function VectorD1(tipo, id, tipo2, valor, line, column) {
+var VectorD1D = /** @class */ (function (_super) {
+    __extends(VectorD1D, _super);
+    function VectorD1D(tipo, id, valor, line, column) {
         var _this = _super.call(this, line, column) || this;
         _this.tipo = tipo;
         _this.id = id;
-        _this.tipo2 = tipo2;
         _this.valor = valor;
         return _this;
     }
-    VectorD1.prototype.ejecutar = function (env) {
-        if (this.valor == null) {
-            s.addErrores(new Errores_1.Errores("Vector: Especifique el tamaño", "Semantico", this.line, this.colum));
-            throw new Error("error semantico");
+    VectorD1D.prototype.ejecutar = function (env) {
+        var diferente = false;
+        var valor = [];
+        for (var _i = 0, _a = this.valor; _i < _a.length; _i++) {
+            var element = _a[_i];
+            var e = element.ejecutar(env);
+            valor.push(e.value);
+            if (e.type != this.tipo) {
+                diferente = true;
+                break;
+            }
         }
-        var valor = this.valor.ejecutar(env);
-        if (this.tipo == this.tipo2) {
-            env.guardar_vector(this.id, [], this.tipo, valor.value, 1);
+        var tamanio = valor.length;
+        if (diferente == false) {
+            env.guardar_vector(this.id, valor, this.tipo, tamanio, 1);
         }
-        //console.log(env);
+        else {
+            s.addErrores(new Errores_1.Errores("No son del mismo tipo", "semantico", this.line, this.colum));
+        }
     };
-    VectorD1.prototype.ast = function () {
+    VectorD1D.prototype.ast = function () {
         var nombre_nodo = "node_".concat(this.line, "_").concat(this.colum, "_");
-        s.addAst("\n        ".concat(nombre_nodo, "[label=\"Splice\"];\n        ").concat(nombre_nodo, "1[label=\"Nombre: ").concat(this.id, "\"];\n        ").concat(nombre_nodo, "2[label=\"Tipo: ").concat(this.tipo, "\"];\n        ").concat(nombre_nodo, "->").concat(nombre_nodo, "1;\n        ").concat(nombre_nodo, "->").concat(nombre_nodo, "2;\n        ").concat(nombre_nodo, "->").concat(this.valor.ast(), "\n        "));
+        s.addAst("\n        ".concat(nombre_nodo, "[label=\"Splice\"];\n        ").concat(nombre_nodo, "1[label=\"Nombre: ").concat(this.id, "\"];\n        ").concat(nombre_nodo, "2[label=\"Tipo: ").concat(this.tipo, "\"];\n        ").concat(nombre_nodo, "->").concat(nombre_nodo, "1;\n        ").concat(nombre_nodo, "->").concat(nombre_nodo, "2;\n        "));
     };
-    return VectorD1;
+    return VectorD1D;
 }(instruccion_1.Instruccion));
-exports.VectorD1 = VectorD1;
+exports.VectorD1D = VectorD1D;

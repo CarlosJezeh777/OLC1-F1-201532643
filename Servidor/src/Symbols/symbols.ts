@@ -22,3 +22,15 @@ export class Symbol_Vector{
         
     }
 }
+
+export class Symbol_Matriz{
+    constructor(
+        public value: any,
+        public id: string,
+        public type: Type,
+        public index: number, 
+        public index2: number
+    ){
+        
+    }
+}

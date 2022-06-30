@@ -21,6 +21,9 @@ export class Relacional extends Expression{
             type: Type.error
         }
 
+        //console.log(this);
+        
+
         const nodIzq = this.izquierda.ejecutar(env)
         const nodDer =  this.derecha.ejecutar(env)
 

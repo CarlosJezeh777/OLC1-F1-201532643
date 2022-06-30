@@ -17,9 +17,11 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DoWhile = void 0;
 var instruccion_1 = require("../abstract/instruccion");
+var Errores_1 = require("../Singleton/Errores");
 var Singleton_1 = require("../Singleton/Singleton");
 var enviroment_1 = require("../Symbols/enviroment");
 var type_1 = require("../Symbols/type");
+var s = Singleton_1.Singleton.getInstance();
 var DoWhile = /** @class */ (function (_super) {
     __extends(DoWhile, _super);
     function DoWhile(condicion, instrucciones, line, colum) {
@@ -40,13 +42,13 @@ var DoWhile = /** @class */ (function (_super) {
                 break;
             }
             if (cond.type != type_1.Type.BOOLEAN) {
+                s.addErrores(new Errores_1.Errores("Do While: La condicion tiene que ser un boolean", "Semantico", this.line, this.colum));
                 throw new Error("la condicion tiene que ser un boolean");
             }
             this.instrucciones.ejecutar(new_env);
         }
     };
     DoWhile.prototype.ast = function () {
-        var s = Singleton_1.Singleton.getInstance();
         var name_node = "node_".concat(this.line, "_").concat(this.colum, "_");
         s.addAst("\n        ".concat(name_node, "[label=\"Do While\"];\n        ").concat(name_node, "1[label=\"Condicion\"];\n        ").concat(name_node, "->").concat(name_node, "1;\n        ").concat(name_node, "1->").concat(this.condicion.ast(), "\n        ").concat(name_node, "->node_").concat(this.instrucciones.line, "_").concat(this.instrucciones.colum, "_;        \n        "));
         this.instrucciones.ast();

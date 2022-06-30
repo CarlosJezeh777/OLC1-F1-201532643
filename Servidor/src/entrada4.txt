@@ -1,0 +1,14 @@
+
+string palabra = "hala manda";
+char hola [] = ['a','b','c'];
+int contador=0;
+println(palabra);
+int p = hola.indexof('a'); 
+println(p);
+
+if(p != -1){
+    contador++;
+}
+
+    
+print("En la cadena enviada encontre "+contador+ " vocales (:");

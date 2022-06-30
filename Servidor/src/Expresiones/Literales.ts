@@ -14,7 +14,8 @@ export class Literal extends Expression{
     super(line,column)    
     }
     public ejecutar(env:Enviroment): Retorno {
-
+        //console.log(this);
+        
         let resultado :Retorno = {
             value: this.valor,
             type: Type.error

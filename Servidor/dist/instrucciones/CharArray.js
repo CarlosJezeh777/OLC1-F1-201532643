@@ -17,8 +17,10 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CharArray = void 0;
 var instruccion_1 = require("../abstract/instruccion");
+var Errores_1 = require("../Singleton/Errores");
 var Singleton_1 = require("../Singleton/Singleton");
 var type_1 = require("../Symbols/type");
+var s = Singleton_1.Singleton.getInstance();
 var CharArray = /** @class */ (function (_super) {
     __extends(CharArray, _super);
     function CharArray(nombre, valor, line, column) {
@@ -29,10 +31,12 @@ var CharArray = /** @class */ (function (_super) {
     }
     CharArray.prototype.ejecutar = function (env) {
         if (this.valor == null) {
+            s.addErrores(new Errores_1.Errores("toCharArray: Falta una palabra", "Semantico", this.line, this.colum));
             throw new Error("error semantico");
         }
         var valor = this.valor.ejecutar(env);
         if (valor.type != type_1.Type.STRING) {
+            s.addErrores(new Errores_1.Errores("toCharArray: No es tipo string", "Semantico", this.line, this.colum));
             throw new Error("error semantico");
         }
         var ArrayChar = Array.from(String(valor.value));
@@ -40,7 +44,6 @@ var CharArray = /** @class */ (function (_super) {
         //console.log(env);
     };
     CharArray.prototype.ast = function () {
-        var s = Singleton_1.Singleton.getInstance();
         var nombre_nodo = "node_".concat(this.line, "_").concat(this.colum, "_");
         s.addAst("\n        ".concat(nombre_nodo, "[label=\"toCharArray\"];\n        ").concat(nombre_nodo, "1[label=\"Nombre: ").concat(this.nombre, "\"];\n        ").concat(nombre_nodo, "->").concat(nombre_nodo, "1;\n        ").concat(nombre_nodo, "->").concat(this.valor.ast(), "\n        "));
     };

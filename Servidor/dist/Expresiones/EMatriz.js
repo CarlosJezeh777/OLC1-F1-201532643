@@ -15,43 +15,39 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.IndexOf = void 0;
+exports.EMatriz = void 0;
 var expression_1 = require("../abstract/expression");
 var type_1 = require("../Symbols/type");
-var IndexOf = /** @class */ (function (_super) {
-    __extends(IndexOf, _super);
-    function IndexOf(nombre, expresion, line, column) {
+var EMatriz = /** @class */ (function (_super) {
+    __extends(EMatriz, _super);
+    function EMatriz(nombre, i1, i2, line, column) {
         var _this = _super.call(this, line, column) || this;
         _this.nombre = nombre;
-        _this.expresion = expresion;
+        _this.i1 = i1;
+        _this.i2 = i2;
         return _this;
     }
-    IndexOf.prototype.ejecutar = function (env) {
+    EMatriz.prototype.ejecutar = function (env) {
         var resultado = {
-            value: -1,
-            type: type_1.Type.INT
+            value: null,
+            type: type_1.Type.error
         };
-        var vector = env.get_vector(this.nombre);
-        var tmp = this.expresion.ejecutar(env);
-        if (vector == null) {
+        var Matriz = env.get_Matriz(this.nombre);
+        var index1 = this.i1.ejecutar(env);
+        var index2 = this.i2.ejecutar(env);
+        if (Matriz == null) {
             throw new Error("error semantico");
         }
-        for (var _i = 0, _a = vector.value; _i < _a.length; _i++) {
-            var elemento = _a[_i];
-            if (elemento == tmp.value) {
-                resultado = {
-                    value: 0,
-                    type: type_1.Type.INT
-                };
-                break;
-            }
-        }
+        resultado = {
+            value: Matriz.value[index1.value][index2.value],
+            type: Matriz.type
+        };
         return resultado;
     };
-    IndexOf.prototype.ast = function () {
+    EMatriz.prototype.ast = function () {
         var name_nodo = "node_".concat(this.line, "_").concat(this.column, "_");
-        return "\n        ".concat(name_nodo, ";\n        ").concat(name_nodo, "[label=\"indexOf\"];\n        ").concat(name_nodo, "->").concat(this.expresion.ast(), "\n        ");
+        return "\n        ".concat(name_nodo, ";\n        ").concat(name_nodo, "[label=\"Vector\"];\n        ").concat(name_nodo, "->").concat(this.i1.ast(), "\n        ").concat(name_nodo, "->").concat(this.i2.ast(), "\n        ");
     };
-    return IndexOf;
+    return EMatriz;
 }(expression_1.Expression));
-exports.IndexOf = IndexOf;
+exports.EMatriz = EMatriz;

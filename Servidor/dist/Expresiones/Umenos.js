@@ -15,43 +15,32 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.IndexOf = void 0;
+exports.Umenos = void 0;
 var expression_1 = require("../abstract/expression");
 var type_1 = require("../Symbols/type");
-var IndexOf = /** @class */ (function (_super) {
-    __extends(IndexOf, _super);
-    function IndexOf(nombre, expresion, line, column) {
+var Umenos = /** @class */ (function (_super) {
+    __extends(Umenos, _super);
+    function Umenos(numero, line, column) {
         var _this = _super.call(this, line, column) || this;
-        _this.nombre = nombre;
-        _this.expresion = expresion;
+        _this.numero = numero;
         return _this;
     }
-    IndexOf.prototype.ejecutar = function (env) {
+    Umenos.prototype.ejecutar = function (env) {
         var resultado = {
-            value: -1,
+            value: null,
+            type: type_1.Type.error
+        };
+        var nodDer = this.numero.ejecutar(env);
+        resultado = {
+            value: Number(-nodDer.value),
             type: type_1.Type.INT
         };
-        var vector = env.get_vector(this.nombre);
-        var tmp = this.expresion.ejecutar(env);
-        if (vector == null) {
-            throw new Error("error semantico");
-        }
-        for (var _i = 0, _a = vector.value; _i < _a.length; _i++) {
-            var elemento = _a[_i];
-            if (elemento == tmp.value) {
-                resultado = {
-                    value: 0,
-                    type: type_1.Type.INT
-                };
-                break;
-            }
-        }
         return resultado;
     };
-    IndexOf.prototype.ast = function () {
+    Umenos.prototype.ast = function () {
         var name_nodo = "node_".concat(this.line, "_").concat(this.column, "_");
-        return "\n        ".concat(name_nodo, ";\n        ").concat(name_nodo, "[label=\"indexOf\"];\n        ").concat(name_nodo, "->").concat(this.expresion.ast(), "\n        ");
+        return "\n        ".concat(name_nodo, ";\n        ").concat(name_nodo, "->").concat(this.numero.ast(), "\n        ");
     };
-    return IndexOf;
+    return Umenos;
 }(expression_1.Expression));
-exports.IndexOf = IndexOf;
+exports.Umenos = Umenos;

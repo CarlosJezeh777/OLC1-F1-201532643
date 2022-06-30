@@ -2,10 +2,13 @@
 var editor = CodeMirror.fromTextArea(document.getElementById('editor'),{
     theme:"rubyblue",
     lineNumbers: true,
+    keyMap: "sublime",
+    
 });
 
 var consola = CodeMirror.fromTextArea(document.getElementById('consola'),{
-    theme:"dracula"
+    theme:"dracula",
+  
 });
 
 const input1 = document.querySelector('input[type=file]')

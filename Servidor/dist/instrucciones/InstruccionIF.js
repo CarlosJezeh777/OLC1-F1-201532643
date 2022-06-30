@@ -29,7 +29,7 @@ var Iif = /** @class */ (function (_super) {
     Iif.prototype.ejecutar = function (env) {
         var new_env = new enviroment_1.Enviroment(env);
         var expresion = this.expresion.ejecutar(env);
-        //console.log(expresion);
+        console.log(expresion);
         if (expresion.value == true) {
             //console.log("aqui van las instrucicones");
             this.instruc.ejecutar(new_env);

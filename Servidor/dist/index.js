@@ -88,7 +88,7 @@ app.get('/enviarGts', function (req, res) {
 });
 /*
 try {
-    const entrada =  fs.readFileSync("src/in3.txt");
+    const entrada =  fs.readFileSync("src/entrada4.txt");
     const ast = parser.parse(entrada.toString());
     const env_padre =  new Enviroment(null);
     

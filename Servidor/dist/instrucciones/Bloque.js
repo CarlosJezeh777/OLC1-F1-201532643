@@ -17,8 +17,10 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Bloque = void 0;
 var instruccion_1 = require("../abstract/instruccion");
+var Errores_1 = require("../Singleton/Errores");
 var Singleton_1 = require("../Singleton/Singleton");
 var enviroment_1 = require("../Symbols/enviroment");
+var singleton = Singleton_1.Singleton.getInstance();
 var Bloque = /** @class */ (function (_super) {
     __extends(Bloque, _super);
     function Bloque(instruccion, line, colum) {
@@ -34,7 +36,7 @@ var Bloque = /** @class */ (function (_super) {
                 elemento.ejecutar(new_env);
             }
             catch (error) {
-                console.log(error);
+                singleton.addErrores(new Errores_1.Errores("Bloque: Error en el bloque", "Semantico", elemento.line, elemento.colum));
             }
         }
         //console.log(env);

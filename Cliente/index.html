@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="codemirror/theme/rubyblue.css">
     <link rel="stylesheet" href="codemirror/theme/dracula.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="codemirror/keymap/sublime.js"></script>
     
 </head>
 <body>
@@ -50,7 +51,7 @@
         </div>
       </nav>
 
-      <div class="container">
+      <div class="container-fluid">
       <div class="row">
         <div class="col align-items-rigth">
             <h6>Editor</h6>
@@ -58,7 +59,7 @@
       </div>
       <div class="row">
         <div class="col">
-            <textarea name="" id="editor" cols="30" rows="30"></textarea>
+            <textarea name="" class="Codemirror" id="editor" cols="50" rows="50"></textarea>
         </div>
         <div class="row">
             <div class="col align-items-rigth">
@@ -81,7 +82,7 @@
             <a href="#" id="btn-cerrar-pop" class="btn-cerrar-popup"><b>X</b></a>
             <h3>Cargar archivo</h3>
             <form method="POST">
-                <input type="file" name="Adejunto" accept=".txt"/>
+                <input type="file" name="Adejunto" accept=".LF"/>
             </form>
         </div>
       </div>

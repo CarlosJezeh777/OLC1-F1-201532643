@@ -1,7 +1,11 @@
 import { Expression } from "../abstract/expression"
 import { Instruccion } from "../abstract/instruccion"
+import { Errores } from "../Singleton/Errores"
 import { Singleton } from "../Singleton/Singleton"
 import { Enviroment } from "../Symbols/enviroment"
+
+const s = Singleton.getInstance()
+        
 
 export class Imprimir extends Instruccion{
     constructor(
@@ -14,12 +18,13 @@ export class Imprimir extends Instruccion{
     }
     public ejecutar(env:Enviroment) {
         if(this.expresion == null){
+            s.addErrores(new Errores("Print: salta de linea","Semantico",this.line,this.colum))
             throw "Es un salto de linea";
             
         }
         const tmp =  this.expresion.ejecutar(env)
 
-        const s = Singleton.getInstance();
+        
         if(this.tipo == 0){
             s.addConsola(tmp.value);
         }else if(this.tipo == 1){
@@ -31,7 +36,6 @@ export class Imprimir extends Instruccion{
     }
 
     public ast(): void {
-        const s = Singleton.getInstance()
         const nombreNodo = `node_${this.line}_${this.colum}_`
         if (this.tipo == 0){s.addAst(`${nombreNodo}[label="Print"];`)}
         else if(this.tipo == 1){s.addAst(`${nombreNodo}[label="Println"];`)}

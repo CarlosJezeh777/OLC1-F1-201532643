@@ -6,6 +6,8 @@ import { Enviroment } from "../Symbols/enviroment";
 import { Type } from "../Symbols/type";
 import { Bloque } from "./Bloque";
 
+const s = Singleton.getInstance()
+
 export class Else_If extends Instruccion{
     constructor(
         public expresion:Expression,
@@ -36,6 +38,12 @@ export class Else_If extends Instruccion{
         
     }
     public ast(): void {
+        const name_node = `node_${this.line}_${this.colum}_`
+        s.addAst(`
+        ${name_node}[label="else if"];
+        ${name_node}1->${this.expresion.ast()}
+        ${name_node}->node${this.instrucccion.ast()};        
+        `)
         
     }
 }

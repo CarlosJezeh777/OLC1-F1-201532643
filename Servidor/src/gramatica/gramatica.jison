@@ -46,6 +46,12 @@
 	const { Singleton } = require('../Singleton/Singleton');
 	const { Errores } = require('../Singleton/Errores');
 	const {GTS} = require('../instrucciones/GraficarTs')
+	const {VectorD1D} = require('../instrucciones/VectorD')
+	const {Matriz} = require('../instrucciones/Matriz')
+	const {AsignarM} = require('../instrucciones/asignarM');
+	const {EMatriz} = require('../Expresiones/EMatriz')
+	const {MatrizD} = require('../instrucciones/MatrizD')
+	const {Umenos} = require('../Expresiones/Umenos')
 
 	const singleton = Singleton.getInstance()
 
@@ -171,6 +177,7 @@
 %left 'potencia' 'mod'
 %left 'suma' 'resta'
 %left 'por' 'div'
+%left umenos
 
 %start INIT
 
@@ -215,15 +222,23 @@ ASIGNACION: identificador igual EXPRESION punto_coma	{$$ = new Asignar($1,$3,@1.
 ;
 
 DECLARACIONVECTORES: TIPO_DATO identificador corchete_a corchete_c igual r_new TIPO_DATO corchete_a EXPRESION corchete_c punto_coma {$$ = new VectorD1($1,$2,$7,$9,@1.first_line,@1.first_column);}
-					|TIPO_DATO identificador corchete_a corchete_c corchete_a corchete_c igual r_new TIPO_DATO corchete_a EXPRESION corchete_c corchete_a EXPRESION corchete_c punto_coma
+					|TIPO_DATO identificador corchete_a corchete_c corchete_a corchete_c igual r_new TIPO_DATO corchete_a EXPRESION corchete_c corchete_a EXPRESION corchete_c punto_coma {$$ = new Matriz($1,$2,$9,$11,$14,@1.first_line,@1.first_column);}
+					|TIPO_DATO identificador corchete_a corchete_c igual corchete_a PARAMETROS corchete_c punto_coma {$$ = new VectorD1D($1,$2,$7,@1.first_line,@1.first_column)}
+					|TIPO_DATO identificador corchete_a corchete_c corchete_a corchete_c igual corchete_a VALORESMATRIZ corchete_c punto_coma {$$ = new MatrizD($1,$2,$9,@1.first_line,@1.first_column)}
+					
+;
+
+VALORESMATRIZ: VALORESMATRIZ coma corchete_a PARAMETROS  corchete_c{$1.push($4); $$ = $1;}
+			|corchete_a PARAMETROS corchete_c 	{$$ = [$2]}
 ;
 
 ASIGNACIONVECTORES:identificador corchete_a EXPRESION corchete_c igual EXPRESION punto_coma {$$ = new AsignarV($1,$3,$6,@1.first_line,@1.first_column)}
+				|identificador corchete_a EXPRESION corchete_c corchete_a EXPRESION corchete_c igual EXPRESION punto_coma {$$ = new AsignarM($1,$3,$6,$9,@1.first_line,@1.first_column)}
 ;
 
 METODOSVECTORES: identificador punto r_pop parentesis_a parentesis_c punto_coma		{$$ = new Pop($1,@1.first_line,@1.first_column)}
 				|identificador punto r_push parentesis_a  EXPRESION parentesis_c punto_coma	{$$ = new Push($1,$5,@1.first_line,@1.first_column)}
-				|identificador punto r_splice parentesis_a  entero coma EXPRESION parentesis_c punto_coma	{$$ = new Splice($1,$5,$7,@1.first_line,@1.first_column)}
+				|identificador punto r_splice parentesis_a  EXPRESION coma EXPRESION parentesis_c punto_coma	{$$ = new Splice($1,$5,$7,@1.first_line,@1.first_column)}
 				|TIPO_DATO identificador corchete_a corchete_c igual r_toChar EXPRESION punto_coma {$$ = new CharArray($2,$7,@1.first_line,@1.first_column)}
 ;
 
@@ -320,7 +335,8 @@ FUNCIONES_NATIVAS
 
 ;
 
-EXPRESION:EXPRESION interrogacion EXPRESION dos_puntos EXPRESION {$$ = new TernarioE($1,$3,$5,@1.first_line,@1.first_column);}
+EXPRESION: resta EXPRESION %prec umenos {$$ = new Umenos($2,@1.first_line,@1.first_column)}
+	|EXPRESION interrogacion EXPRESION dos_puntos EXPRESION {$$ = new TernarioE($1,$3,$5,@1.first_line,@1.first_column);}
 	|identificador punto r_indexof EXPRESION {$$ = new IndexOf($1,$4,@1.first_line,@1.first_column)}
 	|r_round EXPRESION					{$$ = new Round($2,@1.first_line,@1.first_column);}
 	|r_toupper EXPRESION				{$$ = new ToUpper($2,@1.first_line,@1.first_column);}
@@ -345,6 +361,7 @@ EXPRESION:EXPRESION interrogacion EXPRESION dos_puntos EXPRESION {$$ = new Terna
 	|EXPRESION div EXPRESION			{$$ = new Aritmeticas($1,$3,AritmeticasOptions.DIVIDIR,@1.first_line,@1.first_column)}
 	|parentesis_a EXPRESION parentesis_c{$$ = $2}       						
 	|identificador corchete_a EXPRESION corchete_c	{$$ = new EVector($1,$3,@1.first_line,@1.first_column)}
+	|identificador corchete_a EXPRESION corchete_c corchete_a EXPRESION corchete_c	{$$ = new EMatriz($1,$3,$6,@1.first_line,@1.first_column)}
 	|identificador						{$$ = new Acces($1,@1.first_line,@1.first_column);} 
 	|TIPO_LITERAL						{$$ = $1}	
 	;

@@ -1,9 +1,11 @@
 import { Expression } from "../abstract/expression";
 import { Instruccion } from "../abstract/instruccion";
 import { Acces } from "../Expresiones/Acceso";
+import { Errores } from "../Singleton/Errores";
 import { Singleton } from "../Singleton/Singleton";
 import { Enviroment } from "../Symbols/enviroment";
 import { Type } from "../Symbols/type";
+const s = Singleton.getInstance()
 
 export class CharArray extends Instruccion{
     constructor(
@@ -17,11 +19,14 @@ export class CharArray extends Instruccion{
     public ejecutar(env:Enviroment) {
 
         if(this.valor == null){
+            s.addErrores(new Errores("toCharArray: Falta una palabra","Semantico",this.line,this.colum))
             throw new Error("error semantico");           
         }
         
         const valor = this.valor.ejecutar(env); 
         if(valor.type !=  Type.STRING){
+            s.addErrores(new Errores("toCharArray: No es tipo string","Semantico",this.line,this.colum))
+            
             throw new Error("error semantico");
             
         }
@@ -36,7 +41,7 @@ export class CharArray extends Instruccion{
     }
     public ast(): void {
 
-        const s = Singleton.getInstance()
+        
         const nombre_nodo =`node_${this.line}_${this.colum}_`
         s.addAst(`
         ${nombre_nodo}[label="toCharArray"];

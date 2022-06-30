@@ -1,10 +1,12 @@
 import { Expression } from "../abstract/expression";
 import { Instruccion } from "../abstract/instruccion";
 import { Acces } from "../Expresiones/Acceso";
+import { Errores } from "../Singleton/Errores";
 import { Singleton } from "../Singleton/Singleton";
 import { Enviroment } from "../Symbols/enviroment";
 import { Type } from "../Symbols/type";
 
+const s = Singleton.getInstance()
 export class Declaracion extends Instruccion{
     constructor(
         public tipo: Type, 
@@ -51,6 +53,8 @@ export class Declaracion extends Instruccion{
                     }else{
                         env.guardar_varible(this.nombre,0,this.tipo,this.editable)
                     }
+            }else{
+                s.addErrores(new Errores("Declaracion: variable nula","Semantico",this.line,this.colum))
             }
         }
 
@@ -61,6 +65,7 @@ export class Declaracion extends Instruccion{
         //console.log(expresion.type);
 
         if(env.buscar_variable(this.nombre)){
+            s.addErrores(new Errores("declaracion: la variable ya exite, y no se puede repetir","Semantico",this.line,this.colum))
             throw "Error semantico, la variable ya exite, y no se puede repetir"
         }
         
@@ -72,7 +77,7 @@ export class Declaracion extends Instruccion{
     }
 
     public ast(): void {
-        const s = Singleton.getInstance()
+        
         const nombreNodo = `node_${this.line}_${this.colum}_`
         s.addAst(`
         ${nombreNodo}[label="Declaracion"];

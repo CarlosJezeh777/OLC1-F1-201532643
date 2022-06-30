@@ -9,6 +9,7 @@ var Enviroment = /** @class */ (function () {
         this.tablaSimbolos = new Map();
         this.tablaSimbolos_metodos = new Map();
         this.tablaSimbolos_vectores = new Map();
+        this.tablaSimbolos_Matrices = new Map();
     }
     Enviroment.prototype.getEnv = function () {
         return this.tablaSimbolos;
@@ -71,6 +72,39 @@ var Enviroment = /** @class */ (function () {
         return null;
     };
     Enviroment.prototype.actualizar_vector = function (nombre, new_valor) {
+        for (var _i = 0, _a = Array.from(this.tablaSimbolos.entries()); _i < _a.length; _i++) {
+            var entry = _a[_i];
+            if (entry[0] == nombre) {
+                entry[1].value = new_valor;
+            }
+        }
+    };
+    Enviroment.prototype.guardar_Matriz = function (nombre, valor, type, index, index2) {
+        if (!this.buscar_vector(nombre)) {
+            this.tablaSimbolos_Matrices.set(nombre, new symbols_1.Symbol_Matriz(valor, nombre, type, index, index2));
+            return true;
+        }
+        console.log("esta variable [" + nombre + "] ya existe...");
+        return false;
+    };
+    Enviroment.prototype.buscar_Matriz = function (nombre) {
+        for (var _i = 0, _a = Array.from(this.tablaSimbolos_Matrices.entries()); _i < _a.length; _i++) {
+            var entry = _a[_i];
+            if (entry[0] == nombre)
+                return true;
+        }
+        return false;
+    };
+    Enviroment.prototype.get_Matriz = function (nombre) {
+        var env = this;
+        while (env != null) {
+            if (env.tablaSimbolos_Matrices.has(nombre))
+                return env.tablaSimbolos_Matrices.get(nombre);
+            env = env.anterior;
+        }
+        return null;
+    };
+    Enviroment.prototype.actualizar_Matriz = function (nombre, new_valor) {
         for (var _i = 0, _a = Array.from(this.tablaSimbolos.entries()); _i < _a.length; _i++) {
             var entry = _a[_i];
             if (entry[0] == nombre) {

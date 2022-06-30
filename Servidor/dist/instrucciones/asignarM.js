@@ -15,51 +15,53 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AsignarV = void 0;
+exports.AsignarM = void 0;
 var instruccion_1 = require("../abstract/instruccion");
 var Errores_1 = require("../Singleton/Errores");
 var Singleton_1 = require("../Singleton/Singleton");
 var singleton = Singleton_1.Singleton.getInstance();
-var AsignarV = /** @class */ (function (_super) {
-    __extends(AsignarV, _super);
-    function AsignarV(nombre, index, valor, line, column) {
+var AsignarM = /** @class */ (function (_super) {
+    __extends(AsignarM, _super);
+    function AsignarM(nombre, index, index2, valor, line, column) {
         var _this = _super.call(this, line, column) || this;
         _this.nombre = nombre;
         _this.index = index;
+        _this.index2 = index2;
         _this.valor = valor;
         return _this;
     }
-    AsignarV.prototype.ejecutar = function (env) {
-        var arreglo = env.get_vector(this.nombre);
-        //console.log(arreglo);
-        if (arreglo == null) {
+    AsignarM.prototype.ejecutar = function (env) {
+        var Matriz = env.get_Matriz(this.nombre);
+        //console.log(Matriz);
+        if (Matriz == null) {
             singleton.addErrores(new Errores_1.Errores("El nombre del vector no existe", "Semantico", this.line, this.colum));
             throw new Error("Error semantico");
         }
-        var i = arreglo.index - 1;
+        var i = Matriz.index - 1;
+        var j = Matriz.index2 - 1;
         //console.log(i);
-        var indice = this.index.ejecutar(env);
-        //console.log(indice);
+        var indice1 = this.index.ejecutar(env);
+        var indice2 = this.index2.ejecutar(env);
         var valor = this.valor.ejecutar(env);
         //console.log(valor);
-        if (indice.value > i) {
-            singleton.addErrores(new Errores_1.Errores("vector: l indice no existe", "Semantico", this.line, this.colum));
+        if (indice1.value > i || indice2.value > j) {
+            singleton.addErrores(new Errores_1.Errores("vector: el indice no existe", "Semantico", this.line, this.colum));
             throw new Error("error semantico");
         }
-        if (valor.type != arreglo.type) {
+        if (valor.type != Matriz.type) {
             singleton.addErrores(new Errores_1.Errores("vector: No son del mismo tipo", "Semantico", this.line, this.colum));
             throw new Error("error semantico");
         }
-        arreglo.value[indice.value] = valor.value;
-        //console.log(arreglo);
-        env.actualizar_vector(this.nombre, arreglo);
+        Matriz.value[indice1.value][indice2.value] = valor.value;
+        //console.log(Matriz.value);
+        env.actualizar_Matriz(this.nombre, Matriz);
         //console.log(expresion);
     };
-    AsignarV.prototype.ast = function () {
+    AsignarM.prototype.ast = function () {
         var s = Singleton_1.Singleton.getInstance();
         var nombre_nodo = "node_".concat(this.line, "_").concat(this.colum, "_");
         s.addAst("\n        ".concat(nombre_nodo, "[label=\"Asignacion Vector\"];\n        ").concat(nombre_nodo, "1[label=\"Nombre: ").concat(this.nombre, "\"];\n        ").concat(nombre_nodo, "->").concat(nombre_nodo, "1;\n        ").concat(nombre_nodo, "->").concat(this.valor.ast(), "\n        "));
     };
-    return AsignarV;
+    return AsignarM;
 }(instruccion_1.Instruccion));
-exports.AsignarV = AsignarV;
+exports.AsignarM = AsignarM;

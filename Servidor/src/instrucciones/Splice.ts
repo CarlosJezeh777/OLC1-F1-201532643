@@ -7,7 +7,7 @@ import { Enviroment } from "../Symbols/enviroment";
 export class Splice extends Instruccion{
     constructor(
         public nombre: string,
-        public indice: number,
+        public indice: Expression,
         public valor: Expression,
         line: number,
         column: number
@@ -26,13 +26,14 @@ export class Splice extends Instruccion{
         }
 
         const valor =  this.valor.ejecutar(env)
+        const indi=  this.indice.ejecutar(env)
         //console.log(valor);
         
         if(valor.type != arreglo.type){
             throw new Error("error semantico");
             
         }
-        arreglo.value.splice(Number(this.indice),0,valor.value)
+        arreglo.value.splice(Number(indi.value),0,valor.value)
         
         
         arreglo.index = arreglo.index + 1

@@ -17,7 +17,9 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Imprimir = void 0;
 var instruccion_1 = require("../abstract/instruccion");
+var Errores_1 = require("../Singleton/Errores");
 var Singleton_1 = require("../Singleton/Singleton");
+var s = Singleton_1.Singleton.getInstance();
 var Imprimir = /** @class */ (function (_super) {
     __extends(Imprimir, _super);
     function Imprimir(tipo, expresion, line, column) {
@@ -28,10 +30,10 @@ var Imprimir = /** @class */ (function (_super) {
     }
     Imprimir.prototype.ejecutar = function (env) {
         if (this.expresion == null) {
+            s.addErrores(new Errores_1.Errores("Print: salta de linea", "Semantico", this.line, this.colum));
             throw "Es un salto de linea";
         }
         var tmp = this.expresion.ejecutar(env);
-        var s = Singleton_1.Singleton.getInstance();
         if (this.tipo == 0) {
             s.addConsola(tmp.value);
         }
@@ -43,7 +45,6 @@ var Imprimir = /** @class */ (function (_super) {
         }
     };
     Imprimir.prototype.ast = function () {
-        var s = Singleton_1.Singleton.getInstance();
         var nombreNodo = "node_".concat(this.line, "_").concat(this.colum, "_");
         if (this.tipo == 0) {
             s.addAst("".concat(nombreNodo, "[label=\"Print\"];"));

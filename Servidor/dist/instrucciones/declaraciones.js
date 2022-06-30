@@ -17,8 +17,10 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Declaracion = void 0;
 var instruccion_1 = require("../abstract/instruccion");
+var Errores_1 = require("../Singleton/Errores");
 var Singleton_1 = require("../Singleton/Singleton");
 var type_1 = require("../Symbols/type");
+var s = Singleton_1.Singleton.getInstance();
 var Declaracion = /** @class */ (function (_super) {
     __extends(Declaracion, _super);
     function Declaracion(tipo, nombre, expresion, editable, line, colum) {
@@ -72,11 +74,15 @@ var Declaracion = /** @class */ (function (_super) {
                     env.guardar_varible(this.nombre, 0, this.tipo, this.editable);
                 }
             }
+            else {
+                s.addErrores(new Errores_1.Errores("Declaracion: variable nula", "Semantico", this.line, this.colum));
+            }
         }
         var expresion = this.expresion.ejecutar(env);
         //console.log(expresion.value);
         //console.log(expresion.type);
         if (env.buscar_variable(this.nombre)) {
+            s.addErrores(new Errores_1.Errores("declaracion: la variable ya exite, y no se puede repetir", "Semantico", this.line, this.colum));
             throw "Error semantico, la variable ya exite, y no se puede repetir";
         }
         if (this.editable == true) {
@@ -87,7 +93,6 @@ var Declaracion = /** @class */ (function (_super) {
         }
     };
     Declaracion.prototype.ast = function () {
-        var s = Singleton_1.Singleton.getInstance();
         var nombreNodo = "node_".concat(this.line, "_").concat(this.colum, "_");
         s.addAst("\n        ".concat(nombreNodo, "[label=\"Declaracion\"];\n        ").concat(nombreNodo, "1[label=\"Nombre: ").concat(this.nombre, "\"];\n        ").concat(nombreNodo, "2[label=\"Tipo: ").concat(this.tipo, "\"];\n        ").concat(nombreNodo, "->").concat(nombreNodo, "1\n        ").concat(nombreNodo, "->").concat(nombreNodo, "2\n        ").concat(nombreNodo, "->").concat(this.expresion.ast()));
     };
