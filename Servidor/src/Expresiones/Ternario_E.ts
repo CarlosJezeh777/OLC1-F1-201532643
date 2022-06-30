@@ -48,6 +48,14 @@ export class TernarioE extends Expression{
         return resultado
     }
     public ast(): string {
-        return "ast"
+        const name_nodo = `node_${this.line}_${this.column}_`
+        return `
+        ${name_nodo};
+        ${name_nodo}[label="Ternario Expresion"];
+        ${name_nodo}->${this.expresion.ast()}
+        ${name_nodo}->${this.expresionTrue.ast()}
+        ${name_nodo}->${this.expresionFalse.ast()}
+        
+        `
     }
 }

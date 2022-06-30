@@ -1,28 +1,16 @@
 int numero = 12;
-int numero_tres_ = numero;
 
-
+Println(numero);
 {
-    //ASIGNACIONES------
-    banderita_uno= true;
-    nombre_tres="ganare compiladores 1";
-    int numero = 13;
-    char caracter_uno = '>' ;
-    numero++;
-    numero++;
-    numero++;
-    numero++;
-    println("SENTENCIA ASIGNACION :--------------------------");
-    println("Sentencia asignacion 1/1 status: si!...");
-    calificacion= calificacion+3.0;
-    println("Calificacion= "+calificacion); 
-
-     {
-        int nivel_intermedio= ' '+2; //resutlado 34
-        int nivel_intermedio_dos= ' '+'>'; 
-        
-    }
-    {
-        caracter_uno_dos = '}' ;
-    } 
+    int numero_tres_ = numero;
+    Println(numero_tres_);
+    graficar_ts();    
 }
+
+graficar_ts();
+
+void Hola(string name){
+    println(name);
+}
+
+call Hola("carlos");

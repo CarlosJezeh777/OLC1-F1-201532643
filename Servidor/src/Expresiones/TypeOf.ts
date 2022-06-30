@@ -53,6 +53,12 @@ export class Type_Of extends Expression{
         
     }
     public ast(): string {
-        return "ast"
+        const name_nodo = `node_${this.line}_${this.column}_`
+        return `
+        ${name_nodo};
+        ${name_nodo}[label="Type Of"];
+        ${name_nodo}->${this.expresion.ast()}
+        
+        `
     }
 }

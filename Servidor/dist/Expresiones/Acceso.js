@@ -46,13 +46,13 @@ var Acces = /** @class */ (function (_super) {
             };
         }
         else {
-            throw new Error("error semantico");
+            throw new Error("error semantico aqui");
         }
         return resultado;
     };
     Acces.prototype.ast = function () {
         var name_nodo = "node_".concat(this.line, "_").concat(this.column, "_");
-        return "\n        ".concat(name_nodo, ";\n        ").concat(name_nodo, "[label=\"{").concat(this.id, "}\"];\n        ");
+        return "\n        ".concat(name_nodo, ";\n        ").concat(name_nodo, "[label=\"").concat(this.id, "\"];\n        ");
     };
     return Acces;
 }(expression_1.Expression));

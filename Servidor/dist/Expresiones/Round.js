@@ -42,7 +42,8 @@ var Round = /** @class */ (function (_super) {
         return resultado;
     };
     Round.prototype.ast = function () {
-        return "ast";
+        var name_nodo = "node_".concat(this.line, "_").concat(this.column, "_");
+        return "\n        ".concat(name_nodo, ";\n        ").concat(name_nodo, "[label=\"Round\"];\n        ").concat(name_nodo, "->").concat(this.expresion.ast(), "\n        ");
     };
     return Round;
 }(expression_1.Expression));

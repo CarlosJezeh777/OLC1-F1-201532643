@@ -55,7 +55,8 @@ var TernarioE = /** @class */ (function (_super) {
         return resultado;
     };
     TernarioE.prototype.ast = function () {
-        return "ast";
+        var name_nodo = "node_".concat(this.line, "_").concat(this.column, "_");
+        return "\n        ".concat(name_nodo, ";\n        ").concat(name_nodo, "[label=\"Ternario Expresion\"];\n        ").concat(name_nodo, "->").concat(this.expresion.ast(), "\n        ").concat(name_nodo, "->").concat(this.expresionTrue.ast(), "\n        ").concat(name_nodo, "->").concat(this.expresionFalse.ast(), "\n        \n        ");
     };
     return TernarioE;
 }(expression_1.Expression));

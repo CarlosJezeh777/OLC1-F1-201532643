@@ -49,7 +49,8 @@ var IndexOf = /** @class */ (function (_super) {
         return resultado;
     };
     IndexOf.prototype.ast = function () {
-        return "ast";
+        var name_nodo = "node_".concat(this.line, "_").concat(this.column, "_");
+        return "\n        ".concat(name_nodo, ";\n        ").concat(name_nodo, "[label=\"indexOf\"];\n        ").concat(name_nodo, "->").concat(this.expresion.ast(), "\n        ");
     };
     return IndexOf;
 }(expression_1.Expression));

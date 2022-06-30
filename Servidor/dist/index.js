@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Singleton_1 = require("./Singleton/Singleton");
 var enviroment_1 = require("./Symbols/enviroment");
-var child_process_1 = require("child_process");
+var Errores_1 = require("./Singleton/Errores");
 var singleton = Singleton_1.Singleton.getInstance();
 var parser = require('./gramatica/gramatica');
 var fs = require("fs");
@@ -23,7 +23,10 @@ app.listen(port, function () {
     console.log("Server listening: => " + port);
 });
 var env_padre = new enviroment_1.Enviroment(null);
+singleton.addAst("digraph G {\nnode[shape=box];");
 singleton.addAst("nodeOriginal[label=\"Instrucciones\"];");
+singleton.addGts("digraph G { bgcolor=\"black\"\n");
+singleton.addGts("node [shape=shape fillcolor=\"black\" style=\"radial\" gradientangle=180];\n");
 app.post('/recibir', function (request, response) {
     try {
         //console.log(request.body["edit"]);
@@ -34,13 +37,11 @@ app.post('/recibir', function (request, response) {
             try {
                 //console.log(elemento);
                 elemento.ast();
-                console.log(elemento);
-                var linea = elemento.line;
-                var columna = elemento.colum;
+                //console.log(elemento);
                 singleton.addAst("nodeOriginal->node_".concat(elemento.line, "_").concat(elemento.colum, "_;"));
             }
             catch (error) {
-                singleton.addErrores(error);
+                singleton.addErrores(new Errores_1.Errores("Error semantico", "Semantico", elemento.line, elemento.colum));
             }
         }
         for (var _a = 0, ast_2 = ast; _a < ast_2.length; _a++) {
@@ -50,7 +51,7 @@ app.post('/recibir', function (request, response) {
                 elemento.ejecutar(env_padre);
             }
             catch (error) {
-                singleton.addErrores(error);
+                singleton.addErrores(new Errores_1.Errores("Error semantico", "Semantico", elemento.line, elemento.colum));
             }
         }
         var texto = singleton.getConsola();
@@ -69,28 +70,25 @@ app.get('/enviarTS', function (req, res) {
     //console.log(TS);    
     res.json({ respuesta: TS });
 });
-app.get('/enviarConsola', function (req, res) {
-    var texto = singleton.getConsola();
-    res.json({ respuesta: texto });
+app.get('/enviarErrores', function (req, res) {
+    var Errores = singleton.getErrores();
+    res.json({ respuesta: Errores });
 });
 app.get('/enviarAst', function (req, res) {
+    singleton.addAst("\n}");
     var arbol = singleton.getAst();
-    console.log(arbol);
-    crearArchivo();
-    res.json({ respuesta: "ok" });
+    //console.log(arbol);
+    res.json({ respuesta: arbol });
 });
-function crearArchivo() {
-    (0, child_process_1.exec)('mkdir out/');
-    createFile("out/ast.dot", "digraph G {\nnode[shape=box];" + singleton.getAst() + "\n}");
-    (0, child_process_1.exec)('dot -Tpng out/ast.dot -o out/ast.png ');
-}
-function createFile(nameFile, data) {
-    fs.writeFile(nameFile, data, function () {
-        console.log('>> The file ' + nameFile + ' has been saved!');
-    });
-}
-/*try {
-    const entrada =  fs.readFileSync("src/entrada2.txt");
+app.get('/enviarGts', function (req, res) {
+    singleton.addGts("\n}");
+    var graficos = singleton.getGts();
+    //console.log(arbol);
+    res.json({ respuesta: graficos });
+});
+/*
+try {
+    const entrada =  fs.readFileSync("src/in3.txt");
     const ast = parser.parse(entrada.toString());
     const env_padre =  new Enviroment(null);
     
@@ -99,7 +97,7 @@ function createFile(nameFile, data) {
             //console.log(elemento);
             elemento.ejecutar(env_padre);
         } catch (error) {
-            singleton.addErrores(error)
+            singleton.addErrores(new Errores("Error semantico","Semantico",elemento.line,elemento.colum))
         }
     }
     //console.log(env_padre);

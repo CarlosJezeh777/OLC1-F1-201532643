@@ -43,6 +43,12 @@
 	const {EVector} = require('../Expresiones/EVector')
 	const {CharArray} = require('../instrucciones/CharArray');
 	const {IndexOf} = require('../Expresiones/IndexOf')
+	const { Singleton } = require('../Singleton/Singleton');
+	const { Errores } = require('../Singleton/Errores');
+	const {GTS} = require('../instrucciones/GraficarTs')
+
+	const singleton = Singleton.getInstance()
+
 %}
 
 %lex
@@ -152,7 +158,8 @@
 
 <<EOF>>                 return 'EOF';
 
-.                       { console.error('Este es un error léxico: ' + yytext + ', en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column); }
+.                       { console.error('Este es un error léxico: ' + yytext + ', en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column); 
+							singleton.addErrores(new Errores("Error: " + yytext,"Lexico",yylloc.first_line,yylloc.first_column))}
 /lex
 
 /* Asociación de operadores y precedencia */
@@ -174,7 +181,8 @@ INIT : INTRUCCIONES EOF {return $1}
 
 INTRUCCIONES : INTRUCCIONES INTRUCCION 	{ $1.push($2); $$ = $1;}
 	|INTRUCCION 						{$$ = [$1]}
-	|error {console.error('Este es un error sintactico: ' + yytext + ', en la linea: '+ this._$.first_line+', en la columna: '+this._$.first_column);}
+	|error {console.error('Este es un error sintactico: ' + yytext + ', en la linea: '+ this._$.first_line+', en la columna: '+this._$.first_column);
+			singleton.addErrores(new Errores("Error: " + yytext,"Sintactico",this._$.first_line,this._$.first_column))}
 ;
 
 INTRUCCION:DVARIABLES 	{$$=$1}
@@ -219,7 +227,7 @@ METODOSVECTORES: identificador punto r_pop parentesis_a parentesis_c punto_coma	
 				|TIPO_DATO identificador corchete_a corchete_c igual r_toChar EXPRESION punto_coma {$$ = new CharArray($2,$7,@1.first_line,@1.first_column)}
 ;
 
-GRAFICARTS: r_graficarTs parentesis_a parentesis_c punto_coma
+GRAFICARTS: r_graficarTs parentesis_a parentesis_c punto_coma {$$ = new GTS(@1.first_line,@1.first_column);}
 ;
 
 IF:r_if EXPRESION BLOQUE  {$$ = new Iif($2,$3,@1.first_line,@1.first_column);} 

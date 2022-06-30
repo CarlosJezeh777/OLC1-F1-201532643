@@ -5,6 +5,7 @@ var Singleton = /** @class */ (function () {
     function Singleton() {
         this.consola = " ";
         this.ast = " ";
+        this.Gts = " ";
         this.errores = [];
         this.elses_if = [];
     }
@@ -19,6 +20,12 @@ var Singleton = /** @class */ (function () {
     };
     Singleton.prototype.getConsola = function () {
         return this.consola;
+    };
+    Singleton.prototype.addGts = function (data) {
+        this.Gts += data;
+    };
+    Singleton.prototype.getGts = function () {
+        return this.Gts;
     };
     Singleton.prototype.addAst = function (data) {
         this.ast += data;

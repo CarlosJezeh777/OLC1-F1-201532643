@@ -1,6 +1,7 @@
 import e from "cors";
 import { Singleton } from "./Singleton/Singleton";
 import { Enviroment } from "./Symbols/enviroment";
+import { Errores } from "./Singleton/Errores";
 import { exec } from "child_process";
 
 const singleton = Singleton.getInstance()
@@ -8,9 +9,12 @@ const singleton = Singleton.getInstance()
 const parser = require('./gramatica/gramatica');
 const fs = require("fs");
 
+
 import express from 'express'
 import morgan from 'morgan'
 import cors from 'cors'
+
+
 const app: express.Application = express()
 const port: number = 3000
 const corsOption: cors.CorsOptions = {origin: true, optionsSuccessStatus: 200}
@@ -26,25 +30,26 @@ app.listen(port, ()=>{
 })
         
 const env_padre =  new Enviroment(null);
+singleton.addAst("digraph G {\nnode[shape=box];") ;
 singleton.addAst(`nodeOriginal[label="Instrucciones"];`)
 
+singleton.addGts("digraph G { bgcolor=\"black\"\n") ;
+singleton.addGts("node [shape=shape fillcolor=\"black\" style=\"radial\" gradientangle=180];\n")
 app.post('/recibir',function(request, response){
     try { 
         //console.log(request.body["edit"]);
         const entrada = request.body["edit"];
         const ast = parser.parse(entrada.toString());
         
-
+        
         for (const elemento of ast) {
             try {
                 //console.log(elemento);
                 elemento.ast();
-                console.log(elemento);
-                const linea = elemento.line
-                const columna = elemento.colum
+                //console.log(elemento);
                 singleton.addAst(`nodeOriginal->node_${elemento.line}_${elemento.colum}_;`)
             } catch (error) {
-                singleton.addErrores(error)
+                singleton.addErrores(new Errores("Error semantico","Semantico",elemento.line,elemento.colum))
             }
         }
         
@@ -54,16 +59,11 @@ app.post('/recibir',function(request, response){
                 elemento.ejecutar(env_padre);
 
             } catch (error) {
-                singleton.addErrores(error)
+                singleton.addErrores(new Errores("Error semantico","Semantico",elemento.line,elemento.colum))
             }
         }
-        
-
-        
-
 
         let texto = singleton.getConsola()
-    
         response.json({respuest: texto});
 
     } catch (error) {
@@ -71,7 +71,6 @@ app.post('/recibir',function(request, response){
     }
             
 });
-
 
 app.get('/enviarTS',function(req, res){
     const taba_sim = env_padre.getEnv()
@@ -85,39 +84,32 @@ app.get('/enviarTS',function(req, res){
 });
     
 
-app.get('/enviarConsola',function(req, res){
-    let texto = singleton.getConsola()
-    res.json({respuesta: texto});
+app.get('/enviarErrores',function(req, res){
+    let Errores = singleton.getErrores()
+
+    res.json({respuesta: Errores});
 });
 
 app.get('/enviarAst',function(req, res){
+    singleton.addAst("\n}")
     const arbol = singleton.getAst()
-    console.log(arbol);
-    crearArchivo()
-    
-    res.json({respuesta: "ok"});
+    //console.log(arbol);
+    res.json({respuesta: arbol});
 });
 
-function crearArchivo(){
-    exec('mkdir out/')
-    createFile("out/ast.dot", "digraph G {\nnode[shape=box];" + singleton.getAst() + "\n}")
-    exec('dot -Tpng out/ast.dot -o out/ast.png ')
-
-}
-
-
-function createFile(nameFile: string, data: string) {
-    fs.writeFile(nameFile, data, () => {
-        console.log('>> The file ' + nameFile + ' has been saved!');
-    })
-}
+app.get('/enviarGts',function(req, res){
+    singleton.addGts("\n}")
+    const graficos = singleton.getGts()
+    //console.log(arbol);
+    res.json({respuesta: graficos});
+});
 
 
 
 
-
-/*try { 
-    const entrada =  fs.readFileSync("src/entrada2.txt");
+/*
+try { 
+    const entrada =  fs.readFileSync("src/in3.txt");
     const ast = parser.parse(entrada.toString());
     const env_padre =  new Enviroment(null);
     
@@ -126,7 +118,7 @@ function createFile(nameFile: string, data: string) {
             //console.log(elemento);
             elemento.ejecutar(env_padre);
         } catch (error) {
-            singleton.addErrores(error)
+            singleton.addErrores(new Errores("Error semantico","Semantico",elemento.line,elemento.colum))
         }
     }
     //console.log(env_padre);

@@ -17,6 +17,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Push = void 0;
 var instruccion_1 = require("../abstract/instruccion");
+var Singleton_1 = require("../Singleton/Singleton");
 var Push = /** @class */ (function (_super) {
     __extends(Push, _super);
     function Push(nombre, valor, line, column) {
@@ -42,6 +43,9 @@ var Push = /** @class */ (function (_super) {
         //console.log(expresion);
     };
     Push.prototype.ast = function () {
+        var s = Singleton_1.Singleton.getInstance();
+        var nombre_nodo = "node_".concat(this.line, "_").concat(this.colum, "_");
+        s.addAst("\n        ".concat(nombre_nodo, "[label=\"Push\"];\n        ").concat(nombre_nodo, "1[label=\"Nombre: ").concat(this.nombre, "\"];\n        ").concat(nombre_nodo, "->").concat(nombre_nodo, "1;\n        ").concat(nombre_nodo, "->").concat(this.valor.ast(), "\n        "));
     };
     return Push;
 }(instruccion_1.Instruccion));

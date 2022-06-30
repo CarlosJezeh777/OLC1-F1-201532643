@@ -42,7 +42,8 @@ var ToLower = /** @class */ (function (_super) {
         return resultado;
     };
     ToLower.prototype.ast = function () {
-        return "ast";
+        var name_nodo = "node_".concat(this.line, "_").concat(this.column, "_");
+        return "\n        ".concat(name_nodo, ";\n        ").concat(name_nodo, "[label=\"To Lower\"];\n        ").concat(name_nodo, "->").concat(this.expresion.ast(), "\n        \n        ");
     };
     return ToLower;
 }(expression_1.Expression));

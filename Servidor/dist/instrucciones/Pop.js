@@ -17,6 +17,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Pop = void 0;
 var instruccion_1 = require("../abstract/instruccion");
+var Singleton_1 = require("../Singleton/Singleton");
 var Pop = /** @class */ (function (_super) {
     __extends(Pop, _super);
     function Pop(nombre, line, column) {
@@ -37,6 +38,9 @@ var Pop = /** @class */ (function (_super) {
         //console.log(expresion);
     };
     Pop.prototype.ast = function () {
+        var s = Singleton_1.Singleton.getInstance();
+        var nombre_nodo = "node_".concat(this.line, "_").concat(this.colum, "_");
+        s.addAst("\n        ".concat(nombre_nodo, "[label=\"Pop\"];\n        ").concat(nombre_nodo, "1[label=\"Nombre: ").concat(this.nombre, "\"];\n        ").concat(nombre_nodo, "->").concat(nombre_nodo, "1;\n        "));
     };
     return Pop;
 }(instruccion_1.Instruccion));

@@ -31,9 +31,7 @@ var MetodosP = /** @class */ (function (_super) {
         if (this.parametros == null) {
             throw new Error("Error semantico: tiene que traer parametros");
         }
-        if (env.guardar_funcion(this.nombre, this)) {
-            console.log("se guardo");
-        }
+        env.guardar_funcion(this.nombre, this);
     };
     MetodosP.prototype.ast = function () {
     };

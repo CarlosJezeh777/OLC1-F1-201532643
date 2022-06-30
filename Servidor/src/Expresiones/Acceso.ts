@@ -35,7 +35,7 @@ export class Acces extends Expression{
                 type: variable_vector.type
             }    
         }else{
-            throw new Error("error semantico");
+            throw new Error("error semantico aqui");
             
         }
 
@@ -47,7 +47,7 @@ export class Acces extends Expression{
         const name_nodo = `node_${this.line}_${this.column}_`
         return `
         ${name_nodo};
-        ${name_nodo}[label="{${this.id}}"];
+        ${name_nodo}[label="${this.id}"];
         `
     }
 

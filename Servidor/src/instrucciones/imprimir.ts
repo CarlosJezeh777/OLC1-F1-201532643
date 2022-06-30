@@ -33,8 +33,9 @@ export class Imprimir extends Instruccion{
     public ast(): void {
         const s = Singleton.getInstance()
         const nombreNodo = `node_${this.line}_${this.colum}_`
-        s.addAst(`
-        ${nombreNodo}[label="\\<Instruccion\\>\\nconsole"];`)
+        if (this.tipo == 0){s.addAst(`${nombreNodo}[label="Print"];`)}
+        else if(this.tipo == 1){s.addAst(`${nombreNodo}[label="Println"];`)}
+        
         if (this.expresion!= null){s.addAst(`${nombreNodo}->${this.expresion.ast()}`)}
         
     }

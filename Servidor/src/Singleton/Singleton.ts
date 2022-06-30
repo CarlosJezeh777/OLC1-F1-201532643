@@ -1,11 +1,13 @@
 import { Else_If } from "../instrucciones/else_if";
+import { Errores } from "./Errores";
 
 export class Singleton{
     private static instance: Singleton
 
     private consola: string = " "
     private ast: string = " "
-    private errores: any[] = [] 
+    private Gts: string = " "
+    private errores: Errores[] = [] 
     private elses_if: Else_If[] = []
 
     constructor(){
@@ -27,6 +29,14 @@ export class Singleton{
         return this.consola
     }
 
+    public addGts(data: string){
+        this.Gts += data;
+    }
+
+    public getGts(): string{
+        return this.Gts
+    }
+
     public addAst(data: string){
         this.ast += data;
     }
@@ -35,11 +45,11 @@ export class Singleton{
         return this.ast
     }
 
-    public addErrores(data: any){
+    public addErrores(data: Errores){
             this.errores.push(data);
     }
 
-    public getErrores():any[]{
+    public getErrores():Errores[]{
         return this.errores
     }
 

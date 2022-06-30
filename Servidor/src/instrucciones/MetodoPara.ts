@@ -1,7 +1,6 @@
 import { Instruccion } from "../abstract/instruccion";
 import { Enviroment } from "../Symbols/enviroment";
 import { Bloque } from "./Bloque";
-import { Declaracion } from "./declaraciones";
 
 export class MetodosP extends Instruccion{
     constructor(
@@ -19,10 +18,8 @@ export class MetodosP extends Instruccion{
             throw new Error("Error semantico: tiene que traer parametros");
             
         }
-        if(env.guardar_funcion(this.nombre,this)){
-            console.log("se guardo");
+        env.guardar_funcion(this.nombre,this)
             
-        }
         
     }
 

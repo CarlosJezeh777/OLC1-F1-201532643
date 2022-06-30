@@ -45,7 +45,12 @@ var Imprimir = /** @class */ (function (_super) {
     Imprimir.prototype.ast = function () {
         var s = Singleton_1.Singleton.getInstance();
         var nombreNodo = "node_".concat(this.line, "_").concat(this.colum, "_");
-        s.addAst("\n        ".concat(nombreNodo, "[label=\"\\<Instruccion\\>\\nconsole\"];"));
+        if (this.tipo == 0) {
+            s.addAst("".concat(nombreNodo, "[label=\"Print\"];"));
+        }
+        else if (this.tipo == 1) {
+            s.addAst("".concat(nombreNodo, "[label=\"Println\"];"));
+        }
         if (this.expresion != null) {
             s.addAst("".concat(nombreNodo, "->").concat(this.expresion.ast()));
         }

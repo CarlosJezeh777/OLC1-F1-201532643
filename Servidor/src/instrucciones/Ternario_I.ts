@@ -1,5 +1,6 @@
 import { Expression } from "../abstract/expression";
 import { Instruccion } from "../abstract/instruccion";
+import { Singleton } from "../Singleton/Singleton";
 import { Enviroment } from "../Symbols/enviroment";
 import { Type } from "../Symbols/type";
 
@@ -54,6 +55,30 @@ export class TernarioI extends Instruccion{
         
     }
     public ast(): void {
-        
+        const s = Singleton.getInstance()
+        const nombre_nodo =`node_${this.line}_${this.colum}_`
+        s.addAst(`
+        ${nombre_nodo}[label="Ternario intrucccion"];
+        ${nombre_nodo}->${this.expresion.ast()}
+        `)
+        for (const elemeto of this.instruccionTrue) {
+            try {
+                elemeto.ast()
+                s.addAst(`${nombre_nodo}->node_${elemeto.line}_${elemeto.colum}_;`)
+
+            } catch (error) {
+                console.log(error);
+                
+            }
+        }
+        for (const elemeto of this.instruccionFalse) {
+            try {
+                elemeto.ast()
+                s.addAst(`${nombre_nodo}->node_${elemeto.line}_${elemeto.colum}_;`)
+            } catch (error) {
+                console.log(error);
+                
+            }
+        }
     }
 }

@@ -19,37 +19,23 @@ export class LlamadaP extends Instruccion{
         let metodo= env.get_metodoP(this.id)
         let env_parametros= new Enviroment(env); 
         let env_instrucciones = new Enviroment(env_parametros);   
-
+        
         let nombres: any[] = [];
-        let asignaciones:Asignar[] = [];
+        let valores: any[] = [];
         
         for (const dec of metodo?.parametros) {
-            nombres.push(dec.nombre)
-            try {
-                dec.ejecutar(env_parametros)
-            } catch (error) {
-                console.log(error);
-                
-            }                   
+            nombres.push(dec.nombre)                       
+        }
+
+        for (const elemento of this.parametros) {
+            const elem = elemento.ejecutar(env_parametros)
+            valores.push(elem)
         }
         
         for (let i = 0; i < nombres.length; i++) {
-            asignaciones.push(new Asignar(nombres[i],this.parametros[i],this.line,this.colum));       
+            env_parametros.guardar_varible(nombres[i],valores[i].value,valores[i].type,true)
         }
         
-        for (const elemento of asignaciones) {
-            try {
-                elemento.ejecutar(env_parametros)
-            } catch (error) {
-                console.log(error);
-                
-            }
-        }
-       
-
-        //.log(env_parametros);
-        
-
         if (metodo== null) {
             throw "Error semantico, no ecnontre esta funcion"
         }

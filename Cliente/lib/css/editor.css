@@ -46,3 +46,9 @@ body{
     text-align: center;
     border: 1px solid #BBBBBB;
   }
+
+  .ver1{
+    visibility: hidden;
+  }
+
+  

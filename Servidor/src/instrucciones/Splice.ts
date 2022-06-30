@@ -1,6 +1,7 @@
 import { Expression } from "../abstract/expression";
 import { Instruccion } from "../abstract/instruccion";
 import { Acces } from "../Expresiones/Acceso";
+import { Singleton } from "../Singleton/Singleton";
 import { Enviroment } from "../Symbols/enviroment";
 
 export class Splice extends Instruccion{
@@ -47,6 +48,15 @@ export class Splice extends Instruccion{
     }
 
     public ast(): void {
-        
+        const s = Singleton.getInstance()
+        const nombre_nodo =`node_${this.line}_${this.colum}_`
+        s.addAst(`
+        ${nombre_nodo}[label="Splice"];
+        ${nombre_nodo}1[label="Nombre: ${this.nombre}"];
+        ${nombre_nodo}2[label="indice: ${this.indice}"];
+        ${nombre_nodo}->${nombre_nodo}1;
+        ${nombre_nodo}->${nombre_nodo}2;
+        ${nombre_nodo}->${this.valor.ast()}
+        `)
     }
 }

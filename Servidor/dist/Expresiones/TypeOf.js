@@ -66,7 +66,8 @@ var Type_Of = /** @class */ (function (_super) {
         return resultado;
     };
     Type_Of.prototype.ast = function () {
-        return "ast";
+        var name_nodo = "node_".concat(this.line, "_").concat(this.column, "_");
+        return "\n        ".concat(name_nodo, ";\n        ").concat(name_nodo, "[label=\"Type Of\"];\n        ").concat(name_nodo, "->").concat(this.expresion.ast(), "\n        \n        ");
     };
     return Type_Of;
 }(expression_1.Expression));

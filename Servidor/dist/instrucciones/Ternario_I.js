@@ -17,6 +17,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TernarioI = void 0;
 var instruccion_1 = require("../abstract/instruccion");
+var Singleton_1 = require("../Singleton/Singleton");
 var enviroment_1 = require("../Symbols/enviroment");
 var type_1 = require("../Symbols/type");
 var TernarioI = /** @class */ (function (_super) {
@@ -61,6 +62,29 @@ var TernarioI = /** @class */ (function (_super) {
         //console.log(expresion);
     };
     TernarioI.prototype.ast = function () {
+        var s = Singleton_1.Singleton.getInstance();
+        var nombre_nodo = "node_".concat(this.line, "_").concat(this.colum, "_");
+        s.addAst("\n        ".concat(nombre_nodo, "[label=\"Ternario intrucccion\"];\n        ").concat(nombre_nodo, "->").concat(this.expresion.ast(), "\n        "));
+        for (var _i = 0, _a = this.instruccionTrue; _i < _a.length; _i++) {
+            var elemeto = _a[_i];
+            try {
+                elemeto.ast();
+                s.addAst("".concat(nombre_nodo, "->node_").concat(elemeto.line, "_").concat(elemeto.colum, "_;"));
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }
+        for (var _b = 0, _c = this.instruccionFalse; _b < _c.length; _b++) {
+            var elemeto = _c[_b];
+            try {
+                elemeto.ast();
+                s.addAst("".concat(nombre_nodo, "->node_").concat(elemeto.line, "_").concat(elemeto.colum, "_;"));
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }
     };
     return TernarioI;
 }(instruccion_1.Instruccion));
