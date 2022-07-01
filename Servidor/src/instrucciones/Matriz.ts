@@ -54,12 +54,13 @@ export class Matriz extends Instruccion{
     public ast(): void {
         const nombre_nodo =`node_${this.line}_${this.colum}_`
         s.addAst(`
-        ${nombre_nodo}[label="Splice"];
+        ${nombre_nodo}[label="vector dimensional"];
         ${nombre_nodo}1[label="Nombre: ${this.id}"];
         ${nombre_nodo}2[label="Tipo: ${this.tipo}"];
         ${nombre_nodo}->${nombre_nodo}1;
         ${nombre_nodo}->${nombre_nodo}2;
         ${nombre_nodo}->${this.valor.ast()}
+        ${nombre_nodo}->${this.valor2.ast()}
         `)
         
     }

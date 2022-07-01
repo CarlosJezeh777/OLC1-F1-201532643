@@ -17,7 +17,10 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LlamadaP = void 0;
 var instruccion_1 = require("../abstract/instruccion");
+var Errores_1 = require("../Singleton/Errores");
+var Singleton_1 = require("../Singleton/Singleton");
 var enviroment_1 = require("../Symbols/enviroment");
+var s = Singleton_1.Singleton.getInstance();
 var LlamadaP = /** @class */ (function (_super) {
     __extends(LlamadaP, _super);
     function LlamadaP(id, parametros, line, column) {
@@ -45,11 +48,14 @@ var LlamadaP = /** @class */ (function (_super) {
             env_parametros.guardar_varible(nombres[i], valores[i].value, valores[i].type, true);
         }
         if (metodo == null) {
+            s.addErrores(new Errores_1.Errores("no se encontro la funcion", "semantico", this.line, this.colum));
             throw "Error semantico, no ecnontre esta funcion";
         }
         metodo.instrucciones.ejecutar(env_instrucciones);
     };
     LlamadaP.prototype.ast = function () {
+        var name_node = "node_".concat(this.line, "_").concat(this.colum, "_");
+        s.addAst("\n        ".concat(name_node, "[label=\"Call\"];\n        ").concat(name_node, "1[label=\"").concat(this.id, "\"];\n        ").concat(name_node, "->").concat(name_node, "1;\n        "));
     };
     return LlamadaP;
 }(instruccion_1.Instruccion));

@@ -1,9 +1,12 @@
 import { Expression } from "../abstract/expression";
 import { Instruccion } from "../abstract/instruccion";
 import { Acces } from "../Expresiones/Acceso";
+import { Errores } from "../Singleton/Errores";
 import { Singleton } from "../Singleton/Singleton";
 import { Enviroment } from "../Symbols/enviroment";
 
+const s = Singleton.getInstance()
+        
 export class Pop extends Instruccion{
     constructor(
         public nombre: string,
@@ -17,6 +20,7 @@ export class Pop extends Instruccion{
         const arreglo = env.get_vector(this.nombre)
         //console.log(arreglo);
         if(arreglo == null){
+            s.addErrores(new Errores("No se encontro el vector", "semantico",this.line,this.colum))
             throw new Error("Error semantico");
             
         }
@@ -33,7 +37,6 @@ export class Pop extends Instruccion{
         
     }
     public ast(): void {
-        const s = Singleton.getInstance()
         const nombre_nodo =`node_${this.line}_${this.colum}_`
         s.addAst(`
         ${nombre_nodo}[label="Pop"];

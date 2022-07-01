@@ -1,9 +1,12 @@
 import { Instruccion } from "../abstract/instruccion";
+import { Errores } from "../Singleton/Errores";
+import { Singleton } from "../Singleton/Singleton";
 import { Enviroment } from "../Symbols/enviroment";
 import { Asignar } from "./asignar";
 import { Declaracion } from "./declaraciones";
 import { Metodos } from "./IMetdos";
 
+const s = Singleton.getInstance()
 export class LlamadaP extends Instruccion{
     constructor(
         public id:string,
@@ -37,6 +40,7 @@ export class LlamadaP extends Instruccion{
         }
         
         if (metodo== null) {
+            s.addErrores(new Errores("no se encontro la funcion","semantico",this.line,this.colum))
             throw "Error semantico, no ecnontre esta funcion"
         }
 
@@ -46,6 +50,12 @@ export class LlamadaP extends Instruccion{
 
     public ast(): void {
         
+        const name_node = `node_${this.line}_${this.colum}_`
+        s.addAst(`
+        ${name_node}[label="Call"];
+        ${name_node}1[label="${this.id}"];
+        ${name_node}->${name_node}1;
+        `)
     }
 
 }

@@ -35,6 +35,16 @@ var Casos = /** @class */ (function (_super) {
         var s = Singleton_1.Singleton.getInstance();
         var nombre_nodo = "node_".concat(this.line, "_").concat(this.colum, "_");
         s.addAst("\n        ".concat(nombre_nodo, "[label=\"Cases\"];\n        "));
+        for (var _i = 0, _a = this.instrucccion; _i < _a.length; _i++) {
+            var elemento = _a[_i];
+            try {
+                elemento.ast();
+                s.addAst("".concat(nombre_nodo, "->node_").concat(elemento.line, "_").concat(elemento.colum, "_;"));
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }
     };
     return Casos;
 }(instruccion_1.Instruccion));

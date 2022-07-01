@@ -17,6 +17,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Iif = void 0;
 var instruccion_1 = require("../abstract/instruccion");
+var Singleton_1 = require("../Singleton/Singleton");
 var enviroment_1 = require("../Symbols/enviroment");
 var Iif = /** @class */ (function (_super) {
     __extends(Iif, _super);
@@ -37,6 +38,9 @@ var Iif = /** @class */ (function (_super) {
         //console.log(expresion);
     };
     Iif.prototype.ast = function () {
+        var s = Singleton_1.Singleton.getInstance();
+        var name_node = "node_".concat(this.line, "_").concat(this.colum, "_");
+        s.addAst("\n        ".concat(name_node, "[label=\"if\"];\n        ").concat(name_node, "->").concat(this.expresion.ast(), "\n        ").concat(name_node, "->").concat(this.instruc.ast(), "; \n        "));
     };
     return Iif;
 }(instruccion_1.Instruccion));

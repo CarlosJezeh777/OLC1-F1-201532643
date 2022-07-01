@@ -61,7 +61,7 @@ var MatrizD = /** @class */ (function (_super) {
     };
     MatrizD.prototype.ast = function () {
         var nombre_nodo = "node_".concat(this.line, "_").concat(this.colum, "_");
-        s.addAst("\n        ".concat(nombre_nodo, "[label=\"Splice\"];\n        ").concat(nombre_nodo, "1[label=\"Nombre: ").concat(this.id, "\"];\n        ").concat(nombre_nodo, "2[label=\"Tipo: ").concat(this.tipo, "\"];\n        ").concat(nombre_nodo, "->").concat(nombre_nodo, "1;\n        ").concat(nombre_nodo, "->").concat(nombre_nodo, "2;\n        "));
+        s.addAst("\n        ".concat(nombre_nodo, "[label=\"vector dimensional\"];\n        ").concat(nombre_nodo, "1[label=\"Nombre: ").concat(this.id, "\"];\n        ").concat(nombre_nodo, "2[label=\"Tipo: ").concat(this.tipo, "\"];\n        ").concat(nombre_nodo, "->").concat(nombre_nodo, "1;\n        ").concat(nombre_nodo, "->").concat(nombre_nodo, "2;\n        "));
     };
     return MatrizD;
 }(instruccion_1.Instruccion));

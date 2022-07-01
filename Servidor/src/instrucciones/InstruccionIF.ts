@@ -1,5 +1,6 @@
 import { Expression } from "../abstract/expression";
 import { Instruccion } from "../abstract/instruccion";
+import { Singleton } from "../Singleton/Singleton";
 import { Enviroment } from "../Symbols/enviroment";
 import { Type } from "../Symbols/type";
 import { Bloque } from "./Bloque";
@@ -33,6 +34,12 @@ export class Iif extends Instruccion{
     }
 
     public ast(): void {
-        
+        const s = Singleton.getInstance()
+        const name_node = `node_${this.line}_${this.colum}_`
+        s.addAst(`
+        ${name_node}[label="if"];
+        ${name_node}->${this.expresion.ast()}
+        ${name_node}->${this.instruc.ast()}; 
+        `)
     }
 }

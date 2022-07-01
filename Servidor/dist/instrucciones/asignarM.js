@@ -60,7 +60,7 @@ var AsignarM = /** @class */ (function (_super) {
     AsignarM.prototype.ast = function () {
         var s = Singleton_1.Singleton.getInstance();
         var nombre_nodo = "node_".concat(this.line, "_").concat(this.colum, "_");
-        s.addAst("\n        ".concat(nombre_nodo, "[label=\"Asignacion Vector\"];\n        ").concat(nombre_nodo, "1[label=\"Nombre: ").concat(this.nombre, "\"];\n        ").concat(nombre_nodo, "->").concat(nombre_nodo, "1;\n        ").concat(nombre_nodo, "->").concat(this.valor.ast(), "\n        "));
+        s.addAst("\n        ".concat(nombre_nodo, "[label=\"Asignacion Matriz\"];\n        ").concat(nombre_nodo, "1[label=\"Nombre: ").concat(this.nombre, "\"];\n        ").concat(nombre_nodo, "->").concat(nombre_nodo, "1;\n        ").concat(nombre_nodo, "->").concat(this.valor.ast(), "\n        "));
     };
     return AsignarM;
 }(instruccion_1.Instruccion));

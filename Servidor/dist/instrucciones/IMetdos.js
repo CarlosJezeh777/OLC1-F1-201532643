@@ -17,6 +17,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Metodos = void 0;
 var instruccion_1 = require("../abstract/instruccion");
+var Singleton_1 = require("../Singleton/Singleton");
 var Metodos = /** @class */ (function (_super) {
     __extends(Metodos, _super);
     function Metodos(nombre, instrucciones, line, colum) {
@@ -29,6 +30,9 @@ var Metodos = /** @class */ (function (_super) {
         env.guardar_funcion(this.nombre, this);
     };
     Metodos.prototype.ast = function () {
+        var s = Singleton_1.Singleton.getInstance();
+        var name_node = "node_".concat(this.line, "_").concat(this.colum, "_");
+        s.addAst("\n        ".concat(name_node, "[label=\"metodo\"];\n        "));
     };
     return Metodos;
 }(instruccion_1.Instruccion));

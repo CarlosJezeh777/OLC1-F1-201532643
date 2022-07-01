@@ -18,6 +18,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.InDe = void 0;
 var instruccion_1 = require("../abstract/instruccion");
 var Acceso_1 = require("../Expresiones/Acceso");
+var Singleton_1 = require("../Singleton/Singleton");
 var IncrementosOpc_1 = require("./IncrementosOpc");
 var InDe = /** @class */ (function (_super) {
     __extends(InDe, _super);
@@ -52,6 +53,14 @@ var InDe = /** @class */ (function (_super) {
         }
     };
     InDe.prototype.ast = function () {
+        var s = Singleton_1.Singleton.getInstance();
+        var name_node = "node_".concat(this.line, "_").concat(this.colum, "_");
+        if (this.tipo == IncrementosOpc_1.OpcionesInDe.MAMA) {
+            s.addAst("".concat(name_node, "[label=\"incremento\"];"));
+        }
+        else if (this.tipo == IncrementosOpc_1.OpcionesInDe.MEME) {
+            s.addAst("".concat(name_node, "[label=\"decremento\"];"));
+        }
     };
     return InDe;
 }(instruccion_1.Instruccion));

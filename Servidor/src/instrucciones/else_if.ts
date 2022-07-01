@@ -19,20 +19,9 @@ export class Else_If extends Instruccion{
     }
     public ejecutar(env:Enviroment) {
 
-        /*const new_env = new  Enviroment(env);
-        const result = this.expresion.ejecutar(env);
         
-        if(result.type != Type.BOOLEAN){
-            throw new Error("la condidicion tiene que ser una expresion booleana");
-            
-        }
-
-        if(result.value == true){
-            this.instrucccion.ejecutar(new_env);
-        }*/
         const util = utilesArrays.getInstance();
         util.addElseIf(this)
-        //console.log(expresion);
         
         
         
@@ -41,8 +30,8 @@ export class Else_If extends Instruccion{
         const name_node = `node_${this.line}_${this.colum}_`
         s.addAst(`
         ${name_node}[label="else if"];
-        ${name_node}1->${this.expresion.ast()}
-        ${name_node}->node${this.instrucccion.ast()};        
+        ${name_node}->${this.expresion.ast()}
+        ${name_node}->${this.instrucccion.ast()};        
         `)
         
     }

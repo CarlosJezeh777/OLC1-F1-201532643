@@ -17,6 +17,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Llamada = void 0;
 var instruccion_1 = require("../abstract/instruccion");
+var Singleton_1 = require("../Singleton/Singleton");
 var enviroment_1 = require("../Symbols/enviroment");
 var Llamada = /** @class */ (function (_super) {
     __extends(Llamada, _super);
@@ -36,6 +37,9 @@ var Llamada = /** @class */ (function (_super) {
         metodo.instrucciones.ejecutar(env_instrucciones);
     };
     Llamada.prototype.ast = function () {
+        var s = Singleton_1.Singleton.getInstance();
+        var name_node = "node_".concat(this.line, "_").concat(this.colum, "_");
+        s.addAst("\n        ".concat(name_node, "[label=\"Call\"];\n        ").concat(name_node, "1[label=\"").concat(this.id, "\"];\n        ").concat(name_node, "->").concat(name_node, "1;\n        "));
     };
     return Llamada;
 }(instruccion_1.Instruccion));

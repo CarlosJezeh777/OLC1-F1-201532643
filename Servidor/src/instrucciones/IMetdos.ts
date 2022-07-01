@@ -1,4 +1,5 @@
 import { Instruccion } from "../abstract/instruccion";
+import { Singleton } from "../Singleton/Singleton";
 import { Enviroment } from "../Symbols/enviroment";
 import { Bloque } from "./Bloque";
 
@@ -17,6 +18,10 @@ export class Metodos extends Instruccion{
     }
 
     public ast(): void {
-        
+        const s = Singleton.getInstance()
+        const name_node = `node_${this.line}_${this.colum}_`
+        s.addAst(`
+        ${name_node}[label="metodo"];
+        `)
     }
 }

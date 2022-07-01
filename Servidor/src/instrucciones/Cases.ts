@@ -24,6 +24,17 @@ export class Casos extends Instruccion{
         s.addAst(`
         ${nombre_nodo}[label="Cases"];
         `)
+        for (const elemento of this.instrucccion) {
+            try {
+
+                elemento.ast()
+                s.addAst(`${nombre_nodo}->node_${elemento.line}_${elemento.colum}_;`)
+                
+            } catch (error) {
+                console.log(error);
+                
+            }
+        }
         
     }
 }

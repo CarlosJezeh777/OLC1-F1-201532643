@@ -1,9 +1,12 @@
 import { Expression } from "../abstract/expression";
 import { Instruccion } from "../abstract/instruccion";
 import { Acces } from "../Expresiones/Acceso";
+import { Errores } from "../Singleton/Errores";
 import { Singleton } from "../Singleton/Singleton";
 import { Enviroment } from "../Symbols/enviroment";
 
+const s = Singleton.getInstance()
+        
 export class Splice extends Instruccion{
     constructor(
         public nombre: string,
@@ -21,6 +24,8 @@ export class Splice extends Instruccion{
         const arreglo = env.get_vector(this.nombre)
         console.log(arreglo);
         if(arreglo == null){
+            s.addErrores(new Errores("no se encontro el vector", "semantico",this.line,this.colum))
+            
             throw new Error("Error semantico");
             
         }
@@ -30,6 +35,8 @@ export class Splice extends Instruccion{
         //console.log(valor);
         
         if(valor.type != arreglo.type){
+            s.addErrores(new Errores("No son del mismo tipo", "semantico",this.line,this.colum))
+            
             throw new Error("error semantico");
             
         }
@@ -49,7 +56,6 @@ export class Splice extends Instruccion{
     }
 
     public ast(): void {
-        const s = Singleton.getInstance()
         const nombre_nodo =`node_${this.line}_${this.colum}_`
         s.addAst(`
         ${nombre_nodo}[label="Splice"];

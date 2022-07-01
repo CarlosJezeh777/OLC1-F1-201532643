@@ -43,8 +43,8 @@ export class IWhile extends Instruccion{
             const s = Singleton.getInstance()
         const name_node = `node_${this.line}_${this.colum}_`
         s.addAst(`
-        ${name_node}[label="\\<Instruccion\\>\\nwhile"];
-        ${name_node}1[label="\\<Condicion\\>"];
+        ${name_node}[label=" while"];
+        ${name_node}1[label="Condicion"];
         ${name_node}->${name_node}1;
         ${name_node}1->${this.condicion.ast()}
         ${name_node}->node_${this.instrucciones.line}_${this.instrucciones.colum}_;        

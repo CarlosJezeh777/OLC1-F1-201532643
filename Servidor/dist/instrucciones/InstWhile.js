@@ -48,7 +48,7 @@ var IWhile = /** @class */ (function (_super) {
     IWhile.prototype.ast = function () {
         var s = Singleton_1.Singleton.getInstance();
         var name_node = "node_".concat(this.line, "_").concat(this.colum, "_");
-        s.addAst("\n        ".concat(name_node, "[label=\"\\<Instruccion\\>\\nwhile\"];\n        ").concat(name_node, "1[label=\"\\<Condicion\\>\"];\n        ").concat(name_node, "->").concat(name_node, "1;\n        ").concat(name_node, "1->").concat(this.condicion.ast(), "\n        ").concat(name_node, "->node_").concat(this.instrucciones.line, "_").concat(this.instrucciones.colum, "_;        \n        "));
+        s.addAst("\n        ".concat(name_node, "[label=\" while\"];\n        ").concat(name_node, "1[label=\"Condicion\"];\n        ").concat(name_node, "->").concat(name_node, "1;\n        ").concat(name_node, "1->").concat(this.condicion.ast(), "\n        ").concat(name_node, "->node_").concat(this.instrucciones.line, "_").concat(this.instrucciones.colum, "_;        \n        "));
         this.instrucciones.ast();
     };
     return IWhile;

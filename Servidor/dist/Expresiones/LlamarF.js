@@ -50,7 +50,8 @@ var LlamadaF = /** @class */ (function (_super) {
         return resultado;
     };
     LlamadaF.prototype.ast = function () {
-        return "ast";
+        var nombre = "node_".concat(this.line, "_").concat(this.column, "_");
+        return "\n        ".concat(nombre, ";\n        ").concat(nombre, "[label=\"call\"];\n        ");
     };
     return LlamadaF;
 }(expression_1.Expression));

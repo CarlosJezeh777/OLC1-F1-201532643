@@ -53,7 +53,7 @@ var Matriz = /** @class */ (function (_super) {
     };
     Matriz.prototype.ast = function () {
         var nombre_nodo = "node_".concat(this.line, "_").concat(this.colum, "_");
-        s.addAst("\n        ".concat(nombre_nodo, "[label=\"Splice\"];\n        ").concat(nombre_nodo, "1[label=\"Nombre: ").concat(this.id, "\"];\n        ").concat(nombre_nodo, "2[label=\"Tipo: ").concat(this.tipo, "\"];\n        ").concat(nombre_nodo, "->").concat(nombre_nodo, "1;\n        ").concat(nombre_nodo, "->").concat(nombre_nodo, "2;\n        ").concat(nombre_nodo, "->").concat(this.valor.ast(), "\n        "));
+        s.addAst("\n        ".concat(nombre_nodo, "[label=\"vector dimensional\"];\n        ").concat(nombre_nodo, "1[label=\"Nombre: ").concat(this.id, "\"];\n        ").concat(nombre_nodo, "2[label=\"Tipo: ").concat(this.tipo, "\"];\n        ").concat(nombre_nodo, "->").concat(nombre_nodo, "1;\n        ").concat(nombre_nodo, "->").concat(nombre_nodo, "2;\n        ").concat(nombre_nodo, "->").concat(this.valor.ast(), "\n        ").concat(nombre_nodo, "->").concat(this.valor2.ast(), "\n        "));
     };
     return Matriz;
 }(instruccion_1.Instruccion));

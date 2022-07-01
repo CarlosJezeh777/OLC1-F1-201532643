@@ -2,6 +2,7 @@ import { Expression } from "../abstract/expression"
 import { Instruccion } from "../abstract/instruccion"
 import { Retorno } from "../abstract/Retorno"
 import { Acces } from "../Expresiones/Acceso"
+import { Singleton } from "../Singleton/Singleton"
 import { Enviroment } from "../Symbols/enviroment"
 import { Type } from "../Symbols/type"
 import { OpcionesInDe } from "./IncrementosOpc"
@@ -48,6 +49,9 @@ export class InDe extends Instruccion{
     }
 
     public ast(): void {
-        
+        const s = Singleton.getInstance()
+        const name_node = `node_${this.line}_${this.colum}_`
+        if(this.tipo == OpcionesInDe.MAMA){s.addAst(`${name_node}[label="incremento"];`)}
+        else if(this.tipo == OpcionesInDe.MEME){s.addAst(`${name_node}[label="decremento"];`)}
     }
 }

@@ -17,6 +17,9 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MetodosP = void 0;
 var instruccion_1 = require("../abstract/instruccion");
+var Errores_1 = require("../Singleton/Errores");
+var Singleton_1 = require("../Singleton/Singleton");
+var s = Singleton_1.Singleton.getInstance();
 var MetodosP = /** @class */ (function (_super) {
     __extends(MetodosP, _super);
     function MetodosP(nombre, parametros, instrucciones, line, colum) {
@@ -29,11 +32,14 @@ var MetodosP = /** @class */ (function (_super) {
     MetodosP.prototype.ejecutar = function (env) {
         //console.log(this);
         if (this.parametros == null) {
+            s.addErrores(new Errores_1.Errores("no tiene parametros", "semantico", this.line, this.colum));
             throw new Error("Error semantico: tiene que traer parametros");
         }
         env.guardar_funcion(this.nombre, this);
     };
     MetodosP.prototype.ast = function () {
+        var nombre_nodo = "node_".concat(this.line, "_").concat(this.colum, "_");
+        s.addAst("\n        ".concat(nombre_nodo, "[label=\"metodo\"];\n        ").concat(nombre_nodo, "1[label=\"Nombre: ").concat(this.nombre, "\"];\n        ").concat(nombre_nodo, "->").concat(nombre_nodo, "1;\n        "));
     };
     return MetodosP;
 }(instruccion_1.Instruccion));

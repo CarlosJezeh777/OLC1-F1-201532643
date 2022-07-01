@@ -43,7 +43,12 @@ export class LlamadaF extends Expression{
     }
 
     public ast(): string {
-        return "ast"
+        const nombre = `node_${this.line}_${this.column}_`
+         return `
+        ${nombre};
+        ${nombre}[label="call"];
+        `
+ 
     }
 
 }

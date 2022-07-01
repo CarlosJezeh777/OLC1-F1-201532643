@@ -31,19 +31,7 @@ var Asignar = /** @class */ (function (_super) {
         var verificar = new Acceso_1.Acces(this.nombre, this.line, this.colum);
         var acces = verificar.ejecutar(env);
         var expresion = this.expresion.ejecutar(env);
-        //console.log(expresion);
-        /*if(env.buscar_variable(this.nombre)){
-            console.log("si esta");
-            
-        }else{
-            console.log("no esta");
-            
-        }*/
         var tmp = env.get_Enviroment(this.nombre);
-        //console.log(tmp);
-        //console.log("haciendo una asinacion: " + this.nombre)
-        //console.log(expresion.value)
-        //console.log(expresion.type)
         tmp === null || tmp === void 0 ? void 0 : tmp.actualizar_variable(this.nombre, expresion.value);
     };
     Asignar.prototype.ast = function () {

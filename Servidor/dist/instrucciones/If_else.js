@@ -17,6 +17,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.If_Else = void 0;
 var instruccion_1 = require("../abstract/instruccion");
+var Singleton_1 = require("../Singleton/Singleton");
 var enviroment_1 = require("../Symbols/enviroment");
 var If_Else = /** @class */ (function (_super) {
     __extends(If_Else, _super);
@@ -41,6 +42,9 @@ var If_Else = /** @class */ (function (_super) {
         //console.log(expresion);
     };
     If_Else.prototype.ast = function () {
+        var s = Singleton_1.Singleton.getInstance();
+        var name_node = "node_".concat(this.line, "_").concat(this.colum, "_");
+        s.addAst("\n        ".concat(name_node, "[label=\"if else\"];\n        ").concat(name_node, "->").concat(this.expresion.ast(), "\n        ").concat(name_node, "->").concat(this.instrucTrue.ast(), ";\n        ").concat(name_node, "->").concat(this.instrucFalse.ast(), ";        \n        "));
     };
     return If_Else;
 }(instruccion_1.Instruccion));

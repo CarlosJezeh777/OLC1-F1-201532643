@@ -17,23 +17,7 @@ export class Asignar extends Instruccion{
         const verificar = new Acces(this.nombre,this.line,this.colum)
         const acces =  verificar.ejecutar(env)
         const expresion = this.expresion.ejecutar(env)
-        //console.log(expresion);
-        
-
-        /*if(env.buscar_variable(this.nombre)){
-            console.log("si esta");
-            
-        }else{
-            console.log("no esta");
-            
-        }*/
-
         const tmp = env.get_Enviroment(this.nombre);
-        //console.log(tmp);
-        
-        //console.log("haciendo una asinacion: " + this.nombre)
-        //console.log(expresion.value)
-        //console.log(expresion.type)
         tmp?.actualizar_variable(this.nombre,expresion.value)
         
     }

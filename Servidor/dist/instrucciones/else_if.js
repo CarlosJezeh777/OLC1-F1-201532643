@@ -29,24 +29,12 @@ var Else_If = /** @class */ (function (_super) {
         return _this;
     }
     Else_If.prototype.ejecutar = function (env) {
-        /*const new_env = new  Enviroment(env);
-        const result = this.expresion.ejecutar(env);
-        
-        if(result.type != Type.BOOLEAN){
-            throw new Error("la condidicion tiene que ser una expresion booleana");
-            
-        }
-
-        if(result.value == true){
-            this.instrucccion.ejecutar(new_env);
-        }*/
         var util = UtilesArrays_1.utilesArrays.getInstance();
         util.addElseIf(this);
-        //console.log(expresion);
     };
     Else_If.prototype.ast = function () {
         var name_node = "node_".concat(this.line, "_").concat(this.colum, "_");
-        s.addAst("\n        ".concat(name_node, "[label=\"else if\"];\n        ").concat(name_node, "1->").concat(this.expresion.ast(), "\n        ").concat(name_node, "->node").concat(this.instrucccion.ast(), ";        \n        "));
+        s.addAst("\n        ".concat(name_node, "[label=\"else if\"];\n        ").concat(name_node, "->").concat(this.expresion.ast(), "\n        ").concat(name_node, "->").concat(this.instrucccion.ast(), ";        \n        "));
     };
     return Else_If;
 }(instruccion_1.Instruccion));

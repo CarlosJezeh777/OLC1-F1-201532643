@@ -61,7 +61,7 @@ export class AsignarM extends Instruccion{
         const s = Singleton.getInstance()
         const nombre_nodo =`node_${this.line}_${this.colum}_`
         s.addAst(`
-        ${nombre_nodo}[label="Asignacion Vector"];
+        ${nombre_nodo}[label="Asignacion Matriz"];
         ${nombre_nodo}1[label="Nombre: ${this.nombre}"];
         ${nombre_nodo}->${nombre_nodo}1;
         ${nombre_nodo}->${this.valor.ast()}
